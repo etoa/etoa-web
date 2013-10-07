@@ -1,0 +1,26 @@
+ErrorDocument 401 /error.php?e=401
+ErrorDocument 403 /error.php?e=403
+ErrorDocument 404 /error.php?e=404
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+	RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+	RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+	
+	RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^([-0-9a-z]*)$ index.php?page=$1 [L]
+</IfModule>
+
+Redirect /bugs http://dev.etoa.net
+Redirect /dev http://dev.etoa.net
+Redirect /fehler http://dev.etoa.net
+
+Redirect /teamspeak http://ts.etoa.net
+Redirect /ts http://ts.etoa.net
+
+Redirect /faq http://etoa.ch/help?page=faq
+Redirect /wiki http://etoa.ch/help?page=article
+
+Redirect /rules http://etoa.ch/regeln

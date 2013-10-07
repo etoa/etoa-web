@@ -1,0 +1,16 @@
+[15-Aug-2011 15:04:16] PHP Fatal error:  Call to undefined function  forwardinternal() in /home/dysignch/public_html/etoa/help/login/index.php on line 77
+[15-Aug-2011 15:04:21] PHP Fatal error:  require() [<a href='function.require'>function.require</a>]: Failed opening required '../forum/wcf/lib/util/StringUtil.class.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/dysignch/public_html/etoa/help/login/index.php on line 9
+[15-Aug-2011 15:04:41] PHP Fatal error:  Call to undefined function  dbquery() in /home/dysignch/public_html/etoa/help/login/index.php on line 11
+[15-Aug-2011 15:04:43] PHP Fatal error:  Call to undefined function  dbquery() in /home/dysignch/public_html/etoa/help/login/index.php on line 11
+[15-Aug-2011 15:05:43] PHP Parse error:  syntax error, unexpected '}' in /home/dysignch/public_html/etoa/help/login/index.php on line 81
+[15-Aug-2011 15:05:43] PHP Parse error:  syntax error, unexpected '}' in /home/dysignch/public_html/etoa/help/login/index.php on line 81
+[15-Aug-2011 15:08:23] PHP Parse error:  syntax error, unexpected $end in /home/dysignch/public_html/etoa/help/login/index.php on line 91
+[15-Aug-2011 15:08:25] PHP Parse error:  syntax error, unexpected $end in /home/dysignch/public_html/etoa/help/login/index.php on line 91
+[15-Aug-2011 15:08:25] PHP Parse error:  syntax error, unexpected $end in /home/dysignch/public_html/etoa/help/login/index.php on line 91
+[15-Aug-2011 15:08:38] PHP Parse error:  syntax error, unexpected $end in /home/dysignch/public_html/etoa/help/login/index.php on line 91
+[15-Aug-2011 15:08:39] PHP Parse error:  syntax error, unexpected $end in /home/dysignch/public_html/etoa/help/login/index.php on line 91
+[06-Mar-2013 17:00:41 Europe/Zurich] PHP Warning:  Module 'PDO' already loaded in Unknown on line 0
+[06-Mar-2013 17:00:41 Europe/Zurich] PHP Warning:  Module 'pdo_sqlite' already loaded in Unknown on line 0
+[06-Mar-2013 17:00:41 Europe/Zurich] PHP Warning:  Module 'SQLite' already loaded in Unknown on line 0
+[06-Mar-2013 17:00:41 Europe/Zurich] PHP Warning:  Module 'sqlite3' already loaded in Unknown on line 0
+[06-Mar-2013 17:00:41 Europe/Zurich] PHP Warning:  Module 'pdo_mysql' already loaded in Unknown on line 0

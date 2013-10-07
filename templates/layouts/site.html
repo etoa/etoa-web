@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>EtoA | Das Sci-Fi Browsergame | {$sitename} </title>
+		<meta name="author" content="EtoA Gaming" />
+		<meta name="description" content="EtoA - Das kostenlose Sci-Fi Browsergame." />
+		<meta name="keywords" content="Escape to Andromeda, Browsergame, Strategie, Simulation, Andromeda, MMPOG, RPG" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    
+		<link rel="stylesheet" href="{$apppurl}style.css">
+
+		<script type="text/javascript" src="{$apppurl}scripts.js"></script>
+		<script type="text/javascript" src="{$apppurl}js/prototype.js"></script>
+		<script type="text/javascript" src="{$apppurl}js/scriptaculous.js?load=effects"></script>
+
+		<script type="text/javascript" src="{$apppurl}highslide/highslide-with-html.js"></script>
+		<link rel="stylesheet" type="text/css" href="{$apppurl}highslide/highslide.css" />
+		<script type="text/javascript">
+		    hs.graphicsDir = '{$apppurl}highslide/graphics/';
+		    hs.outlineType = 'rounded-white';
+		</script>
+    
+    {$headerJs}
+    
+  </head>
+
+	<body class="body" onload="scrolltextInit();document.forms['loginform'].elements[0].focus();">
+
+		<!-- Stuff for DHTML Tipps -->
+		<div id="Migoicons" style="visibility:hidden;position:absolute;z-index:1000;top:0px;border:none;"></div>
+		<script type="text/javascript">
+			stl=["white","##222255","","","",,"white","#606578","","","",,,,2,"#222255",2,,,,,"",,,,]
+			var TipId="Migoicons"
+			var FiltersEnabled = 1
+			mig_clay()
+		</script>
+		
+    <div class="Table_01">
+    
+      <div class="Header_">
+        <img alt="img" id="Header" src="{$apppurl}images/headers/{$page}.png" style="width:263px;height:45px" />
+      </div>
+      <div class="Scr-up_">
+        <img alt="img" id="line_top" src="{$apppurl}images/line_top.gif" style="width:35px;height:36px" />
+      </div>
+      <div class="Line1_">
+        <img alt="img" id="Line1" src="{$apppurl}images/Line1.gif" style="width:390px;height:20px" />
+      </div>
+      <div class="Line2_">
+        <img alt="img" id="Line2" src="{$apppurl}images/Line2.gif" style="width:14px;height:608px" />
+      </div>	
+      <div class="Line1009_">
+        <img alt="img" id="Line1009" src="{$apppurl}images/Line1-09.gif" style="width:8px;height:600px" />
+      </div>
+      
+      <ul id="mainMenu">
+        {foreach from=$nav item=n}
+          <li>{if isset($n.hr)}<img src="{$apppurl}images/hline.gif" alt="hline" class="hline" />{else}<a href="{$n.url}"{if $n.url eq $page} class="current"{/if}>{$n.name}</a>{/if}</li>
+        {/foreach}        
+      </ul>
+    
+      <div class="Votebanner_">
+        {$votebanner}
+      </div>
+
+      <!-- Login -->
+      <div class="login">	
+        <form action="{$loginform.rnd}" method="post" id="loginform" onsubmit="changeAction('login');" >
+          <input type="text" name="{$loginform.nickField}" size="11" maxlength="100" />
+          <input type="password" name="{$loginform.passwordField}" size="11" maxlength="100" />
+          <select id="loginround" name="round" onchange="setDefault()">
+            {foreach from=$rounds key=k item=v}<option value="{$v.url}"{if $v.url eq $selectedRound} selected="selected"{/if}>{$v.name}</option>{/foreach}
+          </select><br/>
+          <input class="btn-login_" type="submit" value=" " name="login" />
+          <input type="hidden" name="token" value="{$loginform.logintoken}" />
+        </form>
+      </div>	   
+ 
+    </div>      
+
+    <!-- Content -->
+    <div id="divScrollTextCont">
+      <div id="divText">
+        {$content_for_layout}
+      </div>
+    </div>
+
+    <div style="position:absolute;left:970px;top:35px;width:200px;">
+      <div class="rightBoxLine"></div>
+      <div class="rightBoxTitle">Aktuell</div>
+      <div class="rightBoxLine"></div>
+      <div class="rightBoxData" style="font-size:9pt;">{$infobox}</div>
+      <div class="rightBoxLine"></div>
+      <br/><br/>
+
+      <!-- Banner rechts anzeigen -->
+      <div style="text-align:center;">{$adds}</div>
+    </div>
+
+  </body>
+</html>
