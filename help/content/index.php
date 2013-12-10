@@ -97,19 +97,17 @@
 <td>
 
 	<h3>Entwicklung</h3>
-	<a href="https://dev.etoa.ch"><img src="web/images/icons/Tools.png" /></a><br/><br/>
-	<a href="https://dev.etoa.ch">Entwicklerportal / Fehler melden</a><br/>
-	<a href="http://www.etoa.ch/forum/index.php?page=Board&boardID=44">Neuen Vorschlag einreichen</a><br/>
-	<a href="http://www.etoa.ch/forum/index.php?page=Board&boardID=76">Changenotes und Entwickler-Blog</a>
+	<a href="https://github.com/etoa"><img src="web/images/icons/Tools.png" /></a><br/><br/>
+	<a href="https://github.com/etoa">Github</a><br/>
+	<a href="http://www.etoa.ch/forum/index.php?page=Board&boardID=44">Ideen und Vorschläge</a><br/>
+	<a href="http://www.etoa.ch/forum/index.php?page=Board&boardID=76">Entwickler-Forum</a>
 	
 </td>
 <td>
 
 	<h3>Weitere Links</h3>
-	<a href="http://downloads.etoa.net"><img src="web/images/icons/star.png" /></a><br/><br/>
-	<a href="http://downloads.etoa.net">Downloads</a><br/>
-	<a href="http://ts.etoa.net">Teamspeak</a>
-	
+	<a href="http://downloads.etoa.ch"><img src="web/images/icons/star.png" /></a><br/><br/>
+	<a href="http://downloads.etoa.ch">Downloads</a>	
 	
 </td>
 </tr>
