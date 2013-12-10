@@ -17,8 +17,7 @@
 	$smarty->setTemplateDir(BASE_PATH.'templates');
 	$smarty->setCompileDir(BASE_PATH.'cache/compile');
 	
-	$smarty->assign('baseurl',"/");	
-	$smarty->assign('apppurl',"/help/");	
+	$smarty->assign('baseurl',"");	
 	
 	ob_start();
 	$error="Du bist nicht eingeloggt!";

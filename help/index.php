@@ -11,11 +11,10 @@
 	// Smarty
 	include(BASE_PATH.'lib/smarty/Smarty.class.php');
 	$smarty = new Smarty;
-	$smarty->setTemplateDir(BASE_PATH.'templates');
+	$smarty->setTemplateDir(BASE_PATH.'help/templates');
 	$smarty->setCompileDir(BASE_PATH.'cache/compile');
 	
-	$smarty->assign('baseurl',"/");	
-	$smarty->assign('apppurl',"/help/");	
+	$smarty->assign('baseurl',"");	
 	
 	// Tag cloud
 	ob_start();
