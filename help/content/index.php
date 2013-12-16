@@ -99,8 +99,9 @@
 	<h3>Entwicklung</h3>
 	<a href="https://github.com/etoa"><img src="web/images/icons/Tools.png" /></a><br/><br/>
 	<a href="https://github.com/etoa">Github</a><br/>
-	<a href="http://www.etoa.ch/forum/index.php?page=Board&boardID=44">Ideen und Vorschläge</a><br/>
-	<a href="http://www.etoa.ch/forum/index.php?page=Board&boardID=76">Entwickler-Forum</a>
+	<a href="http://etoa.ch/forum/index.php?page=Thread&threadID=8384">Fehler melden</a><br/>
+	<a href="http://etoa.ch/forum/index.php?page=Board&boardID=44">Ideen und Vorschläge</a><br/>
+	<a href="http://etoa.ch/forum/index.php?page=Board&boardID=76">Entwickler-Forum</a>
 	
 </td>
 <td>
