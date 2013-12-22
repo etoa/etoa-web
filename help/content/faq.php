@@ -346,7 +346,7 @@
 					
 					$text = $username." hat eine neue Antwort zu deiner Frage\n\n'".$arr['faq_question']."'\n\nin der EtoA-Hilfe geschrieben";
 					//$text .= "\n\nUser-Agent: ".$_SERVER['HTTP_USER_AGENT']."\nHost: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."";
-					$text .= "\n\nhttp://www.etoa.ch/help/?page=faq&faq=".$arr['faq_id']."";
+					$text .= "\n\nhttp://etoa.ch/help/?page=faq&faq=".$arr['faq_id']."";
 					mail($arr['faq_user_email'],"EtoA-FAQ: Neuer Antwort zu deiner Frage",$text);
 				}
 				else
@@ -538,7 +538,7 @@
 				}			
 				echo "</ul>";			
 			}
-			echo "<p><br/><br/><input type=\"button\" onclick=\"document.location='http://www.etoa.ch/admin/?page=faq&faq_edit=".$arr['faq_id']."'\" value=\"Admin: Bearbeiten\" /></p>";
+			echo "<p><br/><br/><input type=\"button\" onclick=\"document.location='http://etoa.ch/admin/?page=faq&faq_edit=".$arr['faq_id']."'\" value=\"Admin: Bearbeiten\" /></p>";
 
 			echo "</div>";			
 			echo "<br class=\"clearer\" />";

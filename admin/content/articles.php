@@ -65,7 +65,7 @@
 		echo "</table><br/>
 		<input type=\"hidden\" name=\"text_id\" value=\"".$first['id']."\" />
 		<input type=\"submit\" name=\"submit\" value=\"&Uuml;bernehmen\" />";
-		echo "&nbsp; <input type=\"button\" value=\"Vorschau\" onclick=\"window.open('http://www.etoa.ch/help/?page=article&amp;article=".$first['id']."');\" />";
+		echo "&nbsp; <input type=\"button\" value=\"Vorschau\" onclick=\"window.open('http://etoa.ch/help/?page=article&amp;article=".$first['id']."');\" />";
 		echo "&nbsp; <input type=\"submit\" name=\"del\" value=\"Löschen\" onclick=\"return confirm('Wirklich löschen?')\" /> ";
 	}
 	else

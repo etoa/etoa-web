@@ -275,7 +275,7 @@
 </map>
 
 <map name="menue10_Map" id="menue10_Map">
-<area shape="rect" coords="0,3,141,20" href="http://www.etoa.ch/wiki" target="_blank"
+<area shape="rect" coords="0,3,141,20" href="http://etoa.ch/help" target="_blank"
 	onmouseover="changeImages('menue9','images/menue9.gif', 'menue10', 'images/menue10-imap_wikipedia_over.gif', 'menue11', 'images/menue11-imap_wikipedia_over.gif'); return true;"
 	onmouseout="changeImages('menue9', 'images/menue9.gif', 'menue10', 'images/menue10.gif', 'menue11', 'images/menue11.gif'); return true;"
 	onclick="ShowState_shown_wikipedia();" />
@@ -309,7 +309,7 @@
 </map>
 
 <map name="menue99_Map" id="menue99_Map">
-<area shape="rect" coords="0,3,141,20" href="http://www.etoa.ch/forum" target="_blank"
+<area shape="rect" coords="0,3,141,20" href="http://forum.etoa.ch" target="_blank"
 	onmouseover="changeImages('menue8', 'images/menue8.gif', 'menue99', 'images/menue99-imap_forum_over.gif', 'menue9', 'images/menue9-imap_banner_over.gif'); return true;"
 	onmouseout="changeImages('menue9', 'images/menue9.gif', 'menue99', 'images/menue99.gif', 'menue9', 'images/menue9.gif'); return true;"
 	onclick="ShowState_shown_banner();" />

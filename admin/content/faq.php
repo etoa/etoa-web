@@ -72,7 +72,7 @@ if (isset($_GET['faq_edit']) && $_GET['faq_edit']>0)
 				WHERE 
 					faq_id=".$_POST['faq_id'].";");
 				$arr=mysql_fetch_array($res);		
-				$text = "Hallo ".$arr['faq_user_nick']."\n\nDeine Frage \"".stripslashes($arr['faq_question'])."\" wurde beantwortet! Klicke auf den folgenden Link um die Antwort anzuzeigen:\n\nhttp://www.etoa.ch/?page=faq&faq=".$_POST['faq_id']."";
+				$text = "Hallo ".$arr['faq_user_nick']."\n\nDeine Frage \"".stripslashes($arr['faq_question'])."\" wurde beantwortet! Klicke auf den folgenden Link um die Antwort anzuzeigen:\n\nhttp://etoa.ch/?page=faq&faq=".$_POST['faq_id']."";
 				$headers .= 'From:EtoA Helpcenter<'.$conf['faq_admin']['v'].">\n";
 				$headers .= 'Reply-To:' . $conf['faq_admin']['v'] . "\n"; 
 				$headers .= 'X-Mailer: PHP/' . phpversion() . "\n"; 
@@ -151,7 +151,7 @@ if (isset($_GET['faq_edit']) && $_GET['faq_edit']>0)
 		}
 		echo '</table><br/><input type="submit" name="faq_edit_submit" value="Speichern" /> &nbsp; 
 		<input type="submit" name="cancel" value="Abbrechen" /> &nbsp; 
-		<input type="button" onclick="document.location=\'http://www.etoa.ch/help/?page=faq&amp;faq='.$arr['faq_id'].'\'" value="Anzeigen" /> <br/><br/>
+		<input type="button" onclick="document.location=\'http://etoa.ch/help/?page=faq&amp;faq='.$arr['faq_id'].'\'" value="Anzeigen" /> <br/><br/>
 		<input type="button" onclick="document.location=\'?page='.$page.'&amp;faq_answers='.$arr['faq_id'].'\'" value="Antworten verwalten" /> &nbsp; 
 		<input type="button" onclick="document.location=\'?page='.$page.'&amp;faq_del='.$arr['faq_id'].'\'" value="Löschen" /> &nbsp; 
 		';

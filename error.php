@@ -64,7 +64,7 @@
 
 <body>
 	<div style="text-align:center;width:500px;margin:100px auto;">
-		<img src="http://www.etoa.ch/site/images/logo.gif" alt="logo"/>
+		<img src="http://etoa.ch/site/images/logo.gif" alt="logo"/>
 
 
 		<h1><?PHP echo $errname; ?>!</h1>
@@ -74,7 +74,7 @@
 <div style="width:250px;margin:0px auto">
 		<ul>
 			<li><a href="javascript:history.back();">Zurück zur vorherigen 
-			Seite</a></li> <li><a href="http://www.etoa.ch">EtoA Startseite</a></li>
+			Seite</a></li> <li><a href="http://etoa.ch">EtoA Startseite</a></li>
 			<li><a href="http://forum.etoa.ch">EtoA Forum</a></li>					<li><a 
 			href="http://etoa.ch/help">EtoA Hilfecenter</a></li>					
 			</ul>

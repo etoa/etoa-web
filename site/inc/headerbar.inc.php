@@ -5,7 +5,7 @@
 <style type="text/css">
 	#headerbar	{
 	height:24px;
-	background:#000 url('http://www.etoa.ch/images/headerbar.jpg') repeat-x;
+	background:#000 url('http://etoa.ch/images/headerbar.jpg') repeat-x;
 	padding:0px;
 	margin:0px;
 	position:absolute;
@@ -28,8 +28,8 @@
 	{
 		?>
 <div id="headerbar">
-	<a href="http://www.etoa.ch" style="float:left;">
-		<img src="http://www.etoa.ch/images/headerbar_logo.jpg" alt="Logo" style="border:none;" />	
+	<a href="http://etoa.ch" style="float:left;">
+		<img src="http://etoa.ch/images/headerbar_logo.jpg" alt="Logo" style="border:none;" />	
 	</a>
 	<div style="float:right;padding-top:2px;padding-right:5px;">
 		
@@ -48,10 +48,8 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;
 		<select onchange="document.location=this.options[this.selectedIndex].value">
 			<option value="#">Seite w&auml;hlen...</option>
-			<option value="http://www.etoa.ch">Login</option>
+			<option value="http://etoa.ch">Login</option>
 			<option value="http://forum.etoa.ch">Forum</option>
-			<option value="http://chat.etoa.ch">Chat</option>
-			<option value="http://ts.etoa.ch">TeamSpeak</option>
 			<option value="http://help.etoa.ch">Hilfe + FAQ</option>
 			<option value="<?PHP echo FORUM_URL;?>/board.php?boardid=21">Technischer Support</option>
 			<option value="http://dev.etoa.ch">Entwicklung</option>
