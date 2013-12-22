@@ -85,8 +85,8 @@
 			;");
 			$parr = mysql_fetch_row($pres);
 			
-			$url = "http://www.etoa.ch/forum/index.php?page=Thread&amp;threadID=";
-			$replyUrl = "http://www.etoa.ch/forum/index.php?form=PostAdd&amp;threadID=";
+			$url = FORUM_URL."/index.php?page=Thread&amp;threadID=";
+			$replyUrl = FORUM_URL."/index.php?form=PostAdd&amp;threadID=";
 
 			if ($parr[0]-1 > 1)
 				$cmts = "<a style=\"color:#fb0;\" href=\"$url".$arr['threadID']."\">".($parr[0]-1)." Kommentare vorhanden</a> | ";
@@ -107,7 +107,7 @@
 			
 			echo "
 			<br/><span class=\"subtitle\">".df($arr['time'])." von  
-			<a href=\"http://www.etoa.ch/forum/profile.php?userid=".$arr['userid']."\">".$arr['username']."</a> ";
+			<a href=\"".FORUM_URL."/index.php?page=User&userID=".$arr['userid']."\">".$arr['username']."</a> ";
 			if ($arr['lastEditTime']>0)
 				echo " (Letzte &Auml;nderung: ".df($arr['lastEditTime']).")";
 			echo "</span></div>";

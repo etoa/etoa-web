@@ -53,7 +53,7 @@
 			echo "<b>Fehler:</b> Unbekannter Fehler (<b>".$err."</b>). Bitte den Entwickler kontaktieren!";
 	}
 	echo "<br/><br/>Solltest du diesen Fehler nicht l&ouml;sen k&ouml;nnen besuche unser <a href=\"help\">HelpCenter</a> <br/>
-	oder unser <a href=\"http://www.etoa.ch/forum/board.php?boardid=21\">Technik-Support-Forum</a>
+	oder unser <a href=\"".FORUM_URL."/board.php?boardid=21\">Technik-Support-Forum</a>
 	um eine Antwort auf dein Problem zu finden!<br/><br/>
 	Programmfehler bitte an das <a href=\"http://dev.etoa.ch\">Entwickler-Team</a> melden.";
 	echo "</div>";

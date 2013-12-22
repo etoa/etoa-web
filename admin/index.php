@@ -101,6 +101,8 @@
 	$nav['Texte']="?page=texts";
 	$nav['Einstellungen']="?page=settings";
 
+	// Forum
+	define('FORUM_URL', 'http://forum.etoa.ch');
 	
 	// Standardseite
 	if (isset($_GET['page']) && eregi("^[a-z\_]+$",$_GET['page'])  && strlen($_GET['page'])<=50) 

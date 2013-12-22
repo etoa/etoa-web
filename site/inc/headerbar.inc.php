@@ -33,7 +33,7 @@
 	</a>
 	<div style="float:right;padding-top:2px;padding-right:5px;">
 		
-<form action="http://www.etoa.ch/forum/search.php" method="post">
+<form action="<?PHP echo FORUM_URL;?>/search.php" method="post">
 	<input name="searchprefix" value="" type="hidden"/>
 	<input type="hidden" name="boardids[]" value="*" />
   <input type="hidden" name="searchdate" value="0" />
@@ -53,7 +53,7 @@
 			<option value="http://chat.etoa.ch">Chat</option>
 			<option value="http://ts.etoa.ch">TeamSpeak</option>
 			<option value="http://help.etoa.ch">Hilfe + FAQ</option>
-			<option value="http://www.etoa.ch/forum/board.php?boardid=21">Technischer Support</option>
+			<option value="<?PHP echo FORUM_URL;?>/board.php?boardid=21">Technischer Support</option>
 			<option value="http://dev.etoa.ch">Entwicklung</option>
 		</select></form>		
 	</div>

@@ -67,7 +67,7 @@ $arr1 = mysql_fetch_row($res);*/
 	echo "<div id=\"forum\" style=\"\"><ul id=\"forumthreadlist\">";
 	while ($arr = mysql_fetch_assoc($res))
 	{
-		echo "<li><a href=\"http://www.etoa.ch/forum/index.php?page=Thread&amp;postID=".$arr['postID']."#post".$arr['postID']."\">".$arr['topic']."</a> <span style=\"color:#aaa;font-size:80%\">".tfs(time()-$arr['time'])."</span></li>";
+		echo "<li><a href=\"".FORUM_URL."/index.php?page=Thread&amp;postID=".$arr['postID']."#post".$arr['postID']."\">".$arr['topic']."</a> <span style=\"color:#aaa;font-size:80%\">".tfs(time()-$arr['time'])."</span></li>";
 	}
 	echo "</ul></div>";
 	

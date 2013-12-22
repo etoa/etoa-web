@@ -7,6 +7,8 @@
     define('DEFAULT_PAGE', 'news');
     define('DEFAULT_VIEW', 'default');
     define('LAYOUT', APP_ID);
+	
+	define('FORUM_URL', 'http://forum.etoa.ch');
     
     // Konfiguration laden
     session_start();

@@ -3,12 +3,13 @@
 <?PHP
 
 	$rulesText = "<b>Regeln:</b> Keine Namen von Mitspielern im Text, keine Koordinaten, kein Spam, kein Fluchwörter, keine Werbung. 
-			Es gelten dieselben <a href=\"http://etoa.ch/forum/index.php?page=Board&boardID=10\">Regeln</a> wie im Forum (z.B. betreffend illegaler Inhalte) sowie die allgemeine Nettiquette. 
+			Es gelten dieselben <a href=\"".FORUM_URL."/index.php?page=Board&boardID=10\">Regeln</a> wie im Forum (z.B. betreffend illegaler Inhalte) sowie die allgemeine Nettiquette. 
 			Missbrauch dieser Funktion kann zu einer Sperre im Forum und/oder im Spiel selbst führen. 
 			Mit dem Absenden erklärst du dich einverstanden, dass deine Foren-Accountdaten (Username, E-Mail, Benutzer-ID) mit der Frage gespeichert werden. 
 			Um Missbrauchsfälle aufzudecken wird auch deine IP-Adresse sowie der verwendete Browser aufgezeichnet.";
 
-	$submitInfoText = "<b>Wichtig:</b> Nur eine Frage auf einmal stellen! Beschreibe den Sachverhalt möglichst präzise, versuche dabei aber den Text kurz zu halten. Bitte keine Fehlerberichte wie 'Login geht nicht...', diese bitte ins <a href=\"http://www.etoa.ch/forum/index.php?page=Board&boardID=21\">Support-Forum</a> stellen.";
+	$submitInfoText = "<b>Wichtig:</b> Nur eine Frage auf einmal stellen! Beschreibe den Sachverhalt möglichst präzise, versuche dabei aber den Text kurz zu halten. Bitte keine Fehlerberichte wie 'Login geht nicht...', 
+	diese bitte ins <a href=\"".FORUM_URL."/index.php?page=Board&boardID=21\">Support-Forum</a> stellen.";
 
 	$requireLoginMsg = message("warning","Du bist nicht eingeloggt! Bitte logge dich <a href=\"login\">hier</a> mit deinem Forum-Account ein!");
 	

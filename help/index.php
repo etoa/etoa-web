@@ -8,6 +8,9 @@
 	dbconnect();
 	$conf = get_all_config();
 
+	// Forum
+	define('FORUM_URL', 'http://forum.etoa.ch');
+	
 	// Smarty
 	include(BASE_PATH.'lib/smarty/Smarty.class.php');
 	$smarty = new Smarty;
@@ -49,16 +52,15 @@
 	$smarty->assign("tagcloud",ob_get_clean());	
 
 	// Login
-	
 	ob_start();
 	if (isset($_SESSION['etoahelp']['username']) && isset($_SESSION['etoahelp']['uid']) && $_SESSION['etoahelp']['uid'] > 0)
 	{
 		define('LOGIN',true);
 		echo "<p>Eingeloggt als <b>".$_SESSION['etoahelp']['username']."</b></p>
 		<p>
-		<a href=\"http://etoa.ch/forum/index.php?form=AccountManagement\">Accountverwaltung</a><br/>
+		<a href=\"".FORUM_URL."/index.php?form=AccountManagement\">Accountverwaltung</a><br/>
 		<a href=\"?page=user&amp;id=".$_SESSION['etoahelp']['uid']."\">Benutzerprofil</a><br/>
-		</p>"; //<a href=\"http://logout:logout@etoa.ch/help/logout\">Logout</a>
+		</p>";
 	}
 	else
 		define('LOGIN',false);

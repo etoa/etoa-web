@@ -106,7 +106,7 @@
 	{
 		echo "<h1>Fehler:</h1><p>".$error."</p><p>Bitte logge dich mit deinem EtoA Forum-Account ein!</p><p>";
 		echo "<input type=\"button\" value=\"Neu einloggen\" onclick=\"document.location='?page=$page'\" />";	
-		echo "<input type=\"button\" value=\"Account erstellen\" onclick=\"document.location='http://etoa.ch/forum/index.php?page=Register'\" />";	
+		echo "<input type=\"button\" value=\"Account erstellen\" onclick=\"document.location='http://forum.etoa.ch/index.php?page=Register'\" />";	
 		echo "<input type=\"button\" value=\"Zurück\" onclick=\"document.location='".SITE_URL."'\" /></p>";	
 	}
 	$ob = ob_get_clean();

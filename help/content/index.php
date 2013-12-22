@@ -84,36 +84,24 @@
 </tr>
 <tr>
 <td>
-
 	<h3>Forum</h3>
-	<a href="http://www.etoa.ch/forum"><img src="web/images/icons/chat.png" /></a><br/><br/>
-	<a href="http://www.etoa.ch/forum/index.php?page=Board&boardID=13">Alles zum Forum</a><br/>
-	<a href="http://www.etoa.ch/forum/index.php?page=Board&boardID=21">Technischer Support</a><br/>
-	<a href="http://www.etoa.ch/forum/index.php?page=Board&boardID=15">Fragen und Antworten</a><br/>
-	<a href="http://www.etoa.ch/forum/index.php?page=Team">Jemanden vom Team kontaktieren</a><br/>
+	<a href="<?PHP echo FORUM_URL;?>"><img src="web/images/icons/chat.png" /></a><br/><br/>
+	<a href="<?PHP echo FORUM_URL;?>/index.php?page=Board&boardID=13">Alles zum Forum</a><br/>
+	<a href="<?PHP echo FORUM_URL;?>/index.php?page=Board&boardID=21">Technischer Support</a><br/>
+	<a href="<?PHP echo FORUM_URL;?>/index.php?page=Board&boardID=15">Fragen und Antworten</a><br/>
+	<a href="<?PHP echo FORUM_URL;?>/index.php?page=Team">Jemanden vom Team kontaktieren</a><br/>
 	<a href="mailto:forum [ at ] etoa.ch">Mail an die Forenleitung</a>
-
 </td>
 <td>
-
 	<h3>Entwicklung</h3>
-	<a href="https://github.com/etoa"><img src="web/images/icons/Tools.png" /></a><br/><br/>
-	<a href="https://github.com/etoa">Github</a><br/>
-	<a href="http://etoa.ch/forum/index.php?page=Thread&threadID=8384">Fehler melden</a><br/>
-	<a href="http://etoa.ch/forum/index.php?page=Board&boardID=44">Ideen und Vorschläge</a><br/>
-	<a href="http://etoa.ch/forum/index.php?page=Board&boardID=76">Entwickler-Forum</a>
-	
+	<a href="http://dev.etoa.ch"><img src="web/images/icons/Tools.png" /></a><br/><br/>
+	<a href="http://dev.etoa.ch">Entwickler-Portal</a><br/>
 </td>
 <td>
-
 	<h3>Weitere Links</h3>
 	<a href="http://downloads.etoa.ch"><img src="web/images/icons/star.png" /></a><br/><br/>
 	<a href="http://downloads.etoa.ch">Downloads</a>	
-	
 </td>
 </tr>
 </table>
-
-		
-			
 </div>

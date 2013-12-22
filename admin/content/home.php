@@ -32,8 +32,7 @@ Besuche folgende Seiten für andere Administrationsmöglichkeiten:
 
 <h2>Community-Administration</h2>
 <ul>
-	<li><a href="http://www.etoa.ch/forum/acp">Forum-Administration</a></li>
-	<li><a href="http://ts.etoa.ch/admin">TeamSpeak-Administration</a></li>
+	<li><a href="<?PHP echo FORUM_URL;?>/acp">Forum-Administration</a></li>
 </ul>
 
 <h2>Game-Administration</h2>

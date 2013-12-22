@@ -1,5 +1,5 @@
 <?PHP
-	define('AVATAR_DIR','/forum/wcf/images/avatars/');
+	define('AVATAR_DIR',FORUM_URL.'/wcf/images/avatars/');
 	define('DEFAULT_AVATAR','avatar-default.png');
 
 	if ($_GET['id'] > 0)
@@ -29,7 +29,7 @@
 			if ($arr['userTitle'] != '')
 				echo $arr['userTitle']."<br/>";
 			echo "<br/><b>Dabei seit:</b> ".tfs(time() - $arr['registrationDate'])."<br/>";
-			echo "<a href=\"http://etoa.ch/forum/index.php?page=User&amp;userID=".$arr['userID']."\">Profil im EtoA Forum anzeigen</a>
+			echo "<a href=\"".FORUM_URL."/index.php?page=User&amp;userID=".$arr['userID']."\">Profil im EtoA Forum anzeigen</a>
 			
 			
 			
