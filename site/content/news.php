@@ -119,7 +119,7 @@
 			echo "<div class=\"boxLine\"></div><br/><br/>";
 			
 		}
-		echo "Alle älteren News findest du <a href=\"forum/board.php?boardid=".NEWS_BOARD_ID."\">hier</a><br/>";
+		echo "<p>Alle älteren News findest du <a href=\"forum/board.php?boardid=".NEWS_BOARD_ID."\">hier</a></p>";
 	}
 	else
 	{
