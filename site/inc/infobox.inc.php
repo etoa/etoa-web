@@ -1,12 +1,6 @@
 <?PHP
-	/*
-	$res=dbquery("
-	SELECT
-		COUNT(userid)
-	FROM
-		bb1_users
-	;");
-$arr1 = mysql_fetch_row($res);*/
+	define('LATEST_POSTS_NUM', 5);
+
 	$res=dbquery("
 	SELECT
 		COUNT(sessionID)
@@ -17,22 +11,6 @@ $arr1 = mysql_fetch_row($res);*/
 	;");
 	$arr2 = mysql_fetch_row($res);	
 
-	/*
-	$res=dbquery("
-	SELECT
-		COUNT(postID)
-	FROM
-		wbb1_1_post
-		;");
-	$arr3 = mysql_fetch_row($res);	
-	$res=dbquery("
-	SELECT
-		COUNT(threadID)
-	FROM
-		wbb1_1_thread
-	;");
-	$arr4 = mysql_fetch_row($res);	
-	 */
 
 	echo "<h2>Neues aus dem Forum</h2>
 	<span style=\"color:#0f0;font-size:9pt;\">".$arr2[0]." Leute online</span>";
@@ -63,7 +41,7 @@ $arr1 = mysql_fetch_row($res);*/
     )		
   ORDER BY 
   	p.time DESC
-	LIMIT 7;");	
+	LIMIT ".LATEST_POSTS_NUM.";");	
 	echo "<div id=\"forum\" style=\"\"><ul id=\"forumthreadlist\">";
 	while ($arr = mysql_fetch_assoc($res))
 	{
