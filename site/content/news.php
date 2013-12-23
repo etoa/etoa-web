@@ -4,6 +4,7 @@
 	define('THREADS_TABLE',"wbb1_1_thread");
 	define('NEWS_BOARD_ID',$conf['news_board']['v']);
 	define('STATUS_BOARD_ID',$conf['status_board']['v']);
+	define('NUM_NEWS', 3);
 
 	echo '<h1>Herzlich willkommen zu Escape to Andromeda!</h1>';
 	echo "<div class=\"boxLine\"></div>";
@@ -69,7 +70,7 @@
 	ORDER BY 
 		t.time DESC 
 	LIMIT 
-		5
+		".NUM_NEWS."
 	;");
 	if (mysql_num_rows($res)>0)
 	{
@@ -119,7 +120,7 @@
 			echo "<div class=\"boxLine\"></div><br/><br/>";
 			
 		}
-		echo "<p>Alle älteren News findest du <a href=\"forum/board.php?boardid=".NEWS_BOARD_ID."\">hier</a></p>";
+		echo "Alle älteren News findest du <a href=\"forum/board.php?boardid=".NEWS_BOARD_ID."\">hier</a><br/><br/>";
 	}
 	else
 	{
