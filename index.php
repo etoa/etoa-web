@@ -13,6 +13,8 @@
     // Konfiguration laden
     session_start();
     
+	$start_time = microtime(true);
+	
     include(APP_PATH."/conf.inc.php");
     include(APP_PATH."/functions.php");
     
@@ -108,6 +110,7 @@
     $smarty->assign('adds', $conf['adds']['v']);
 
     $smarty->assign('headerJs', stripslashes($conf['indexjscript']['v']));
+    $smarty->assign('generate_time', round((microtime(true) - $start_time), 3));
     
     // Render
     $smarty->display('layouts/'.LAYOUT.'.html');
