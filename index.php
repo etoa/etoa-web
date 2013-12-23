@@ -109,6 +109,7 @@
     // Adds
     $smarty->assign('adds', $conf['adds']['v']);
 
+	$smarty->assign('footerJs', stripslashes($conf['footer_js']['v']));
     $smarty->assign('headerJs', stripslashes($conf['indexjscript']['v']));
     $smarty->assign('generate_time', round((microtime(true) - $start_time), 3));
     
