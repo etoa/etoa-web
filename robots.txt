@@ -1,4 +1,4 @@
 ﻿user-agent: *
 disallow: /admin/
-disallow: /maintenance/
+disallow: /_maintenance/
    

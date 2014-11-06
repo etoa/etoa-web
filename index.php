@@ -26,7 +26,7 @@
     // Maintenance
     if ($conf['maintenance_mode']['v']==1)
     {
-        include('maintenance/index.html');
+        include('_maintenance/index.html');
         exit;
     }
 
