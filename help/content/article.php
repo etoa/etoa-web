@@ -141,7 +141,7 @@
 		{		
 			$arr = mysql_fetch_assoc($res);
 		
-			include('../inc/textdiff.php');
+			include('inc/textdiff.php');
 			list($v1,$v2) = explode(":",$_GET['range']);
 			
 			echo "<h1>".$arr['title'].": Differenz</h1>";
