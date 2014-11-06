@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>EtoA | Das Sci-Fi Browsergame | {$sitename} </title>
+		<meta name="author" content="EtoA Gaming" />
+		<meta name="description" content="EtoA - Das kostenlose Sci-Fi Browsergame." />
+		<meta name="keywords" content="Escape to Andromeda, Browsergame, Strategie, Simulation, Andromeda, MMPOG, RPG" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link rel="shortcut icon" href="{$baseurl}favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="{$apppurl}style.css">
+		<link rel="stylesheet" href="{$apppurl}web/css/messagebox.css">
+    </head>
+	<body>    	
+    <div id="overall">
+      <div id="header">
+        <div id="logo" onclick="javascript: document.location.href='./';">
+        </div>
+        <div id="bar"></div>
+      </div>
+      <div id="main">
+	  
+            <div id="sidemenu">
+			
+                <div class="menu_box">
+				 <div id="menu">
+                  <b>Navigation</b><br/>
+                  <a href="?page=index">Übersicht</a>
+                  <a href="?page=faq">Fragen</a>
+                  <a href="?page=article">Wiki-Artikel</a>
+                  <a href="?page=rounds">Runden</a>
+				  <a href="?page=tags">Tags</a>
+				  <a href="?page=user">User</a>
+				  <br/>
+				  <a href="http://etoa.ch">EtoA-Login</a>
+				 </div>
+              	</div>
+				
+                <div class="menu_box" id="loginbox">				
+                  <b>Login</b><br/>
+				  {if $loginbox|default:'' != ''}{$loginbox}{else}<p>Nicht eingeloggt!</p><p><a href="{$apppurl}login">Mit Forenaccount einloggen</a></p>{/if}
+              	</div>				
+
+                <div class="menu_box">				
+                  <b>Suche</b><br/>
+					<form action="?" method="get">
+					<input type="hidden" name="page" value="faq" />
+					Frage suchen: <input type="text" name="s" size="15" maxlength="30" value="" /> &nbsp; 
+					<input type="submit" name="faq_show" value="Anzeigen" />
+					</form>
+              	</div>
+	
+                <div class="menu_box">
+                  <b>Tags</b><br/>
+				  <div id="tags">
+					{$tagcloud}
+				  </div>
+              	</div>				
+              </div>
+
+
+			<div id="content">
+			  <div>				
+				{$content_for_layout}					
+			</div>
+		  </div>
+		  
+		  <br style="clear:both;" />
+		  
+        </div>
+      <div id="overallend">
+    </div>
+    <div id="footer">
+      <div id="server">&copy; EtoA Gaming, Langenthal - Switzerland</div>      
+    </div>
+  </div>  
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-4499873-4']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script> 
+  </body>
+</html>

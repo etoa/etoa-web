@@ -1,0 +1,5 @@
+/admin/error_log
+/cache/compile/*.php
+/error_log
+/.ftpquota
+/help/error_log
