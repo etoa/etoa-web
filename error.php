@@ -1,4 +1,6 @@
 <?PHP
+// Used as error page if a file is not found or access has been denied
+// see .htaccess for configuration
 
 	$e = isset($_GET['e']) ? $_GET['e'] : 404;
 
@@ -29,58 +31,84 @@
 	}
 	
 
-?>
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
-<head>
-<title>Seite nicht gefunden!</title>
-<style type="text/css"><!--/*--><![CDATA[/*><!--*/ 
-    body { 
-    	color: #fff; 
-    	background: #000; 
-    	font-family: arial, helvetica, verdana;
-    	font-size:10pt;
-    }
-    
-    h1	{
-    	font-size:12pt;
-    }
-    a { 
-    	color: #ddf; 
-    	font-weight:bold;
-    }
-    a:hover { 
-    	color: #aad; 
-    	font-weight:bold;
-    	text-decoration:underline;
-    }
-    p, address {margin-left: 3em;}
-    span {font-size: smaller;}
-/*]]>*/--></style>
-</head>
-
-<body>
-	<div style="text-align:center;width:500px;margin:100px auto;">
-		<img src="http://etoa.ch/site/images/logo.gif" alt="logo"/>
-
-
-		<h1><?PHP echo $errname; ?>!</h1>
-		<p><?PHP echo $errtext;?></p>
-
-</div>
-<div style="width:250px;margin:0px auto">
-		<ul>
-			<li><a href="javascript:history.back();">Zurück zur vorherigen 
-			Seite</a></li> <li><a href="http://etoa.ch">EtoA Startseite</a></li>
-			<li><a href="http://forum.etoa.ch">EtoA Forum</a></li>					<li><a 
-			href="http://etoa.ch/help">EtoA Hilfecenter</a></li>					
+?><!DOCTYPE html>
+<html>
+	<meta charset="UTF-8" />
+	<title><?=$errname?></title>
+	<style type="text/css"><!--/*--><![CDATA[/*><!--*/ 
+		body { 
+			color: #fff; 
+			background: #0E0E0E; 
+			font-family: arial, helvetica, verdana;
+			font-size:10pt;
+		}		
+		h1 {
+			font-size:12pt;
+		}
+		a { 
+			color: #ddf; 
+			font-weight:bold;
+		}
+		a:hover { 
+			color: #aad; 
+			font-weight:bold;
+			text-decoration:underline;
+		}
+		p, address {
+			margin-left: 3em;
+		}
+		span {
+			font-size: smaller;
+		}
+		.message {
+			text-align: center;
+			width: 500px;
+			margin: 100px auto 50px;
+		}
+		.links {
+			width: 650px;
+			margin: 0px auto;
+			text-align: center;
+		}
+		.links ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+		.links ul li {
+			display: inline-block;
+			margin: 0;
+			padding: 0;
+		}
+		.links ul li a {
+			text-decoration: none;
+			border: 1px solid #3D3D3D;
+			border-radius: 2px;
+			padding: 8px;
+			margin: 5px;
+			background: #2C2C2C;
+			color: #ccc;
+		}
+		.links ul li a:hover {
+			color: #fff;
+			background: #262626;
+			border: 1px solid #373737;
+		}
+	/*]]>*/--></style>
+	</head>
+	<body>
+		<div class="message">
+			<p><img src="http://etoa.ch/site/images/logo.gif" alt="logo"/></p>
+			<h1><?PHP echo $errname; ?>!</h1>
+			<p><?PHP echo $errtext;?></p>
+		</div>
+		<div class="links">
+			<ul>
+				<li><a href="javascript:history.back();">ZurÃ¼ck zur vorherigen Seite</a></li>
+				<li><a href="http://etoa.ch">Startseite</a></li>
+				<li><a href="http://forum.etoa.ch">Forum</a></li>
+				<li><a href="http://etoa.ch/help">Hilfecenter</a></li>
 			</ul>
-
-</div>
-
-</body>
+		</div>
+	</body>
 </html>
-
