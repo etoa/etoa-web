@@ -24,12 +24,11 @@
     es erneut.";
 			break;		
 		default:	
-			$errname = "Fehler 404 - Seite nicht gefunden";
-			$errtext = "Der angeforderte URL konnte auf dem Server nicht gefunden werden.
-		    Sofern Sie den URL manuell eingegeben haben,
-		    &uuml;berpr&uuml;fen Sie bitte die Schreibweise und versuchen Sie es erneut.";
+			$errname = "Diese Seite wurde leider von einem Schwarzen Loch verschluckt! (Fehler 404)";
+			$errtext = "Das tut uns leid! Zum Glück gibt es in unserem Universum noch genügend andere Seiten welche weit genug von Schwarzen Löchern entfernt sind.
+			
+			Wähle eine Seite aus folgender Liste:";
 	}
-	
 
 ?><!DOCTYPE html>
 <html>
@@ -38,7 +37,7 @@
 	<style type="text/css"><!--/*--><![CDATA[/*><!--*/ 
 		body { 
 			color: #fff; 
-			background: #0E0E0E; 
+			background: #000 url('http://etoa.ch/_error/bg.jpg') no-repeat center 0px; 
 			font-family: arial, helvetica, verdana;
 			font-size:10pt;
 		}		
@@ -60,13 +59,18 @@
 		span {
 			font-size: smaller;
 		}
+		.logo {
+			text-align: center;
+			width: 500px;
+			margin: 190px auto 100px;
+		}
 		.message {
 			text-align: center;
 			width: 500px;
-			margin: 100px auto 50px;
+			margin: 50px auto 50px;
 		}
 		.links {
-			width: 650px;
+			width: 500px;
 			margin: 0px auto;
 			text-align: center;
 		}
@@ -97,17 +101,19 @@
 	/*]]>*/--></style>
 	</head>
 	<body>
+		<div class="logo">
+				<p><img src="http://etoa.ch/_error/logo.png" alt="logo"/></p>
+		</div>
 		<div class="message">
-			<p><img src="http://etoa.ch/site/images/logo.gif" alt="logo"/></p>
-			<h1><?PHP echo $errname; ?>!</h1>
-			<p><?PHP echo $errtext;?></p>
+			<h1><?PHP echo $errname; ?></h1>
+			<p><?PHP echo nl2br($errtext);?></p>
 		</div>
 		<div class="links">
 			<ul>
-				<li><a href="javascript:history.back();">Zurück zur vorherigen Seite</a></li>
 				<li><a href="http://etoa.ch">Startseite</a></li>
 				<li><a href="http://forum.etoa.ch">Forum</a></li>
 				<li><a href="http://etoa.ch/help">Hilfecenter</a></li>
+				<li><a href="javascript:history.back();">Zurück zur vorherigen Seite</a></li>
 			</ul>
 		</div>
 	</body>
