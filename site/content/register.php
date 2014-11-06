@@ -20,11 +20,6 @@
 	<li>Java oder Flash wird <b>nicht</b> benötigt!</li>
 	</ul>";
 
-	echo '<h3>Testserver</h3>Um Zugang zum Testserver zu erhalten, schaue bitte den <a href="forum/thread.php?threadid=4226">Foren-Thread mit Infos
-	zur Bewerbung als Beta-Tester</a> an. Falls du Beta-Tester bist, hast du Zugang zu einem speziellen Forenbereich wo auch 
-	alle Daten zum Testserver-Login enthalten sind.';
-
-
 	echo "<h3>Empfohlener Browser</h3>
 	<table style=\"width:600px;\">
 	<tr>
