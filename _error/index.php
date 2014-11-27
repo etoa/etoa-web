@@ -29,6 +29,7 @@
 			
 			Wähle eine Seite aus folgender Liste:";
 	}
+	
 
 ?><!DOCTYPE html>
 <html>
