@@ -6,10 +6,10 @@
 //////////////       MYSQL - Connection Data          /////////
 ///////////////////////////////////////////////////////////////
 
-$db_access['server'] 	= "www.etoa.ch";
+$db_access['server'] 	= "localhost";
 $db_access['db'] 			= "dysignch_etoa";
 $db_access['user'] 		= "dysignch_etoa";
-$db_access['pw'] 			= "af5b5ae4a15ef1f2229881845149857174adf5ccaae307ffa252811e79";
+$db_access['pw'] 			= "choose_pw";
 
 ///////////////////////////////////////////////////////////////
 //////////////       MYSQL - Table Names		          /////////
