@@ -8,8 +8,8 @@
 	mt_srand(time());	
 
 	// Konfiguration laden
-	include("../site/conf.inc.php");
-	include("../site/functions.php");
+	include("../site/config/conf.inc.php");
+	include("../site/inc/functions.php");
 	
 	// Mit der DB verbinden und Config-Werte laden
 	dbconnect();

@@ -15,8 +15,8 @@
     
 	$start_time = microtime(true);
 	
-    include(APP_PATH."/conf.inc.php");
-    include(APP_PATH."/functions.php");
+    include(APP_PATH."/config/conf.inc.php");
+    include(APP_PATH."/inc/functions.php");
     
     // DB Connect
     dbconnect();

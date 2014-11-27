@@ -5,8 +5,8 @@
 
 	// Konfiguration laden
 	session_start();
-	include(BASE_PATH."site/conf.inc.php");
-	include(BASE_PATH."site/functions.php");
+	include(BASE_PATH."site/config/conf.inc.php");
+	include(BASE_PATH."site/inc/functions.php");
 	
 	header("WWW-Authenticate: Basic realm=\"EtoA.ch Hilfe\"");
 	header("HTTP/1.0 401 Unauthorized"); 

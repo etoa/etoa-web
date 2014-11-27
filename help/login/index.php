@@ -6,8 +6,8 @@
 
 	// Konfiguration laden
 	session_start();
-	include(BASE_PATH."site/conf.inc.php");
-	include(BASE_PATH."site/functions.php");
+	include(BASE_PATH."site/config/conf.inc.php");
+	include(BASE_PATH."site/inc/functions.php");
 	dbconnect();
 	$conf = get_all_config();
 
