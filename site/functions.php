@@ -24,7 +24,7 @@
 		if (!$db_handle = @mysql_connect($db_access["server"],$db_access["user"],$db_access["pw"]))
 		{
 			echo "</head><body>";
-			print_fs_error_msg("Zum Datenbankserver auf <b>".$db_access[server]."</b> kann keine Verbindung hergestellt werden! Bitte schaue später nochmals vorbei.<br/><br/><a href=\"http://forum.etoa.ch\">Zum Forum</a> | <a href=\"mailto:mail@etoa.ch\">Mail an die Spielleitung</a>","MySQL-Verbindungsproblem");
+			print_fs_error_msg("Zum Datenbankserver auf <b>".$db_access['server']."</b> kann keine Verbindung hergestellt werden! Bitte schaue später nochmals vorbei.<br/><br/><a href=\"http://forum.etoa.ch\">Zum Forum</a> | <a href=\"mailto:mail@etoa.ch\">Mail an die Spielleitung</a>","MySQL-Verbindungsproblem");
 		}
 		if (!@mysql_select_db($db_access["db"]))
 		{
