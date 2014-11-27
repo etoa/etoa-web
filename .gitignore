@@ -3,3 +3,4 @@
 /error_log
 /.ftpquota
 /help/error_log
+/site/config/conf.inc.php
