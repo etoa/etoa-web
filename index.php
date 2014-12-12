@@ -59,21 +59,22 @@
 
             if ($ob != "")
             {
-    		$smarty->assign("content",$ob);
-	    }
+				$smarty->assign("content",$ob);
+			}
 
             $selectedView = is_file(BASE_PATH."templates/views/".APP_ID."/".$view.".html") && preg_match('/^[a-z0-9_\-]+$/i', $view) > 0  ? $view : DEFAULT_VIEW;
             $smarty->assign("content_for_layout", $smarty->fetch('views/'.APP_ID."/".$selectedView.".html"));
-	}
-
+		}
         else
         {
+			http_response_code(404);
             $smarty->assign("error","Seite wurde nicht gefunden!");
             $smarty->assign("content_for_layout", $smarty->fetch("views/".APP_ID."/error.html"));
         }
     }
     else
     {
+		http_response_code(400);
         $smarty->assign("error","Ung&uuml;ltige Abfrage!");
         $smarty->assign("content_for_layout", $smarty->fetch("views/".APP_ID."/error.html"));
     }
