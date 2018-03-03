@@ -7,22 +7,22 @@
     define('DEFAULT_PAGE', 'news');
     define('DEFAULT_VIEW', 'default');
     define('LAYOUT', APP_ID);
-	
+
 	define('FORUM_URL', 'http://forum.etoa.ch');
-    
+
     // Konfiguration laden
     session_start();
-    
+
 	$start_time = microtime(true);
-	
+
     include(APP_PATH."/config/conf.inc.php");
     include(APP_PATH."/inc/functions.php");
-    
+
     // DB Connect
     dbconnect();
     $conf = get_all_config();
     $rounds = get_gamerounds();
-    
+
     // Maintenance
     if ($conf['maintenance_mode']['v']==1)
     {
@@ -53,9 +53,15 @@
         if (is_file($pagepath))
         {
             $view = $page;
-            ob_start();
-            include($pagepath);
-            $ob = ob_get_clean();
+            if (!($view === 'news' && $ob = apcu_fetch('page-news'))) {
+                ob_start();
+                include $pagepath;
+                $ob = ob_get_clean();
+
+                if ($view === 'news') {
+                    apcu_add('page-news', $ob, 3600);
+                }
+            }
 
             if ($ob != "")
             {
@@ -106,16 +112,16 @@
     ob_start();
     include("site/inc/infobox.inc.php");
     $smarty->assign('infobox', ob_get_clean());
-    
+
     // Adds
     $smarty->assign('adds', $conf['adds']['v']);
 
 	$smarty->assign('footerJs', stripslashes($conf['footer_js']['v']));
     $smarty->assign('headerJs', stripslashes($conf['indexjscript']['v']));
     $smarty->assign('generate_time', round((microtime(true) - $start_time), 3));
-    
+
     // Render
     $smarty->display('layouts/'.LAYOUT.'.html');
-    
+
     dbclose();
 ?>

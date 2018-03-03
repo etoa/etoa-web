@@ -9,18 +9,19 @@
 	WHERE
 		lastActivityTime >".(time()-1000)."
 	;");
-	$arr2 = mysql_fetch_row($res);	
-
+	$arr2 = mysql_fetch_row($res);
 
 	echo "<h2>Neues aus dem Forum</h2>
 	<span style=\"color:#0f0;font-size:9pt;\">".$arr2[0]." Leute online</span>";
-	$bl = explode(",",$conf['infobox_board_blacklist']['v']);
-	$bls = "";
-	foreach ($bl as $bli)
-	{
-		$bls .=" AND t.boardid!=".$bli." ";
-	}
-	$res=dbquery("
+
+function displayForumNews($conf)
+{
+    $bl = explode(",", $conf['infobox_board_blacklist']['v']);
+    $bls = "";
+    foreach ($bl as $bli) {
+        $bls .= " AND t.boardid!=" . $bli . " ";
+    }
+    $res = dbquery("
 	SELECT
 		t.topic,
 		p.postID,
@@ -35,20 +36,28 @@
         SELECT p2.`postID`
         FROM `wbb1_1_post` p2
         WHERE p2.`threadID` = t.`threadID`
-        ".$bls."
+        " . $bls . "
         ORDER BY p2.`time` DESC
         LIMIT 1
-    )		
-  ORDER BY 
+    )
+  ORDER BY
   	p.time DESC
-	LIMIT ".LATEST_POSTS_NUM.";");	
-	echo "<div id=\"forum\" style=\"\"><ul id=\"forumthreadlist\">";
-	while ($arr = mysql_fetch_assoc($res))
-	{
-		echo "<li><a href=\"".FORUM_URL."/index.php?page=Thread&amp;postID=".$arr['postID']."#post".$arr['postID']."\">".$arr['topic']."</a> <span style=\"color:#aaa;font-size:80%\">".tfs(time()-$arr['time'])."</span></li>";
-	}
-	echo "</ul></div>";
-	
+	LIMIT " . LATEST_POSTS_NUM . ";");
+    echo "<div id=\"forum\" style=\"\"><ul id=\"forumthreadlist\">";
+    while ($arr = mysql_fetch_assoc($res)) {
+        echo "<li><a href=\"" . FORUM_URL . "/index.php?page=Thread&amp;postID=" . $arr['postID'] . "#post" . $arr['postID'] . "\">" . $arr['topic'] . "</a> <span style=\"color:#aaa;font-size:80%\">" . tfs(time() - $arr['time']) . "</span></li>";
+    }
+    echo "</ul></div>";
+}
+
+if (!$formumNews = apcu_fetch('infobox-forum-news')) {
+	ob_start();
+	displayForumNews($conf);
+    $formumNews = ob_get_clean();
+    apcu_add('infobox-forum-news', $formumNews, 15 * 60);
+}
+echo $formumNews;
+
 	$res=dbquery("
 	SELECT
 		COUNT(faq_id)
@@ -64,7 +73,7 @@
 	FROM
 		articles
 	;");
-	$arr1 = mysql_fetch_row($res);	
+	$arr1 = mysql_fetch_row($res);
 	echo "<br/><h2>Hilfecenter</h2>
 	<span style=\"color:#0f0;font-size:9pt;\">".($arr[0]+$arr1[0])." Einträge</span><br/>";
 	$res=dbquery("
@@ -99,7 +108,7 @@
 	;");
 	echo "<b>Tags:</b><br/>";
 	while ($arr = mysql_fetch_assoc($res))
-	{	
+	{
 		echo "<a href=\"help/?page=tags&amp;id=".$arr['id']."\">".$arr['name']."</a> ";
 	}
 
@@ -114,6 +123,6 @@
 		echo "<br/><div style=\"margin-top:5px;font-size:8pt;\">Aktualisiert: ".df($conf['server_notice']['p1'])."</div>";
 		echo "</div><br/>";
 	}
-		
-	
+
+
 ?>
