@@ -17,10 +17,13 @@
 function displayForumNews($conf)
 {
     $bl = explode(",", $conf['infobox_board_blacklist']['v']);
-    $bls = "";
-    foreach ($bl as $bli) {
-        $bls .= " AND t.boardid!=" . $bli . " ";
-    }
+
+    $bls = '';
+    if ($bl) {
+        sort($bl);
+        $bls .= 't.boardid NOT IN (' . implode(',', $bl) . ')';
+	}
+
     $res = dbquery("
 	SELECT
 		t.topic,
@@ -36,10 +39,10 @@ function displayForumNews($conf)
         SELECT p2.`postID`
         FROM `wbb1_1_post` p2
         WHERE p2.`threadID` = t.`threadID`
-        " . $bls . "
         ORDER BY p2.`time` DESC
         LIMIT 1
     )
+    WHERE " . $bls . "
   ORDER BY
   	p.time DESC
 	LIMIT " . LATEST_POSTS_NUM . ";");
@@ -54,7 +57,7 @@ if (!$formumNews = apcu_fetch('infobox-forum-news')) {
 	ob_start();
 	displayForumNews($conf);
     $formumNews = ob_get_clean();
-    apcu_add('infobox-forum-news', $formumNews, 15 * 60);
+    apcu_add('infobox-forum-news', $formumNews, 5 * 60);
 }
 echo $formumNews;
 
