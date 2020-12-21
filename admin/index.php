@@ -1,16 +1,16 @@
 <?PHP
 	ini_set('arg_separator.output',  '&amp;');
-	session_start();  
+	session_start();
 
-	$auth = false;	
+	$auth = false;
 
 	// Zufallsgenerator initialisieren
-	mt_srand(time());	
+	mt_srand(time());
 
 	// Konfiguration laden
 	include("../site/config/conf.inc.php");
 	include("../site/inc/functions.php");
-	
+
 	// Mit der DB verbinden und Config-Werte laden
 	dbconnect();
 	$conf = get_all_config();
@@ -21,7 +21,7 @@
 	{
 		define('WCF_DIR','../forum/wcf/');
 		require(WCF_DIR."lib/util/StringUtil.class.php");
-		
+
 		$res = dbquery("
 		SELECT
 			userID,
@@ -45,7 +45,7 @@
 			AND
 				userID='".$arr['userID']."'
 			;");
-			if (mysql_num_rows($cres)>0)	
+			if (mysql_num_rows($cres)>0)
 			{
 				$gcheck = false;
 				$res = dbquery("
@@ -74,7 +74,7 @@
 				{
 					$error = "Keine Berechtigung!";
 				}
-			}		
+			}
 			else
 			{
 				$error = "User nicht vorhanden oder Passwort falsch!";
@@ -89,9 +89,9 @@
 	if (!$auth)
 	{
 		header("WWW-Authenticate: Basic realm=\"EtoA.ch Administration\"");
-		header("HTTP/1.0 401 Unauthorized"); 
+		header("HTTP/1.0 401 Unauthorized");
 	}
-	
+
 	// Navigation
 	$nav['&Uuml;bersicht']="?page=home";
 	$nav['Runden']="?page=rounds";
@@ -103,17 +103,17 @@
 
 	// Forum
 	define('FORUM_URL', 'http://forum.etoa.ch');
-	
+
 	// Standardseite
-	if (isset($_GET['page']) && eregi("^[a-z\_]+$",$_GET['page'])  && strlen($_GET['page'])<=50) 
+	if (isset($_GET['page']) && preg_match("#^[a-z\_]+$#",$_GET['page'])  && strlen($_GET['page'])<=50)
 		$page=$_GET['page'];
-	else 
-		$page="home";		
-		
+	else
+		$page="home";
+
 	ob_start();
 	require("content/".$page.".php");
-	$content = ob_get_clean();		
-		
+	$content = ob_get_clean();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -139,7 +139,7 @@
             	<div id="menu_top"></div>
                 <div id="menu_center">
                 	<?PHP			if ($auth)
-			{				
+			{
 					?>
                   <b>Navigation</b><br/>
                   <a href="?page=home">&Uuml;bersicht</a>
@@ -164,14 +164,14 @@
           <div>
 			<?PHP
 				if ($auth)
-				{				
+				{
 						echo $content;
-						
+
 				}
 				else
 				{
 					echo "<h1>Fehler:</h1> ".$error."<br/><br/>";
-					echo "<input type=\"button\" value=\"Neu einloggen\" onclick=\"document.location='?page=$page'\" />";						
+					echo "<input type=\"button\" value=\"Neu einloggen\" onclick=\"document.location='?page=$page'\" />";
 				}
 			?>
 	    </div>
@@ -181,6 +181,6 @@
     </div>
     <div id="footer">
       <div id="server">&copy; 2008 EtoA Gaming</div>
-      
+
     </div>
   </div></body></html>
