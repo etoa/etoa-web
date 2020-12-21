@@ -1,5 +1,7 @@
 <?PHP
 
+include_once 'mysql_polyfill.php';
+
 	//////////////////////////////////////////////////
 	// The Andromeda-Project-Browsergame						//
 	// Ein Massive-Multiplayer-Online-Spiel					//
