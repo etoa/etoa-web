@@ -20,7 +20,7 @@
 	function dbconnect($utf8=1)
 	{
 		global $db_access;
-		global $db_handle;	
+		global $db_handle;
 		if (!$db_handle = @mysql_connect($db_access["server"],$db_access["user"],$db_access["pw"]))
 		{
 			echo "</head><body>";
@@ -35,7 +35,7 @@
 		dbquery("SET NAMES 'utf8';");
 
 	}
-	
+
 	//
 	// Datenbankverbindung trennen
 	//
@@ -48,16 +48,16 @@
 		{
 			@mysql_free_result($res);
 		}
-		@mysql_close($db_handle);	
+		@mysql_close($db_handle);
 	}
-	
-	// 
+
+	//
 	// Datenbankquery ausführen
 	//
 
 	function dbquery($string, $fehler=1)
 	{
-		if ($result=mysql_query($string))	
+		if ($result=mysql_query($string))
 		{
 			return $result;
 		}
@@ -65,21 +65,21 @@
 		{
 			if ($fehler==1)
 			{
-				echo "<p><b>Datenbank-Fehler:</b> ".mysql_error()."!<br><b>Query:</b> $string</p>";	
+				echo "<p><b>Datenbank-Fehler:</b> ".mysql_error()."!<br><b>Query:</b> $string</p>";
 			}
 		}
 	}
 	//
 	// Gesamte Config-Tabelle lesen und Werte in Array speichern
 	//
-	
+
 	function baseUrl()
 {
 	$str = substr($_SERVER['SCRIPT_FILENAME'],strlen($_SERVER['DOCUMENT_ROOT']));
 	return substr($str,0,strrpos($str,"/")+1);
 }
 
-	
+
 	function get_all_config()
 	{
 		global $db_table;
@@ -100,28 +100,28 @@
 
 	function nf($number)	// Number format
 	{
-		return number_format($number,0,".","'");		
+		return number_format($number,0,".","'");
 	}
-	
+
 	//
 	// Zeit formatieren
 	//
-	
+
 	function tf($ts)	// Time format
 	{
 		$t = floor($ts / 3600 / 24);
 		$h = floor(($ts-($t*24*3600)) / 3600);
 		$m = floor(($ts-($t*24*3600)-($h*3600))/60);
 		$s = floor(($ts-($t*24*3600)-($h*3600)-($m*60)));
-	
+
 		$str = "";
 		if ($t > 0) $str.=$t."d ";
 		if ($h > 0) $str.=$h."h ";
 		if ($m > 0) $str.=$m."m ";
 		if ($s > 0) $str.=$s."s ";
 		return $str;
-	}		
-	
+	}
+
 	function tfs($ts)	// Time format
 	{
 		if ($ts < 60)
@@ -138,12 +138,12 @@
 			return "vor 2 Tagen";
 		if ($ts-(86400*3) < $tm-$mn)
 			return "vor 3 Tagen";
-		return date("d.m.y",$tm-$ts);			
-	}		
+		return date("d.m.y",$tm-$ts);
+	}
 
 	//
 	// Datum formatieren
-	// 
+	//
 	function df($date)
 	{
 		if (date("dmY") == date("dmY",$date))
@@ -164,7 +164,7 @@
 	 	$string = preg_replace('/\[url\]www.([^\[]*)\[\/url\]/', '<a href="http://www.\1" >\1</a>', $string);
 		$string = preg_replace('/\[url\]([^\[]*)\[\/url\]/', '<a href="\1" >\1</a>', $string);
 		$string = preg_replace('/\[mailurl\]([^\[]*)\[\/mailurl\]/', '<a href="\1">Link</a>', $string);
-		return $string;		
+		return $string;
 	}
 
 	/**
@@ -187,7 +187,7 @@
 		$string = str_replace("\"", "&quot;", $string);
 		$string = str_replace("<", "&lt;", $string);
 		$string = str_replace(">", "&gt;", $string);
-		
+
 		$string =  preg_replace("((\r\n))", trim('<br/>'), $string);
 		$string =  preg_replace("((\n))", trim('<br/>'), $string);
 		$string =  preg_replace("((\r)+)", trim('<br/>'), $string);
@@ -228,12 +228,12 @@
 		$string = str_replace('[/H3]', '</h3>', $string);
 
 		$string = str_replace('[center]', '<div style="text-align:center">', $string);
-		$string = str_replace('[/center]', '</div>', $string);		$string = str_replace('[align=center]', '<div style="text-align:center">', $string);		$string = str_replace('[/align]', '</div>', $string);				
+		$string = str_replace('[/center]', '</div>', $string);		$string = str_replace('[align=center]', '<div style="text-align:center">', $string);		$string = str_replace('[/align]', '</div>', $string);
 		$string = str_replace('[right]', '<div style="text-align:right">', $string);
-		$string = str_replace('[/right]', '</div>', $string);		
+		$string = str_replace('[/right]', '</div>', $string);
 		$string = str_replace('[headline]', '<div style="text-align:center"><b>', $string);
 		$string = str_replace('[/headline]', '</b></div>',$string);
-		
+
 		$string = str_replace('[CENTER]', '<div style="text-align:center">', $string);
 		$string = str_replace('[/CENTER]', '</div>', $string);
 		$string = str_replace('[RIGHT]', '<div style="text-align:right">', $string);
@@ -258,7 +258,7 @@
 		$string = str_replace('[/alist]', '</ol>', $string);
 		$string = str_replace('[rlist]', '<ol style="list-style-type:upper-roman">', $string);
 		$string = str_replace('[/rlist]', '</ol>', $string);
-		
+
 		$string = str_replace('[LIST]', '<ul>', $string);
 		$string = str_replace('[/LIST]', '</ul>', $string);
 		$string = str_replace('[NLIST]', '<ol style="list-style-type:decimal">', $string);
@@ -267,22 +267,22 @@
 		$string = str_replace('[/ALIST]', '</ol>', $string);
 		$string = str_replace('[RLIST]', '<ol style="list-style-type:upper-roman">', $string);
 		$string = str_replace('[/RLIST]', '</ol>', $string);
-		
+
 		$string = str_replace('[element]', '<li>', $string);
 		$string = str_replace('[/element]', '</li>', $string);
 		$string = str_replace('[ELEMENT]', '<li>', $string);
 		$string = str_replace('[/ELEMENT]', '</li>', $string);
-		
+
 		$string = str_replace('[line]', '<hr class="line" />', $string);
 		$string = str_replace('[LINE]', '<hr class="line" />', $string);
 
 
 		$string = preg_replace('/\[codebox ([^\[]*) ([^\[]*)\]/', '<textarea readonly=\"readonly\" rows=\"\1\" cols=\"\2\">', $string);
-		
+
 		$string = str_replace('[codebox]', '<textarea readonly=\"readonly\" rows=\"3\" cols=\"60\">', $string);
 		$string = str_replace('[/codebox]', '</textarea>', $string);
-		
-		
+
+
 		$string = preg_replace('/\[quote]([^\[]*)\[\/quote\]/i', '<fieldset class="quote"><legend class="quote"><b>Zitat</b></legend>\1</fieldset>', $string);
 		$string = preg_replace('/\[quote ([^\[]*)\]([^\[]*)\[\/quote\]/i', '<fieldset class="quote"><legend class="quote"><b>Zitat von:</b> \1</legend>\2</fieldset>', $string);
 		$string = preg_replace('/\[quote=([^\[]*)\]([^\[]*)\[\/quote\]/i', '<fieldset class="quote"><legend class="quote"><b>Zitat von:</b> \1</legend>\2</fieldset>', $string);
@@ -320,7 +320,7 @@
     $string = str_replace('[/th]', '</th>', $string);
     $string = str_replace('[tr]', '<tr>', $string);
     $string = str_replace('[/tr]', '</tr>', $string);
-    
+
     $string = str_replace('[TABLE]', '<table>', $string);
     $string = str_replace('[/TABLE]', '</table>', $string);
     $string = str_replace('[TD]', '<td>', $string);
@@ -350,7 +350,7 @@
 
 		return $string;
 	}
-	
+
 $flaglist['ch-la']="Langenthal";
 $flaglist['ch-ag']="Kanton Aargau";
 $flaglist['ch-ai']="Kanton Appenzell-Innerrhoden";
@@ -434,19 +434,19 @@ $sizelist['12']="Mittelgross";
 $sizelist['14']="Gross";
 $sizelist['17']="Ganz gross";
 
-	
+
 	function send_msg($user_id,$msg_type,$subject,$text)
 	{
 		global $db_table;
 		dbquery("INSERT INTO ".$db_table['messages']." (message_user_from,message_user_to,message_timestamp,message_cat_id,message_subject,message_text) VALUES (0,'$user_id',".time().",$msg_type,'".addslashes($subject)."','".addslashes($text)."');");
 	}
-	
+
 	function send_msg_hd($user_id,$msg_type,$subject,$text,$user_from)
 	{
 		global $db_table;
 		dbquery("INSERT INTO ".$db_table['messages']." (message_user_from,message_user_to,message_timestamp,message_cat_id,message_subject,message_text) VALUES ('$user_from','$user_id',".time().",$msg_type,'".addslashes($subject)."','".addslashes($text)."');");
 	}
-	
+
 function endpage()
 {
 	echo "</body></html>";
@@ -491,22 +491,22 @@ function endpage()
 	  }
 	  echo "</select> ";
 		echo "<br/>";
-		
-	} 
-	  
+
+	}
+
 	function show_smilies($textarea_id)
-	{	  
+	{
 		$disp_array = array();
 		foreach ($smilielist as $smilie_id=>$smilie_img)
 		{
 			if (!in_array($smilie_img,$disp_array))
-			{ 
+			{
 				echo "<a href=\"javascript:;\" onclick=\"insertTags('$smilie_id','$textarea_id');\"><img src=\"".SMILIE_DIR."/".$smilie_img."\" border=\"0\" alt=\"Smilie\" title=\"".$smilie_img."\" /></a> ";
 				array_push($disp_array,$smilie_img);
 			}
-		}		
+		}
 	}
-	
+
 	function show_text($keyword)
 	{
 		global $db_table;
@@ -522,17 +522,17 @@ function endpage()
 		else
 		{
 			echo "<p><i><b>Fehler:</b> Datensatz fehlt!</i></p>";
-		}		
-		
+		}
+
 	}
-	
+
 	function show_thumb($file,$width=0)
 	{
 		$folder = substr($file,0,strrpos($file,"/"));
 		$filename = substr($file,strrpos($file,"/")+1,strlen($file));
 		$string = "";
 		if($filename!="")
-		{ 
+		{
 			if(file_exists($folder."/thumb_".$filename))
 				$thumb_path = $folder."/thumb_".$filename;
 			elseif(file_exists($folder."/".$filename."_small"))
@@ -542,7 +542,7 @@ function endpage()
 				$thumb_path = $file;
 				if ($width==0) $width=100;
 			}
-				   						
+
 			$imsize = getimagesize($file);
 			$imw = $imsize[0]+30;
 			$imh = $imsize[1]+60;
@@ -550,10 +550,10 @@ function endpage()
 			$string.= "<img src=\"$thumb_path\" style=\"margin-right: 8px\" align=\"left\" alt=\"$filename\" title=\"Bild anzeigen\" ";
 			if ($width>0) $string.= " width=\"$width\"";
 			$string.= " /></a>";
-		}		
+		}
 		return $string;
 	}
-	
+
 	function boarddateformat($date)
 	{
 		if (date("dmY") == date("dmY",$date))
@@ -562,9 +562,9 @@ function endpage()
 			$string = date("d.m.Y, H:i",$date);
 		return $string;
 	}
-	
+
 	function formatfilesize($file_size)
-	{	
+	{
 		if ($file_size<pow(1024,1)) $file_size = $file_size." Byte";
 		elseif ($file_size<pow(1024,2)) {$file_size = round($file_size/pow(1024,1),2); $file_size=$file_size." KB";}
 		elseif ($file_size<pow(1024,3)) {$file_size = round($file_size/pow(1024,2),2); $file_size=$file_size." MB";}
@@ -592,16 +592,13 @@ function endpage()
 		}
 		else
 			echo "<div class=\"mowemMsgErr\">Fehler: Kein Verzeichnisname angegeben!</div>";
-	}		
-
-	function checkEmail($email) 
-	{
-	  if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email))
-	     return FALSE;
-	  else 
-	     return TRUE; 
 	}
-	
+
+	function checkEmail($email)
+	{
+		return filter_var($email, FILTER_VALIDATE_EMAIL);
+	}
+
 	function encode_textfield ($string)
 	{
 		str_replace("\"","&quot;",$string);
@@ -612,7 +609,7 @@ function endpage()
 		str_replace("‘","&lsquo;",$string);
 		str_replace("’","&rsquo;",$string);
 		str_replace("'","&#39;",$string);
-		
+
 		return $string;
 	}
 
@@ -626,7 +623,7 @@ function endpage()
 		str_replace("&lsquo;","‘",$string);
 		str_replace("&rsquo;","’",$string);
 		str_replace("&#39;","'",$string);
-		
+
 		return $string;
 	}
 
@@ -648,17 +645,17 @@ function endpage()
 		}
 		closedir($d);
 	}
-	
+
 	function print_fs_error_msg($string,$title="Fehler!")
 	{
 		echo "<table style=\"width:80%;margin:10px auto;border:1px solid #fff;border-collapse:collapse\">";
 		echo "<tr><th class=\"tbltitle\">$title</th></tr>";
 		echo "<tr><td class=\"tbldata\">$string</td></tr>";
-		echo "</table>";		
+		echo "</table>";
 		echo "</body></html>";
 		exit;
 	}
-	
+
 	function get_denied_ips()
 	{
 		global $db_table;
@@ -671,7 +668,7 @@ function endpage()
 			}
 		}
 		return $ips;
-	}    
+	}
 
 	function get_gamerounds()
 	{
@@ -688,7 +685,7 @@ function endpage()
 			}
 		}
 		return $rounds;
-	}    	
+	}
 
 	//
 	// Serverstatus prüfen
@@ -697,13 +694,13 @@ function endpage()
 	{
 		global $db_table;
 		$port=80;
-		
+
 		if (substr($addr,0,7)=="http://")
 			$addr = substr($addr,7);
 		if (stristr($addr,"/"))
 			$addr = substr($addr,0,strpos($addr,"/"));
-		
-		
+
+
 		$churl = @fsockopen($addr, $port, $errno, $errstr, 5);
 	  if (!$churl)
 	  {
@@ -728,15 +725,15 @@ function endpage()
 	  $text="";
 	  for ($x=0;$x<$len;$x++)
 	  {
-	  	$text.=rand(0,9); 
+	  	$text.=rand(0,9);
 	  }
 	  return $text;
 	}
-	
-  function encryptCaptchaString($string, $key) 
+
+  function encryptCaptchaString($string, $key)
   {
 	   $result = '';
-	   for($i=0; $i<strlen($string); $i++) 
+	   for($i=0; $i<strlen($string); $i++)
 	   {
 	      $char = substr($string, $i, 1);
 	      $keychar = substr($key, ($i % strlen($key))-1, 1);
@@ -767,7 +764,7 @@ function endpage()
 	{
 		$_SESSION['encfkey'] = rand(1000,9999).rand(1000,9999).rand(1000,9999);
 	}
-	
+
 	function encfname($name)
 	{
 		return md5($name.$_SESSION['encfkey']);
@@ -776,21 +773,21 @@ function endpage()
 	function forward($page,$debug=0)
 	{
 		if ($debug==0)
-			header("Location: $page");	
-		echo "Falls die automatische Weiterleitung nicht klappt, <a href=\"".$page."\">hier</a> klicken." ;	
+			header("Location: $page");
+		echo "Falls die automatische Weiterleitung nicht klappt, <a href=\"".$page."\">hier</a> klicken." ;
 		exit;
 	}
-	
+
 	function forwardInternal($page,$debug=0)
 	{
 		forward("http://".$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), '/\\')."/".$page, $debug);
 	}
-	
+
 	function pushText($text)
 	{
 		$_SESSION['textstore']=$text;
 	}
-	
+
 	function popText()
 	{
 		$text = "";
@@ -801,12 +798,12 @@ function endpage()
 		}
 		return $text;
 	}
-  
+
 	function message($type,$msg)
 	{
 		return "<div class=\"messagebox\"><div class=\"".$type."\">".$msg."</div></div>";
 	}
-  
+
   function prettyUrlString($str)
 {
 	$ut = $str;
@@ -843,5 +840,5 @@ function fetchJsonConfig($file)	{
   }
   return $data;
 }
-  
+
 ?>
