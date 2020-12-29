@@ -18,17 +18,4 @@ jobs:
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         protocol: ftps
-        exclude:
-          - ".git*"
-          - ".git*/**"
-          - "node_modules/**"
-          - "node_modules/**/*"
-          - .well-known
-          - _db
-          - archiv
-          - cgi-bin
-          - downloads
-          - forum
-          - testforum
-          - zeitung
-          - .ftpquota
+        exclude: ['.git*', '.git*/**', 'node_modules/**', 'node_modules/**/*', '.well-known', '_db', 'archiv', 'cgi-bin', 'downloads', 'forum', 'testforum', 'zeitung', '.ftpquota']
