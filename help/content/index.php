@@ -1,5 +1,5 @@
 <div id="innercontent">
-	
+
 <h1>Willkommen im EtoA-Hilfe-Center</h1>
 
 <table class="indextable">
@@ -17,22 +17,22 @@
 	;");
 	$arr = mysql_fetch_row($res);
 	echo "<b>".$arr[0]."</b> Fragen in der <a href=\"?page=faq\">FAQ</a><br/>zuletzt aktualisiert ";
-	
+
 	$res=dbquery("
 	SELECT
 		faq_id,
 		faq_updated
-	FROM 
+	FROM
 		faq
 	WHERE
 		faq_deleted=0
 	ORDER BY
 		faq_updated DESC
-	LIMIT 
+	LIMIT
 		1;");
 	$arr = mysql_fetch_array($res);
 	echo "<a href=\"?page=faq&amp;faq=".$arr['faq_id']."\">".tfs(time() - $arr['faq_updated'])."</a>";
-	?>		
+	?>
 </td>
 <td>
 	<h3>Wiki</h3>
@@ -52,20 +52,20 @@
 		GROUP BY hash) as b
 		;");
 		$arr = mysql_fetch_row($res);
-		echo "<b>".$arr[0]."</b> Artikel im <a href=\"?page=article\">Wiki</a><br/>zuletzt aktualisiert ";	
+		echo "<b>".$arr[0]."</b> Artikel im <a href=\"?page=article\">Wiki</a><br/>zuletzt aktualisiert ";
 		$res=dbquery("
 		SELECT
 			hash,
 			changed
-		FROM 
+		FROM
 			articles
 		ORDER BY
 			changed DESC
-		LIMIT 
+		LIMIT
 			1;");
 		$arr = mysql_fetch_array($res);
-		echo " <a href=\"?page=article&amp;article=".$arr['hash']."\">".tfs(time() - $arr['changed'])."</a>";	
-		?>	
+		echo " <a href=\"?page=article&amp;article=".$arr['hash']."\">".tfs(time() - $arr['changed'])."</a>";
+		?>
 </td>
 <td>
 	<h3>Runden</h3>
@@ -78,7 +78,7 @@
 			{
 				echo '<a target="_blank" href="'.$arr['round_url'].'/show.php?index=help">Game-Hilfe '.$arr['round_name'].'</a><br/>';
 			}
-		}		
+		}
 	?>
 </td>
 </tr>
@@ -99,8 +99,8 @@
 </td>
 <td>
 	<h3>Weitere Links</h3>
-	<a href="http://downloads.etoa.ch"><img src="web/images/icons/star.png" /></a><br/><br/>
-	<a href="http://downloads.etoa.ch">Downloads</a>	
+	<a href="http://etoa.ch/downloads"><img src="web/images/icons/star.png" /></a><br/><br/>
+	<a href="http://etoa.ch/downloads">Downloads</a>
 </td>
 </tr>
 </table>

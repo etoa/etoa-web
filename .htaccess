@@ -7,20 +7,19 @@ ErrorDocument 404 /_error/index.php?e=404
 
 	RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 	RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
-	
+
 	RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^([-0-9a-z]*)$ index.php?page=$1 [L]
 </IfModule>
 
-Redirect /bugs http://dev.etoa.net
-Redirect /dev http://dev.etoa.net
-Redirect /fehler http://dev.etoa.net
-
-Redirect /teamspeak http://ts.etoa.net
-Redirect /ts http://ts.etoa.net
+Redirect /bugs http://dev.etoa.ch
+Redirect /dev http://dev.etoa.ch
+Redirect /fehler http://dev.etoa.ch
 
 Redirect /faq http://etoa.ch/help?page=faq
 Redirect /wiki http://etoa.ch/help?page=article
 
 Redirect /rules http://etoa.ch/regeln
+
+Redirect /downloads http://etoa.ch/archiv
