@@ -1,5 +1,5 @@
 ﻿<?PHP
-    define('BASE_PATH','');
+    define('BASE_PATH', '');
     define('APP_ID', 'site');
     define('APP_NAME', 'Escape to Andromeda');
     define('APP_PATH', BASE_PATH.APP_ID);
