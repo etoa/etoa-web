@@ -2,3 +2,4 @@
 /cache/compile/*.php
 /.ftpquota
 /site/config/conf.inc.php
+/pub/.ftpquota
