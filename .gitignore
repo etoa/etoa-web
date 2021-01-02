@@ -1,6 +1,4 @@
-/admin/error_log
+/archiv/*
 /cache/compile/*.php
-/error_log
 /.ftpquota
-/help/error_log
 /site/config/conf.inc.php
