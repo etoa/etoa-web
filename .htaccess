@@ -12,6 +12,7 @@ Redirect /wiki http://etoa.ch/help?page=article
 Redirect /rules http://etoa.ch/regeln
 
 Redirect /downloads http://etoa.ch/archiv
+Redirect /zeitung http://etoa.ch/archiv/zeitung
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
