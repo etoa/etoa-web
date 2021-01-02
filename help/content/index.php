@@ -94,8 +94,8 @@
 </td>
 <td>
 	<h3>Entwicklung</h3>
-	<a href="http://dev.etoa.ch"><img src="web/images/icons/Tools.png" /></a><br/><br/>
-	<a href="http://dev.etoa.ch">Entwickler-Portal</a><br/>
+	<a href="https://github.com/etoa/etoa"><img src="web/images/icons/Tools.png" /></a><br/><br/>
+	<a href="https://github.com/etoa/etoa">Entwickler-Portal</a><br/>
 </td>
 <td>
 	<h3>Weitere Links</h3>

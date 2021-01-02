@@ -2,10 +2,6 @@ ErrorDocument 401 /_error/index.php?e=401
 ErrorDocument 403 /_error/index.php?e=403
 ErrorDocument 404 /_error/index.php?e=404
 
-Redirect /bugs http://dev.etoa.ch
-Redirect /dev http://dev.etoa.ch
-Redirect /fehler http://dev.etoa.ch
-
 Redirect /faq http://etoa.ch/help?page=faq
 Redirect /wiki http://etoa.ch/help?page=article
 
