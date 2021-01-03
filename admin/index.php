@@ -121,7 +121,6 @@
 		<title>EtoA | Das Sci-Fi Browsergame | Administration</title>
 		<meta name="author" content="EtoA Gaming" />
 		<meta name="description" content="EtoA - Das kostenlose Sci-Fi Browsergame." />
-		<meta name="keywords" content="Escape to Andromeda, Browsergame, Strategie, Simulation, Andromeda, MMPOG, RPG" />
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" href="style.css">
