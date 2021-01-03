@@ -81,7 +81,10 @@
 			if ($ob != "")
 				$smarty->assign("content",$ob);
 			$selectedView = is_file($smarty->getTemplateDir()[0]."/views/help/$view.html") && preg_match('/^[a-z0-9_\-]+$/i',$view) > 0  ? $view : 'default';
-			$smarty->assign("content_for_layout",$smarty->fetch("views/help/$selectedView.html"));
+            $smarty->assign("content_for_layout",$smarty->fetch("views/help/$selectedView.html"));
+            if (isset($header_content)) {
+                $smarty->assign("header_content", $header_content);
+            }
 		}
 		else
 		{

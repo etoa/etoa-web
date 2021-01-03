@@ -138,8 +138,6 @@
 		if (mysql_num_rows($res)>0)
 		{
 			$arr = mysql_fetch_assoc($res);
-
-			include('inc/textdiff.php');
 			list($v1,$v2) = explode(":",$_GET['range']);
 
 			echo "<h1>".$arr['title'].": Differenz</h1>";
@@ -147,8 +145,6 @@
 
 			$author = $arr['user_nick'] != "" && $arr['user_id']>0 ? "<a href=\"?page=user&id=".$arr['user_id']."\">".$arr['user_nick']."</a>"  : "Unbekannt";
 			echo "<p>Autor: ".$author.",  ".tfs(time() - $arr['changed'])."</p>	";
-
-
 
 			$v1res = dbquery("SELECT
 				*
@@ -169,8 +165,12 @@
 			;");
 			$v2arr = mysql_fetch_assoc($v2res);
 
-			$diff = new diff($v1arr['text'],$v2arr['text']);
-			echo "<pre>".$diff->render()."</pre>";
+            if ($v1arr['text'] == $v2arr['text']) {
+                echo message("info", "Keine Änderungen");
+            } else {
+                $header_content = "<style type=\"text/css\">\n" . file_get_contents(BASE_PATH . 'vendor/qazd/text-diff/css/style.css') . "</style>\n";
+                echo Qazd\TextDiff::render($v1arr['text'],$v2arr['text']);
+            }
 		}
 		else
 		{
