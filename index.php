@@ -8,7 +8,9 @@
     define('DEFAULT_VIEW', 'default');
     define('LAYOUT', APP_ID);
 
-	define('FORUM_URL', 'http://forum.etoa.ch');
+    define('FORUM_URL', 'http://forum.etoa.ch');
+
+    require __DIR__ . '/vendor/autoload.php';
 
     // Konfiguration laden
     session_start();
@@ -31,7 +33,6 @@
     }
 
     // Smarty
-    include(BASE_PATH.'lib/smarty/Smarty.class.php');
     $smarty = new Smarty;
     $smarty->setTemplateDir(BASE_PATH.'templates');
     $smarty->setCompileDir(BASE_PATH.'cache/compile');

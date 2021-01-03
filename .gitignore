@@ -3,3 +3,5 @@
 /.ftpquota
 /site/config/conf.inc.php
 /pub/.ftpquota
+/forum/
+/vendor/

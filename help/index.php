@@ -1,6 +1,8 @@
 <?PHP
 	define('BASE_PATH','../');
 
+    require __DIR__ . '/../vendor/autoload.php';
+
 	// Konfiguration laden
 	session_start();
 	include(BASE_PATH."site/config/conf.inc.php");
@@ -10,15 +12,14 @@
 
 	// Forum
 	define('FORUM_URL', 'http://forum.etoa.ch');
-	
+
 	// Smarty
-	include(BASE_PATH.'lib/smarty/Smarty.class.php');
 	$smarty = new Smarty;
 	$smarty->setTemplateDir(BASE_PATH.'help/templates');
 	$smarty->setCompileDir(BASE_PATH.'cache/compile');
-	
-	$smarty->assign('baseurl',"");	
-	
+
+	$smarty->assign('baseurl',"");
+
 	// Tag cloud
 	ob_start();
 	$res = dbquery("SELECT t.id,t.name,COUNT(r.item_id) AS cnt
@@ -40,16 +41,16 @@
 	$max_size = 20; // max font size in pixels
 	$min_size = 10; // min font size in pixels
 	$spread = $max_qty - $min_qty;
-	if ($spread == 0) { 
+	if ($spread == 0) {
 			$spread = 1;
 	}
 	$step = ($max_size - $min_size) / ($spread);
-	foreach ($tags as $arr) 
+	foreach ($tags as $arr)
 	{
 		$size = round($min_size + (($arr['cnt'] - $min_qty) * $step));
 		echo "<a style=\"font-size: ".$size."px\" href=\"?page=tags&amp;id=".$arr['id']."\" title=\"".$arr['cnt']." Einträge getaggt mit '".$arr['name']."'\">".$arr['name']."</a> ";
-	}	
-	$smarty->assign("tagcloud",ob_get_clean());	
+	}
+	$smarty->assign("tagcloud",ob_get_clean());
 
 	// Login
 	ob_start();
@@ -64,8 +65,8 @@
 	}
 	else
 		define('LOGIN',false);
-	$smarty->assign("loginbox",ob_get_clean());	
-	
+	$smarty->assign("loginbox",ob_get_clean());
+
 	// Content
 	$page = isset($_GET['page']) ? $_GET['page'] : 'index';
 	$pagepath = "content/$page.php";
@@ -92,11 +93,11 @@
 	{
 		$smarty->assign("error","Ung&uuml;ltige Abfrage!");
 		$smarty->assign("content_for_layout",$smarty->fetch("views/help/error.html"));
-	}	
-	
+	}
+
 	// Site nbame
 	$smarty->assign("sitename","Hilfe | ".ucfirst($page));
-	
+
 	// Render
 	$smarty->display('layouts/help.html');
-?>		  
+?>

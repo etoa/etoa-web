@@ -1,0 +1,16 @@
+{
+    "name": "etoa/etoa-web",
+    "description": "EtoA Portal and Login Site",
+    "type": "project",
+    "license": "AGPL",
+    "authors": [
+        {
+            "name": "Nicolas Perrenoud",
+            "email": "mrcage@etoa.ch"
+        }
+    ],
+    "require": {
+        "smarty/smarty": "^3.1",
+        "michelf/php-markdown": "^1.9"
+    }
+}
