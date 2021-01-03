@@ -1,28 +1,29 @@
 <?PHP
-	define('LATEST_POSTS_NUM', 5);
+define('LATEST_POSTS_NUM', 5);
+define('FAQ_NUM', 5);
 
-	$res=dbquery("
+$res = dbquery("
 	SELECT
 		COUNT(sessionID)
 	FROM
-		wcf1_session
+        " . wcftable('session') . "
 	WHERE
-		lastActivityTime >".(time()-1000)."
-	;");
-	$arr2 = mysql_fetch_row($res);
+		lastActivityTime >" . (time() - 1000) . "
+;");
+$arr2 = mysql_fetch_row($res);
 
-	echo "<h2>Neues aus dem Forum</h2>
-	<span style=\"color:#0f0;font-size:9pt;\">".$arr2[0]." Leute online</span>";
+echo "<h2>Neues aus dem Forum</h2>
+	<span style=\"color:#0f0;font-size:9pt;\">" . $arr2[0] . " Leute online</span>";
 
-function displayForumNews($conf)
+function displayForumNews()
 {
-    $bl = explode(",", $conf['infobox_board_blacklist']['v']);
+    $bl = explode(",", get_config('infobox_board_blacklist'));
 
     $bls = '';
     if ($bl) {
         sort($bl);
         $bls .= 't.boardid NOT IN (' . implode(',', $bl) . ')';
-	}
+    }
 
     $res = dbquery("
 	SELECT
@@ -32,100 +33,97 @@ function displayForumNews($conf)
 		p.username,
 		p.time
 	FROM
-		wbb1_1_thread t
+		" . wbbtable('thread') . " t
 	INNER JOIN
-		wbb1_1_post p
+        " . wbbtable('post') . " p
 		ON p.postID = (
         SELECT p2.`postID`
-        FROM `wbb1_1_post` p2
+        FROM `" . wbbtable('post') . "` p2
         WHERE p2.`threadID` = t.`threadID`
         ORDER BY p2.`time` DESC
         LIMIT 1
     )
     WHERE " . $bls . "
-  ORDER BY
-  	p.time DESC
+  	ORDER BY p.time DESC
 	LIMIT " . LATEST_POSTS_NUM . ";");
     echo "<div id=\"forum\" style=\"\"><ul id=\"forumthreadlist\">";
     while ($arr = mysql_fetch_assoc($res)) {
-        echo "<li><a href=\"" . FORUM_URL . "/index.php?page=Thread&amp;postID=" . $arr['postID'] . "#post" . $arr['postID'] . "\">" . $arr['topic'] . "</a> <span style=\"color:#aaa;font-size:80%\">" . tfs(time() - $arr['time']) . "</span></li>";
+        echo "<li><a href=\"" . forumUrl('post', $arr['postID']) . "\">" . $arr['topic'] . "</a>
+        <span style=\"color:#aaa;font-size:80%\">" . tfs(time() - $arr['time']) . "</span></li>";
     }
     echo "</ul></div>";
 }
 
 if (!$formumNews = apcu_fetch('infobox-forum-news')) {
-	ob_start();
-	displayForumNews($conf);
+    ob_start();
+    displayForumNews();
     $formumNews = ob_get_clean();
     apcu_add('infobox-forum-news', $formumNews, 5 * 60);
 }
 echo $formumNews;
 
-	$res=dbquery("
+// Help Center
+$res = dbquery("
 	SELECT
 		COUNT(faq_id)
 	FROM
-		faq
+		" . dbtable('faq') . "
 	WHERE
 		faq_deleted=0
-	;");
-	$arr = mysql_fetch_row($res);
-	$res=dbquery("
+;");
+$arr = mysql_fetch_row($res);
+$res = dbquery("
 	SELECT
 		COUNT(*)
 	FROM
-		articles
-	;");
-	$arr1 = mysql_fetch_row($res);
-	echo "<br/><h2>Hilfecenter</h2>
-	<span style=\"color:#0f0;font-size:9pt;\">".($arr[0]+$arr1[0])." Einträge</span><br/>";
-	$res=dbquery("
+        " . dbtable('articles') . "
+;");
+$arr1 = mysql_fetch_row($res);
+echo "<br/><h2>Hilfecenter</h2>
+	<span style=\"color:#0f0;font-size:9pt;\">" . ($arr[0] + $arr1[0]) . " Einträge</span><br/>";
+$res = dbquery("
 	SELECT
 		faq_question,
 		faq_id,
 		faq_user_time
-	FROM 
-		faq
+	FROM
+        " . dbtable('faq') . "
 	WHERE
 		faq_deleted=0
 	ORDER BY faq_updated DESC
-	LIMIT 
-	5;");
-	echo "<ul id=\"helplist\">";
-	while($arr = mysql_fetch_assoc($res))
-	{
-		$txt = text2html($arr['faq_question']);
-		if (strlen($txt)>30)
-			$txt = substr($txt,0,24)."...";
-		echo "<li><a href=\"help/?page=faq&amp;faq=".$arr['faq_id']."\">".$txt."</a></li>";
-	}
-	echo "</ul>";
+	LIMIT " . FAQ_NUM . "
+;");
+echo "<ul id=\"helplist\">";
+while ($arr = mysql_fetch_assoc($res)) {
+    $txt = text2html($arr['faq_question']);
+    if (strlen($txt) > 30) {
+        $txt = substr($txt, 0, 24) . "...";
+    }
+    echo "<li><a href=\"help/?page=faq&amp;faq=" . $arr['faq_id'] . "\">" . $txt . "</a></li>";
+}
+echo "</ul>";
 
-	$res = dbquery("SELECT * FROM (SELECT t.id,t.name,COUNT(r.item_id) AS cnt
-	FROM help_tag t
-	INNER JOIN help_tag_rel r ON t.id=r.tag_id
-	INNER JOIN faq f ON r.item_id=f.faq_id
+// Tags
+$res = dbquery("
+    SELECT * FROM (SELECT t.id,t.name,COUNT(r.item_id) AS cnt
+	FROM " . dbtable('help_tag') . " t
+	INNER JOIN " . dbtable('help_tag_rel') . " r ON t.id=r.tag_id
+	INNER JOIN " . dbtable('faq') . " f ON r.item_id=f.faq_id
 	GROUP BY t.id
 	ORDER BY cnt DESC LIMIT 10) AS t
 	ORDER BY t.name
-	;");
-	echo "<b>Tags:</b><br/>";
-	while ($arr = mysql_fetch_assoc($res))
-	{
-		echo "<a href=\"help/?page=tags&amp;id=".$arr['id']."\">".$arr['name']."</a> ";
-	}
+;");
+echo "<b>Tags:</b><br/>";
+while ($arr = mysql_fetch_assoc($res)) {
+    echo "<a href=\"help/?page=tags&amp;id=" . $arr['id'] . "\">" . $arr['name'] . "</a> ";
+}
 
-	if ($conf['server_notice']['v']!="")
-	{
-		if ($conf['server_notice']['p2'])
-			$color = $conf['server_notice']['p2'];
-		else
-			$color = "#fff";
-		echo "<br/><div style=\"border:1px solid ".$color.";padding:4px;background:#223;color:".$color."\">";
-		echo text2html($conf['server_notice']['v']);
-		echo "<br/><div style=\"margin-top:5px;font-size:8pt;\">Aktualisiert: ".df($conf['server_notice']['p1'])."</div>";
-		echo "</div><br/>";
-	}
-
-
-?>
+// Server notice
+$server_notice = get_config('server_notice');
+if ($server_notice != "") {
+    $color = get_config('server_notice_color', "#fff");
+    echo "<br/><br><div style=\"border:1px solid " . $color . ";padding:4px;background:#223;color:" . $color . "\">";
+    echo text2html($server_notice);
+    echo "<br/><div style=\"margin-top:5px;font-size:8pt;\">Aktualisiert: " . df(get_config('server_notice_updated')) . "</div>";
+    echo "</div><br/>";
+}

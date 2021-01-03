@@ -8,8 +8,6 @@
     define('DEFAULT_VIEW', 'default');
     define('LAYOUT', APP_ID);
 
-    define('FORUM_URL', 'http://forum.etoa.ch');
-
     require __DIR__ . '/vendor/autoload.php';
 
     // Konfiguration laden
@@ -22,11 +20,10 @@
 
     // DB Connect
     dbconnect();
-    $conf = get_all_config();
     $rounds = get_gamerounds();
 
     // Maintenance
-    if ($conf['maintenance_mode']['v']==1)
+    if (get_config('maintenance_mode') == 1)
     {
         include('_maintenance/index.html');
         exit;
@@ -92,7 +89,7 @@
     $smarty->assign('nav', fetchJsonConfig("nav.conf"));
 
     // Votebanner
-    $smarty->assign('votebanner', stripslashes($conf['buttons']['v']));
+    $smarty->assign('votebanner', get_config('buttons'));
 
     // Login form
     $t = time();
@@ -115,14 +112,13 @@
     $smarty->assign('infobox', ob_get_clean());
 
     // Adds
-    $smarty->assign('adds', $conf['adds']['v']);
+    $smarty->assign('adds', get_config('adds'));
 
-	$smarty->assign('footerJs', stripslashes($conf['footer_js']['v']));
-    $smarty->assign('headerJs', stripslashes($conf['indexjscript']['v']));
+	$smarty->assign('footerJs', get_config('footer_js'));
+    $smarty->assign('headerJs', get_config('indexjscript'));
     $smarty->assign('generate_time', round((microtime(true) - $start_time), 3));
 
     // Render
     $smarty->display('layouts/'.LAYOUT.'.html');
 
     dbclose();
-?>

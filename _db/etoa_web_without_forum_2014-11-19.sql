@@ -88,39 +88,35 @@ INSERT INTO `articles` (`id`, `alias`, `hash`, `title`, `text`, `created`, `chan
 -- Tabellenstruktur für Tabelle `config`
 --
 
-CREATE TABLE IF NOT EXISTS `config` (
-  `config_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `config` (
+  `config_id` int(11) NOT NULL,
   `config_name` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT '',
-  `config_value` text COLLATE latin1_general_ci NOT NULL,
-  `config_param1` text COLLATE latin1_general_ci NOT NULL,
-  `config_param2` text COLLATE latin1_general_ci NOT NULL,
-  `config_comment` text COLLATE latin1_general_ci NOT NULL,
-  PRIMARY KEY (`config_id`),
-  KEY `config_name` (`config_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=65 ;
+  `config_value` text COLLATE latin1_general_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- Daten für Tabelle `config`
 --
 
-INSERT INTO `config` (`config_id`, `config_name`, `config_value`, `config_param1`, `config_param2`, `config_comment`) VALUES
-(12, 'game_name', 'Escape to Andromeda - Das Sci-Fi Browsergame', 'v3.0', '', ''),
-(15, 'author', 'MrCage', 'mrcage@etoa.ch', '', ''),
-(21, 'site_email', 'mail@etoa.ch', 'EtoA', 'www.etoa.ch', ''),
-(51, 'news_board', '6', '', '', ''),
-(52, 'rules_thread', '75', '', '', ''),
-(53, 'ts_link', 'http://www.etoa.ch/forum/thread.php?threadid=77', '', '', ''),
-(54, 'faq_admin', 'mrcage@etoa.ch', '', '', ''),
-(55, 'server_notice', '', '1415305653', 'orange', ''),
-(56, 'loginadmin_group', '22', '', '', ''),
-(57, 'buttons', '', '', '', ''),
-(59, 'indexjscript', '<!-- Insert analytics script here -->', '', '', ''),
-(58, 'adds', '<a href="https://www.facebook.com/etoagame" target="_blank"><img src="site/images/3rdparty/fb.png" style="border:0;" alt="EtoA auf Facebook"/></a>   \r\n\r\n<a href="http://www.galaxy-news.de/charts/?op=vote&game_id=610" target="_blank"><img src="site/images/3rdparty/galaxynews.png" style="border:0;" alt="Die besten Browsergames in den Galaxy-News MMOG-Charts!"/></a><br/><br/>\r\n\r\n<a href="http://www.gamessphere.de/vote/vote_433.html" target="new"><img src="site/images/3rdparty/gamesphere.png" width="88" height="31" border="0" alt="Today GamesSphere, tomorrow, nothing else!"/></a>   \r\n\r\n<a href="http://www.webgamers.de/index.php?page=LinkListLink&linkID=255"><img alt="Webgamers" src="site/images/3rdparty/webgamers_de.png"></a>', '', '', ''),
-(60, 'adds_news', '', '', '', ''),
-(61, 'infobox_board_blacklist', '11,57,58,59,4,2,3,82,42,99,8,20,114,115,116,117, 138,139,151,159,152,153,154,155,171,181,182,183,202,212,213,214,215,217,218,219,220,221,222,223', '', '', ''),
-(62, 'status_board', '103', '', '', ''),
-(63, 'maintenance_mode', '0', '', '', ''),
-(64, 'footer_js', '', '', '', '');
+INSERT INTO `config` (`config_id`, `config_name`, `config_value`) VALUES
+(189, 'adds_news', ''),
+(226, 'infobox_board_blacklist', '11,57,58,59,4,2,3,82,42,99,8,20,114,116,117,138,139,151,159,152,153,154,155,171,182,183,202,212,213,214,215,217,218,219,220,221,222,223,235,236,237,238,239,250,260,271,272,273,274,286,287,303,313,331'),
+(55, 'server_notice', ''),
+(225, 'loginadmin_group', '22'),
+(130, 'buttons', ''),
+(59, 'indexjscript', '<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-4499873-4\"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag(\'js\', new Date());\r\n\r\n  gtag(\'config\', \'UA-4499873-4\');\r\n</script>\r\n'),
+(188, 'adds', '<a href=\"https://www.facebook.com/etoagame\" target=\"_blank\"><img src=\"site/images/3rdparty/fb.png\" style=\"border:0;\" alt=\"EtoA auf Facebook\"/></a>   \r\n\r\n<a href=\"http://de.mmofacts.com/etoa-escape-to-andromeda-610#track\" target=\"_blank\"><img src=\"site/images/3rdparty/mmofacts.png\" style=\"border:0;\" alt=\"Die besten Browsergames in den Galaxy-News MMOG-Charts!\"/></a><br/><br/>\r\n\r\n<a href=\"http://www.gamessphere.de/vote/vote_433.html\" target=\"new\"><img src=\"site/images/3rdparty/gamesphere.png\" width=\"88\" height=\"31\" border=\"0\" alt=\"Today GamesSphere, tomorrow, nothing else!\"/></a>  '),
+(224, 'faq_admin', 'mrcage@etoa.ch'),
+(220, 'news_board', '6'),
+(222, 'rules_thread', '9904'),
+(223, 'ts_link', 'https://discord.gg/w6pKn9c'),
+(227, 'status_board', '103'),
+(63, 'maintenance_mode', '0'),
+(64, 'footer_js', ''),
+(221, 'rules_board', '10'),
+(228, 'support_board', '21'),
+(229, 'forum_mail', 'forum@etoa.ch'),
+(230, 'forum_url', 'http://forum.etoa.ch');
 
 -- --------------------------------------------------------
 
