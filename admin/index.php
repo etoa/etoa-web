@@ -116,7 +116,7 @@
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="de">
 	<head>
 		<title>EtoA | Das Sci-Fi Browsergame | Administration</title>
 		<meta name="author" content="EtoA Gaming" />

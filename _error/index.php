@@ -11,7 +11,7 @@
 			$errtext = "Der Zugriff auf das angeforderte Verzeichnis ist nicht m&ouml;glich.
     Entweder ist kein Index-Dokument vorhanden oder das Verzeichnis
     ist zugriffsgesch&uuml;tzt.";
-			break;		
+			break;
 		case 401:
 			$errname = "Fehler 401 - Authentisierung fehlgeschlagen";
 			$errtext = "Der Server konnte nicht verifizieren, ob Sie autorisiert sind,
@@ -22,35 +22,35 @@
     Sofern Sie f&uuml;r den Zugriff berechtigt sind, &uuml;berpr&uuml;fen
     Sie bitte die eingegebene User-ID und das Passwort und versuchen Sie
     es erneut.";
-			break;		
-		default:	
+			break;
+		default:
 			$errname = "Diese Seite wurde leider von einem Schwarzen Loch verschluckt! (Fehler 404)";
 			$errtext = "Das tut uns leid! Zum Glück gibt es in unserem Universum noch genügend andere Seiten welche weit genug von Schwarzen Löchern entfernt sind.
-			
+
 			Wähle eine Seite aus folgender Liste:";
 	}
-	
+
 
 ?><!DOCTYPE html>
-<html>
+<html lang="de">
 	<meta charset="UTF-8" />
 	<title><?=$errname?></title>
-	<style type="text/css"><!--/*--><![CDATA[/*><!--*/ 
-		body { 
-			color: #fff; 
-			background: #000 url('http://etoa.ch/_error/bg.jpg') no-repeat center 0px; 
+	<style type="text/css"><!--/*--><![CDATA[/*><!--*/
+		body {
+			color: #fff;
+			background: #000 url('http://etoa.ch/_error/bg.jpg') no-repeat center 0px;
 			font-family: arial, helvetica, verdana;
 			font-size:10pt;
-		}		
+		}
 		h1 {
 			font-size:12pt;
 		}
-		a { 
-			color: #ddf; 
+		a {
+			color: #ddf;
 			font-weight:bold;
 		}
-		a:hover { 
-			color: #aad; 
+		a:hover {
+			color: #aad;
 			font-weight:bold;
 			text-decoration:underline;
 		}

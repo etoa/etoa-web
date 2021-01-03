@@ -80,7 +80,7 @@
 			$ob = ob_get_clean();
 			if ($ob != "")
 				$smarty->assign("content",$ob);
-			$selectedView = is_file($smarty->getTemplateDir()."/views/help/$view.html") && preg_match('/^[a-z0-9_\-]+$/i',$view) > 0  ? $view : 'default';
+			$selectedView = is_file($smarty->getTemplateDir()[0]."/views/help/$view.html") && preg_match('/^[a-z0-9_\-]+$/i',$view) > 0  ? $view : 'default';
 			$smarty->assign("content_for_layout",$smarty->fetch("views/help/$selectedView.html"));
 		}
 		else
