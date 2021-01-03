@@ -114,13 +114,13 @@ INSERT INTO `config` (`config_id`, `config_name`, `config_value`, `config_param1
 (55, 'server_notice', '', '1415305653', 'orange', ''),
 (56, 'loginadmin_group', '22', '', '', ''),
 (57, 'buttons', '', '', '', ''),
-(59, 'indexjscript', '<meta name="google-site-verification" content="LIfGS_kQp57BYMV9PJkLHH2DnuYr1rtFwvtZD4zkpAE" />', '', '', ''),
+(59, 'indexjscript', '<!-- Insert analytics script here -->', '', '', ''),
 (58, 'adds', '<a href="https://www.facebook.com/etoagame" target="_blank"><img src="site/images/3rdparty/fb.png" style="border:0;" alt="EtoA auf Facebook"/></a>   \r\n\r\n<a href="http://www.galaxy-news.de/charts/?op=vote&game_id=610" target="_blank"><img src="site/images/3rdparty/galaxynews.png" style="border:0;" alt="Die besten Browsergames in den Galaxy-News MMOG-Charts!"/></a><br/><br/>\r\n\r\n<a href="http://www.gamessphere.de/vote/vote_433.html" target="new"><img src="site/images/3rdparty/gamesphere.png" width="88" height="31" border="0" alt="Today GamesSphere, tomorrow, nothing else!"/></a>   \r\n\r\n<a href="http://www.webgamers.de/index.php?page=LinkListLink&linkID=255"><img alt="Webgamers" src="site/images/3rdparty/webgamers_de.png"></a>', '', '', ''),
 (60, 'adds_news', '', '', '', ''),
 (61, 'infobox_board_blacklist', '11,57,58,59,4,2,3,82,42,99,8,20,114,115,116,117, 138,139,151,159,152,153,154,155,171,181,182,183,202,212,213,214,215,217,218,219,220,221,222,223', '', '', ''),
 (62, 'status_board', '103', '', '', ''),
 (63, 'maintenance_mode', '0', '', '', ''),
-(64, 'footer_js', '<script type="text/javascript">\r\nvar gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");\r\ndocument.write(unescape("%3Cscript src=''" + gaJsHost + "google-analytics.com/ga.js'' type=''text/javascript''%3E%3C/script%3E"));\r\n</script>\r\n<script type="text/javascript">\r\ntry {\r\nvar pageTracker = _gat._getTracker("UA-4499873-4");\r\npageTracker._trackPageview();\r\n} catch(err) {}</script>', '', '', '');
+(64, 'footer_js', '', '', '', '');
 
 -- --------------------------------------------------------
 
