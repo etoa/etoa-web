@@ -105,7 +105,7 @@ INSERT INTO `config` (`config_id`, `config_name`, `config_value`) VALUES
 (225, 'loginadmin_group', '22'),
 (130, 'buttons', ''),
 (59, 'indexjscript', '<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-4499873-4\"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag(\'js\', new Date());\r\n\r\n  gtag(\'config\', \'UA-4499873-4\');\r\n</script>\r\n'),
-(188, 'adds', '<a href=\"https://www.facebook.com/etoagame\" target=\"_blank\"><img src=\"site/images/3rdparty/fb.png\" style=\"border:0;\" alt=\"EtoA auf Facebook\"/></a>   \r\n\r\n<a href=\"http://de.mmofacts.com/etoa-escape-to-andromeda-610#track\" target=\"_blank\"><img src=\"site/images/3rdparty/mmofacts.png\" style=\"border:0;\" alt=\"Die besten Browsergames in den Galaxy-News MMOG-Charts!\"/></a><br/><br/>\r\n\r\n<a href=\"http://www.gamessphere.de/vote/vote_433.html\" target=\"new\"><img src=\"site/images/3rdparty/gamesphere.png\" width=\"88\" height=\"31\" border=\"0\" alt=\"Today GamesSphere, tomorrow, nothing else!\"/></a>  '),
+(188, 'adds', ''),
 (224, 'faq_admin', 'mrcage@etoa.ch'),
 (220, 'news_board', '6'),
 (222, 'rules_thread', '9904'),

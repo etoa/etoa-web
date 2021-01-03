@@ -18,7 +18,6 @@
 <body class="body">
 
     <div class="Table_01">
-
         <div class="Header_">
             <img alt="img" id="Header" src="{$apppurl}images/headers/{$page}.png" style="width:263px;height:45px" />
         </div>
@@ -37,8 +36,17 @@
 
         <ul id="mainMenu">
             {foreach from=$nav item=n}
-            <li>{if isset($n.hr)}<img src="{$apppurl}images/hline.gif" alt="hline" class="hline" />{else}<a
-                    href="{$n.url}" {if $n.url eq $page} class="current" {/if}>{$n.name}</a>{/if}</li>
+            <li>
+                {if isset($n.hr)}
+                <img src="{$apppurl}images/hline.gif" alt="hline" class="hline" />
+                {else}
+                {if $n.url eq $page}
+                <a href="{$n.url}" class="current">{$n.name}</a>
+                {else}
+                <a href="{$n.url}">{$n.name}</a>
+                {/if}
+                {/if}
+            </li>
             {/foreach}
         </ul>
 
@@ -52,8 +60,13 @@
                 <input type="text" name="{$loginform.nickField}" size="11" maxlength="100" autofocus />
                 <input type="password" name="{$loginform.passwordField}" size="11" maxlength="100" />
                 <select id="loginround" name="round">
-                    {foreach from=$rounds key=k item=v}<option value="{$v.url}" {if $v.url eq $selectedRound}
-                        selected="selected" {/if}>{$v.name}</option>{/foreach}
+                    {foreach from=$rounds key=k item=v}
+                    {if $v.url eq $selectedRound}
+                    <option value="{$v.url}" selected="selected">{$v.name}</option>
+                    {else}
+                    <option value="{$v.url}">{$v.name}</option>
+                    {/if}
+                    {/foreach}
                 </select><br />
                 <input class="btn-login_" type="submit" value=" " name="login" />
                 <input type="hidden" name="token" value="{$loginform.logintoken}" />
