@@ -180,7 +180,7 @@
       <div id="overallend">
     </div>
     <div id="footer">
-      <div id="server">&copy; 2008 EtoA Gaming</div>
+      <div id="server">&copy; EtoA Gaming</div>
 
     </div>
   </div></body></html>
