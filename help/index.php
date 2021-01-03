@@ -1,51 +1,16 @@
-<?PHP
-define('BASE_PATH', '../');
+<?php
+
+use App\Support\ForumBridge;
+use App\TemplateEngine;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// Konfiguration laden
 session_start();
-include(BASE_PATH . "site/config/conf.inc.php");
-include(BASE_PATH . "site/inc/functions.php");
+
 dbconnect();
 
-// Smarty
-$smarty = new Smarty;
-$smarty->setTemplateDir(BASE_PATH . 'help/templates');
-$smarty->setCompileDir(BASE_PATH . 'cache/compile');
-
-$smarty->assign('baseurl', "");
-
-// Tag cloud
-ob_start();
-$res = dbquery("
-    SELECT t.id,t.name,COUNT(r.item_id) AS cnt
-	FROM ".dbtable('help_tag')." t
-	INNER JOIN ".dbtable('help_tag_rel')." r ON t.id=r.tag_id
-	INNER JOIN ".dbtable('faq')." f ON r.item_id=f.faq_id
-	GROUP BY t.id
-	ORDER BY t.name
-	;");
-$tags = array();
-while ($arr = mysql_fetch_assoc($res)) {
-	if (!isset($max_qty)) $max_qty = $arr['cnt'];
-	if (!isset($min_qty)) $min_qty = $arr['cnt'];
-	$max_qty = max($arr['cnt'], $max_qty);
-	$min_qty = min($arr['cnt'], $min_qty);
-	$tags[] = $arr;
-}
-$max_size = 20; // max font size in pixels
-$min_size = 10; // min font size in pixels
-$spread = $max_qty - $min_qty;
-if ($spread == 0) {
-	$spread = 1;
-}
-$step = ($max_size - $min_size) / ($spread);
-foreach ($tags as $arr) {
-	$size = round($min_size + (($arr['cnt'] - $min_qty) * $step));
-	echo "<a style=\"font-size: " . $size . "px\" href=\"?page=tags&amp;id=" . $arr['id'] . "\" title=\"" . $arr['cnt'] . " Einträge getaggt mit '" . $arr['name'] . "'\">" . $arr['name'] . "</a> ";
-}
-$smarty->assign("tagcloud", ob_get_clean());
+// Templating engine
+$tpl = new TemplateEngine();
 
 // Login
 ob_start();
@@ -53,13 +18,14 @@ if (isset($_SESSION['etoahelp']['username']) && isset($_SESSION['etoahelp']['uid
 	define('LOGIN', true);
 	echo "<p>Eingeloggt als <b>" . $_SESSION['etoahelp']['username'] . "</b></p>
 		<p>
-		<a href=\"" . forumUrl('account') . "\">Accountverwaltung</a><br/>
-		<a href=\"?page=user&amp;id=" . $_SESSION['etoahelp']['uid'] . "\">Benutzerprofil</a><br/>
+		<a href=\"" . ForumBridge::url('account') . "\">Accountverwaltung</a><br/>
+        <a href=\"?page=user&amp;id=" . $_SESSION['etoahelp']['uid'] . "\">Benutzerprofil</a><br/>
+        <a href=\"logout\">Logout</a><br/>
 		</p>";
 } else {
 	define('LOGIN', false);
 }
-$smarty->assign("loginbox", ob_get_clean());
+$tpl->assign("loginbox", ob_get_clean());
 
 // Content
 $page = isset($_GET['page']) ? $_GET['page'] : 'index';
@@ -69,25 +35,22 @@ if (preg_match('/^[a-z0-9_\/\-]+$/i', $page) > 0) {
 		$view = $page;
 		ob_start();
 		include($pagepath);
-		$ob = ob_get_clean();
-		if ($ob != "")
-			$smarty->assign("content", $ob);
-		$selectedView = is_file($smarty->getTemplateDir()[0] . "/views/help/$view.html") && preg_match('/^[a-z0-9_\-]+$/i', $view) > 0  ? $view : 'default';
-		$smarty->assign("content_for_layout", $smarty->fetch("views/help/$selectedView.html"));
+        $content = ob_get_clean();
+		$tpl->assign("content", $content);
 		if (isset($header_content)) {
-			$smarty->assign("header_content", $header_content);
+			$tpl->assign("header_content", $header_content);
 		}
 	} else {
-		$smarty->assign("error", "Seite wurde nicht gefunden!");
-		$smarty->assign("content_for_layout", $smarty->fetch("views/help/error.html"));
+		$tpl->assign("title", "Fehler");
+		$tpl->assign("error", "Seite wurde nicht gefunden!");
 	}
 } else {
-	$smarty->assign("error", "Ung&uuml;ltige Abfrage!");
-	$smarty->assign("content_for_layout", $smarty->fetch("views/help/error.html"));
+    $tpl->assign("title", "Fehler");
+	$tpl->assign("error", "Ungültige Abfrage!");
 }
 
 // Site nbame
-$smarty->assign("sitename", "Hilfe | " . ucfirst($page));
+$tpl->assign("sitename", "Hilfe | " . ucfirst($page));
 
 // Render
-$smarty->display('layouts/help.html');
+$tpl->render('layouts/help.html');

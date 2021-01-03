@@ -10,5 +10,5 @@ if (isset($_POST['submit'])) {
 echo "<form action=\"?page=$page\" method=\"post\">";
 echo "<textarea name=\"server_notice\" rows=\"10\" cols=\"120\">" . get_config('server_notice', '') . "</textarea><br/>";
 echo "Farbe: <input size=\"12\" name=\"server_notice_color\" value=\"" . get_config('server_notice_color', 'orange')  . "\" /><br/>";
-echo "<br/><br/><input type=\"submit\" name=\"submit\" value=\"&Uuml;bernehmen\" /> ";
+echo "<br/><br/><input type=\"submit\" name=\"submit\" value=\"Übernehmen\" /> ";
 echo "</form>";

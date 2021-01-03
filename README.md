@@ -16,7 +16,8 @@ Portal site for the Escape to Andromeda browser game.
 Run:
 
     composer install
+    composer dump-autoload
 
 ### Setup database connection
 
-Copy `site/config/config.inc.php.dist` to `site/config/config.inc.php` and configure the database connection parameters.
+Copy `config/app.dist.php` to `config/app.php` and configure the database connection parameters.

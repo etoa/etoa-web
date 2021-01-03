@@ -11,5 +11,5 @@ echo "Header<br/>";
 echo "<textarea name=\"indexjscript\" rows=\"30\" cols=\"120\">" . get_config('indexjscript', '') . "</textarea><br/>";
 echo "Footer<br/>";
 echo "<textarea name=\"footer_js\" rows=\"30\" cols=\"120\">" . get_config('footer_js', '') . "</textarea><br/>";
-echo "<p><input type=\"submit\" name=\"submit\" value=\"&Uuml;bernehmen\" /></p>";
+echo "<p><input type=\"submit\" name=\"submit\" value=\"Übernehmen\" /></p>";
 echo "</form>";

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>EtoA | Das Sci-Fi Browsergame | Administration</title>
+    <meta name="author" content="EtoA Gaming" />
+    <meta name="description" content="EtoA - Das kostenlose Sci-Fi Browsergame." />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="{asset file='favicon.ico'}" type="image/x-icon" />
+    <link rel="stylesheet" href="{asset file='style.css'}">
+</head>
+
+<body>
+    <div id="overall">
+        <div id="header">
+            <div id="logo" onclick="javascript: document.location.href='./';">
+            </div>
+            <div id="bar"></div>
+        </div>
+        <div id="main">
+            <div id="menu">
+                <div id="menu_top"></div>
+                <div id="menu_center">
+                    <b>Navigation</b><br />
+                    {if $auth}
+                        <a href="?page=home">Übersicht</a>
+                        <a href="?page=serverinfo">Servermeldung</a>
+                        <a href="?page=maintenance">Wartungsmodus</a>
+                        <a href="?page=rounds">Runden</a>
+                        <a href="?page=buttons">Buttons</a>
+                        <a href="?page=adds">Werbung</a>
+                        <a href="?page=script">Java-Script</a>
+                        <a href="?page=faq">FAQ</a>
+                        <a href="?page=articles">Hilfe-Artikel</a>
+                        <a href="?page=texts">Texte</a>
+                        <a href="?page=settings">Einstellungen</a>
+                    {else}
+                        <a href="?">Login</a>
+                    {/if}
+                </div>
+                <div id="menu_bottom"></div>
+            </div>
+            <div id="content">
+                <div>
+                    {if $auth}
+                        {$content}
+                    {else}
+                        <h1>Fehler</h1>
+                        Nicht eingeloggt!<br/><br/>
+                        <input type="button" value="Neu einloggen" onclick="document.location='?page=$page'" />
+                    {/if}
+                </div>
+            </div>
+        </div>
+        <div id="overallend">
+        </div>
+        <div id="footer">
+            <div id="server">&copy; EtoA Gaming</div>
+        </div>
+    </div>
+</body>
+
+</html>

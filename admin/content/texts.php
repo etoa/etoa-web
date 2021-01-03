@@ -1,5 +1,8 @@
 <h1>Texte</h1>
 <?PHP
+
+use App\Support\StringUtil;
+
 if (isset($_POST['submit']) && $_POST['text_text'] != "" && $_POST['text_id'] > 0) {
     dbquery("
         UPDATE ".dbtable('texts')."
@@ -33,9 +36,9 @@ if (mysql_num_rows($res) > 0) {
     }
     echo "</select> <input type=\"button\" value=\"Anzeigen\" onclick=\"document.location='?page=$page&id='+document.getElementById('text_select').options[document.getElementById('text_select').selectedIndex].value\" /></td></tr>";
     echo "<tr><th>Name, Schlüsselwort:</th><td>" . $first['text_name'] . ", " . $first['text_keyword'] . "</td></tr>";
-    echo "<tr><th>Letzte Änderung:</th><td>" . df($first['text_last_changes']) . "</td></tr>";
+    echo "<tr><th>Letzte Änderung:</th><td>" . StringUtil::dateFormat($first['text_last_changes']) . "</td></tr>";
     echo "<tr><td colspan=\"2\"><textarea name=\"text_text\" rows=\"28\" cols=\"100\">" . stripslashes($first['text_text']) . "</textarea></td></tr>";
-    echo "</table><br/><input type=\"hidden\" name=\"text_id\" value=\"" . $first['text_id'] . "\" /><input type=\"submit\" name=\"submit\" value=\"&Uuml;bernehmen\" /> ";
+    echo "</table><br/><input type=\"hidden\" name=\"text_id\" value=\"" . $first['text_id'] . "\" /><input type=\"submit\" name=\"submit\" value=\"Übernehmen\" /> ";
 } else {
     echo "<i>Keine Texte vorhanden!</i><br/><br/>";
 }

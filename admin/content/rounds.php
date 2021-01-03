@@ -64,7 +64,7 @@ if (mysql_num_rows($res) > 0) {
             </td>
         </tr>";
     }
-    echo "</table><br/><input type=\"submit\" name=\"submit\" value=\"&Uuml;bernehmen\" /> ";
+    echo "</table><br/><input type=\"submit\" name=\"submit\" value=\"Übernehmen\" /> ";
 } else {
     echo "<i>Keine Runden vorhanden!</i><br/><br/>";
 }

@@ -1,7 +1,10 @@
 <?PHP
 
+use App\Support\ForumBridge;
+use App\Support\StringUtil;
+
 $rulesText = message("info", "<b>Regeln:</b> Keine Namen von Mitspielern im Text, keine Koordinaten, kein Spam, kein Fluchwörter, keine Werbung.
-    Es gelten dieselben <a href=\"" . forumUrl('board', get_config('rules_board')) . "\">Regeln</a> wie im Forum (z.B. betreffend illegaler Inhalte) sowie die allgemeine Nettiquette.
+    Es gelten dieselben <a href=\"" . ForumBridge::url('board', get_config('rules_board')) . "\">Regeln</a> wie im Forum (z.B. betreffend illegaler Inhalte) sowie die allgemeine Nettiquette.
     Missbrauch dieser Funktion kann zu einer Sperre im Forum und/oder im Spiel selbst führen.
     Mit dem Absenden erklärst du dich einverstanden, dass deine Foren-Accountdaten (Username, E-Mail, Benutzer-ID) mit der Frage gespeichert werden.
     Um Missbrauchsfälle aufzudecken wird auch deine IP-Adresse sowie der verwendete Browser aufgezeichnet.");
@@ -79,12 +82,12 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
             }
             echo "</div>";
         }
-        echo "<p>Dieser Artikel wurde zuletzt bearbeitet von " . $author . " " . tfs(time() - $arr['changed']) . ", <a href=\"?page=$page&amp;diff=" . $arr['hash'] . "&amp;range=" . ($arr['rev'] - 1) . ":" . $arr['rev'] . "\">Revision " . $arr['rev'] . "</a></p>	";
+        echo "<p>Dieser Artikel wurde zuletzt bearbeitet von " . $author . " " . StringUtil::diffFromNow($arr['changed']) . ", <a href=\"?page=$page&amp;diff=" . $arr['hash'] . "&amp;range=" . ($arr['rev'] - 1) . ":" . $arr['rev'] . "\">Revision " . $arr['rev'] . "</a></p>	";
     } else {
         echo message("error", "Dieser Artikel existiert nicht!");
     }
 
-    echo "<input type=\"button\" onclick=\"document.location='?page=$page'\" value=\"Zur &Uuml;bersicht\" /> &nbsp;";
+    echo "<input type=\"button\" onclick=\"document.location='?page=$page'\" value=\"Zur Übersicht\" /> &nbsp;";
     if (isset($_GET['source']) && $_GET['source'] == 1)
         echo "<input type=\"button\" onclick=\"document.location='?page=$page&article=" . $arr['hash'] . (isset($_GET['rev']) ? "&rev=" . $_GET['rev'] : '') . "'\" value=\"Normale Ansicht\" /> &nbsp; ";
     else
@@ -108,7 +111,7 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
         echo "<h2>Version $v1 zu Version $v2</h2>";
 
         $author = $arr['user_nick'] != "" && $arr['user_id'] > 0 ? "<a href=\"?page=user&id=" . $arr['user_id'] . "\">" . $arr['user_nick'] . "</a>"  : "Unbekannt";
-        echo "<p>Autor: " . $author . ",  " . tfs(time() - $arr['changed']) . "</p>	";
+        echo "<p>Autor: " . $author . ",  " . StringUtil::diffFromNow($arr['changed']) . "</p>	";
 
         $v1res = dbquery("
             SELECT *
@@ -130,8 +133,9 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
         if ($v1arr['text'] == $v2arr['text']) {
             echo message("info", "Keine Änderungen");
         } else {
-            $header_content = "<style type=\"text/css\">\n" . file_get_contents(BASE_PATH . 'vendor/qazd/text-diff/css/style.css') . "</style>\n";
+            $header_content = "<style type=\"text/css\">\n" . file_get_contents(__DIR__ . '../../../vendor/qazd/text-diff/css/style.css') . "</style>\n";
             echo Qazd\TextDiff::render($v1arr['text'], $v2arr['text']);
+            echo "<br>";
         }
     } else {
         echo message("error", "Dieser Artikel existiert nicht!");
@@ -139,7 +143,7 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
 
     echo "<input type=\"button\" onclick=\"document.location='?page=$page&article=" . $hash . "'\" value=\"Zum Artikel\" /> &nbsp; ";
     echo "<input type=\"button\" onclick=\"document.location='?page=$page&revs=" . $hash . "'\" value=\"Andere Versionen\" /> &nbsp; ";
-    echo "<input type=\"button\" onclick=\"document.location='?page=$page'\" value=\"Zur &Uuml;bersicht\" /> &nbsp;";
+    echo "<input type=\"button\" onclick=\"document.location='?page=$page'\" value=\"Zur Übersicht\" /> &nbsp;";
 } elseif (isset($_GET['revs']) && $_GET['revs'] != '') {
     $hash = $_GET['revs'];
     echo "<h1>Revisionen</h1>";
@@ -169,7 +173,7 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
                 $author = $arr['user_nick'] != "" && $arr['user_id'] > 0 ? "<a href=\"?page=user&id=" . $arr['user_id'] . "\">" . $arr['user_nick'] . "</a>"  : "Unbekannt";
                 echo "<tr><td><b>" . $arr['rev'] . "</b></td>
 					<td><a href=\"?page=$page&amp;article=" . $arr['hash'] . "&amp;rev=" . $arr['rev'] . "\">" . $arr['title'] . "</a></td>
-					<td>" . tfs(time() - $arr['changed']) . "</td>
+					<td>" . StringUtil::diffFromNow($arr['changed']) . "</td>
 					<td>$author</td>
 					<td>";
                 if ($i < $nr - 1)
@@ -233,7 +237,7 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
 						VALUES
 						(
 							'" . $arr['hash'] . "',
-							'" . prettyUrlString($_POST['title']) . "',
+							'" . StringUtil::prettyUrlString($_POST['title']) . "',
 							'" . mysql_real_escape_string($_POST['title']) . "',
 							'" . mysql_real_escape_string($_POST['text']) . "',
 							" . $_SESSION['etoahelp']['uid'] . ",
@@ -307,7 +311,7 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
             echo "</form>";
 
             $author = $arr['user_nick'] != "" && $arr['user_id'] > 0 ? "<a href=\"?page=user&id=" . $arr['user_id'] . "\">" . $arr['user_nick'] . "</a>"  : "Unbekannt";
-            echo "<p>Dieser Artikel wurde zuletzt bearbeitet von " . $author . " " . tfs(time() - $arr['changed']) . ", Revision " . $arr['rev'] . "</p>";
+            echo "<p>Dieser Artikel wurde zuletzt bearbeitet von " . $author . " " . StringUtil::diffFromNow($arr['changed']) . ", Revision " . $arr['rev'] . "</p>";
         } else {
             echo message("error", "Artikel exisitert nicht!");
         }
@@ -341,7 +345,7 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
 					VALUES
 					(
 						'" . $hash . "',
-						'" . prettyUrlString($_POST['title']) . "',
+						'" . StringUtil::prettyUrlString($_POST['title']) . "',
 						'" . mysql_real_escape_string($_POST['title']) . "',
 						'" . mysql_real_escape_string($_POST['text']) . "',
 						" . $_SESSION['etoahelp']['uid'] . ",
@@ -427,7 +431,7 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
             $url = $arr['alias'] != '' ? "?page=$page&amp;a=" . $arr['alias'] : "?page=$page&amp;article=" . $arr['hash'];
 
             echo "<li><a href=\"$url\">" . $arr['title'] . "</a>
-				<span style=\"font-size:8pt;\">(bearbeitet " . tfs(time() - $arr['changed']) . ", rev " . $arr['rev'] . ")</span></li>";
+				<span style=\"font-size:8pt;\">(bearbeitet " . StringUtil::diffFromNow($arr['changed']) . ", rev " . $arr['rev'] . ")</span></li>";
         }
         echo "</ul>";
     } else {

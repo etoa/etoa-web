@@ -69,7 +69,7 @@ a img
 }
 #bar a:hover
 {
-	color: #00CCff;				
+	color: #00CCff;
 	border-bottom: 1px dotted #00CCff;
 }
 #menu
@@ -141,7 +141,7 @@ a img
 #menu,
 #main
 {
-	
+
 }
 #main
 {
@@ -255,58 +255,6 @@ a img
 	clear: both;
 }
 
-#quickdownloadbox
-{
-    margin-left: 50px;
-}
-
-#quickdownloadbox a,
-#quickdownloadbox a:link
-{
-    border-bottom: none;
-    color: #ffffff;
-}
-
-#quickdownloadbox a:hover
-{
-    color: #cccccc;
-    border-bottom: none;
-    background-color: transparent;
-}
-
-.quickdownload
-{
-    float: left;
-    padding-left: 18px;
-    padding-top: 11px;
-    background: url(images/button.png) no-repeat;
-    width: 250px;
-    height: 84px;
-}
-
-.quickdownload span
-{
-    font-size: 11px;
-}
-
-.quickdownload strong
-{
-    font-size: 20px;
-    line-height: 20px;
-}
-
-#downloadplatform p
-{
-    margin-left: 24px;
-}
-
-#downloadplatform a,
-#downloadplatform a:link
-{
-	padding-left: 20px;
-	background: url(images/arrow.png) no-repeat;
-}
-
 #menu_buttons
 {
     width: 125px;
@@ -327,17 +275,17 @@ legend	{
 
 .tbl	{
 	border-collapse:collapse;
-	
+
 }
 
 .tbl	td
 {
 	background:#eef;
-	border:#bbb solid 1px;	
+	border:#bbb solid 1px;
 }
 
 .tbl	th
 {
 	background:#dde;
-	border:#bbb solid 1px;	
+	border:#bbb solid 1px;
 }

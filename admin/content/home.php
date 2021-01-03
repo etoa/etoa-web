@@ -1,23 +1,11 @@
-<h1>&Uuml;bersicht</h1>
+<h1>Übersicht</h1>
 Willkommen in der Loginserver-Administration!<br /><br />
 Diese Seite dient der Verwaltung gewisser Bereiche der Login-Page.<br />
 Besuche folgende Seiten für andere Administrationsmöglichkeiten:
 
 <?php
-$res = dbquery("
-    SELECT
-        t.threadID
-    FROM
-        " . wbbtable('thread') . " AS t
-    WHERE
-        t.boardID=" . get_config('status_board') . "
-        AND t.isClosed=0
-;");
-$nr = mysql_num_rows($res);
-if ($nr > 0) {
-    echo "<h2 style=\"color:red\">Offene Statusmeldung</h2>";
-    echo "Es gibt <a href=\"?page=status\">$nr offene Statusmeldung</a>!";
-}
+
+use App\Support\ForumBridge;
 
 if (get_config('maintenance_mode', 0) == 1) {
     echo "<h2 style=\"color:#f00\">Wartungsmodus</h2>
@@ -27,7 +15,7 @@ if (get_config('maintenance_mode', 0) == 1) {
 
 <h2>Community-Administration</h2>
 <ul>
-    <li><a href="<?= forumUrl('admin') ?>">Forum-Administration</a></li>
+    <li><a href="<?= ForumBridge::url('admin') ?>">Forum-Administration</a></li>
 </ul>
 
 <h2>Game-Administration</h2>
@@ -47,21 +35,11 @@ if (mysql_num_rows($res) > 0) {
 }
 
 echo "<h2>Zugriff</h2>
-	<p>Folgende Leute haben Zugang auf diese Tool:</p>";
-$res = dbquery("
-	SELECT
-		u.userID,
-		u.username
-	FROM
-		" . wcftable('user_to_groups') . " t
-	INNER JOIN
-        " . wcftable('user') . " u
-	ON t.userID=u.userID
-	AND t.groupID = " . get_config('loginadmin_group') . ";
-;");
+    <p>Folgende Leute haben Zugang auf diese Tool:</p>";
+$admins = ForumBridge::usersOfGroup(get_config('loginadmin_group'));
 echo "<ul>";
-while ($arr = mysql_fetch_assoc($res)) {
-    echo "<li>" . $arr['username'] . "</li>";
+foreach ($admins as $admin) {
+    echo '<li><a href="' . ForumBridge::url('user', $admin['id']) . '">' . $admin['username'] . '</a></li>';
 }
 echo "</ul>";
 ?>

@@ -1,18 +1,18 @@
 <br />
 <?PHP
-$thread_id = get_config('rules_thread');
-$res = dbquery("
-    SELECT * FROM " . wbbtable('post') . "
-    WHERE threadid=" . $thread_id . "
-    ORDER BY time ASC LIMIT 1;");
+
+use App\Support\ForumBridge;
+use App\Support\StringUtil;
+
+$thread_id = get_config('rules_thread', 0);
+$thread = ForumBridge::thread($thread_id);
 echo "<div class=\"boxLine\"></div>";
-if (mysql_num_rows($res) > 0) {
-    $arr = mysql_fetch_array($res);
-    echo "<div class=\"boxTitle\"><h2>" . $arr['subject'] . "</h2>";
+if ($thread !== null) {
+    echo "<div class=\"boxTitle\"><h2>" . $thread['subject'] . "</h2>";
     echo "</div>";
     echo "<div class=\"boxLine\"></div>";
     echo "<div class=\"boxData\">";
-    echo text2html($arr["message"]);
+    echo StringUtil::text2html($thread["message"]);
 } else {
     echo "<div class=\"boxTitle\">Es trat ein Fehler auf!</div>";
     echo "<div class=\"boxLine\"></div>";

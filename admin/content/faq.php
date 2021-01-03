@@ -5,6 +5,9 @@
 /**********************
  * Frage bearbeiten    *
  **********************/
+
+use App\Support\StringUtil;
+
 if (isset($_GET['faq_edit']) && $_GET['faq_edit'] > 0) {
     echo '<b>Frage bearbeiten</b><br/><br/>';
     $res = dbquery("
@@ -114,7 +117,7 @@ if (isset($_GET['faq_edit']) && $_GET['faq_edit'] > 0) {
         echo '<tr><th>Frage:</th><td><input tzype="text" name="faq_question" size="80" value="' . stripslashes($arr['faq_question']) . '"/></td></tr>';
         echo '<tr><th>Beschreibung:</th><td><textarea name="faq_description" cols="60" rows="10">' . stripslashes($arr['faq_description']) . '</textarea></td></tr>';
         //echo '<tr><th>Antwort:</th><td><textarea name="faq_answer" cols="60" rows="10">'.stripslashes($arr['faq_answer']).'</textarea></td></tr>';
-        //echo '<tr><th>Schl&uuml;sselw&ouml;rter:</th><td><textarea name="faq_keywords" cols="60" rows="4">'.stripslashes($arr['faq_keywords']).'</textarea></td></tr>';
+        //echo '<tr><th>Schlüsselwörter:</th><td><textarea name="faq_keywords" cols="60" rows="4">'.stripslashes($arr['faq_keywords']).'</textarea></td></tr>';
         echo '<tr><th>Tags:</th><td><textarea name="tags" cols="60" rows="4">' . $tagstr . '</textarea></td></tr>';
         if ($arr['faq_user_nick'] != "") {
             echo '<tr><th>Name:</th><td>' . stripslashes($arr['faq_user_nick']) . '</td></tr>';
@@ -138,7 +141,7 @@ if (isset($_GET['faq_edit']) && $_GET['faq_edit'] > 0) {
             echo '<tr><th>Name:</th><td>' . stripslashes($arr['faq_user_host']) . '</td></tr>';
         }
         if ($arr['faq_user_time'] > 0) {
-            echo '<tr><th>Zeit:</th><td>' . df($arr['faq_user_time']) . ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            echo '<tr><th>Zeit:</th><td>' . StringUtil::dateFormat($arr['faq_user_time']) . ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="checkbox" name="time_reset" value="1" /> Zeit neu setzen
 			</td></tr>';
         }
@@ -206,8 +209,8 @@ elseif (isset($_GET['faq_answers']) && $_GET['faq_answers'] > 0) {
                 echo "<tr>
 					<td class=\"tbldata\">" . $carr['comment_nick'] . "</td>
 					<td class=\"tbldata\"><a href=\"mailto:" . $carr['comment_email'] . "\">" . $carr['comment_email'] . "</a></td>
-					<td class=\"tbldata\">" . text2html($carr['comment_text']) . "</td>
-					<td class=\"tbldata\">" . df($carr['comment_time']) . "</td>
+					<td class=\"tbldata\">" . StringUtil::text2html($carr['comment_text']) . "</td>
+					<td class=\"tbldata\">" . StringUtil::dateFormat($carr['comment_time']) . "</td>
 					<td class=\"tbldata\"><a href=\"?page=$page&faq_answers=" . $arr['faq_id'] . "&amp;delcmt=" . $carr['comment_id'] . "\">Löschen</a></td>
 				</tr>";
             }
@@ -229,7 +232,7 @@ elseif (isset($_GET['faq_answers']) && $_GET['faq_answers'] > 0) {
 * Frage löschen       *
 **********************/
 elseif (isset($_GET['faq_del']) && $_GET['faq_del'] > 0) {
-    echo '<b>Frage l&ouml;schen</b><br/><br/>';
+    echo '<b>Frage löschen</b><br/><br/>';
     $res = dbquery("
     SELECT
 		*
@@ -249,14 +252,14 @@ elseif (isset($_GET['faq_del']) && $_GET['faq_del'] > 0) {
                 WHERE
                     faq_id=" . $_POST['faq_id'] . "
             ;");
-            pushText("Gel&ouml;scht!<br/><br/>");
+            pushText("Gelöscht!<br/><br/>");
             forwardInternal('index.php?page=' . $page . '&show=accepted');
         }
 
 
         echo '<form action="?page=' . $page . '&amp;faq_del=' . $_GET['faq_del'] . '" method="post">';
-        echo 'Soll folgende Frage gel&ouml;scht werden?<br/><br/>';
-        echo text2html($arr['faq_question']);
+        echo 'Soll folgende Frage gelöscht werden?<br/><br/>';
+        echo StringUtil::text2html($arr['faq_question']);
         echo '<br/><br/><input type="submit" name="faq_del_submit" value="Ja" />
 		<input type="button" onclick="document.location=\'?page=' . $page . '&amp;faq_edit=' . $arr['faq_id'] . '\'" value="Abbrechen" /> &nbsp; ';
         echo '<input type="hidden" name="faq_id" value="' . $arr['faq_id'] . '" /></form>';
@@ -273,7 +276,7 @@ elseif (isset($_GET['show']) && $_GET['show'] == "accepted") {
     echo '<h2>Eingetragene Fragen</h2>';
 
     echo '<p><input type="button" value="Neue Frage" onclick="document.location=\'/help?page=faq&amp;cat=submit\'" /> &nbsp;
-	<input type="button" value="Zur &Uuml;bersicht" onclick="document.location=\'?page=' . $page . '\'" /></p>';
+	<input type="button" value="Zur Übersicht" onclick="document.location=\'?page=' . $page . '\'" /></p>';
 
     echo popText();
 
@@ -340,7 +343,7 @@ elseif (isset($_GET['show']) && $_GET['show'] == "deleted") {
 		    WHERE
                 faq_id=" . $_GET['deldel'] . "
         ;");
-        echo "Gel&ouml;scht!<br/><br/>";
+        echo "Gelöscht!<br/><br/>";
     }
     if (isset($_GET['undel']) && $_GET['undel'] > 0) {
         dbquery("
@@ -354,7 +357,7 @@ elseif (isset($_GET['show']) && $_GET['show'] == "deleted") {
         echo "Wiederhergestellt!<br/><br/>";
     }
 
-    echo '<b>Gel&ouml;schte Fragen</b><br/><br/>';
+    echo '<b>Gelöschte Fragen</b><br/><br/>';
     $res = dbquery("
         SELECT
             faq_id,
@@ -372,13 +375,13 @@ elseif (isset($_GET['show']) && $_GET['show'] == "deleted") {
         while ($arr = mysql_fetch_array($res)) {
             echo '<tr><td>' . $arr['faq_question'] . '</td>
 			<td><a href="?page=' . $page . '&amp;show=deleted&amp;undel=' . $arr['faq_id'] . '">Wiederherstellen</a> &nbsp;
-			<a href="?page=' . $page . '&amp;show=deleted&amp;deldel=' . $arr['faq_id'] . '">L&ouml;schen </a></td></tr>';
+			<a href="?page=' . $page . '&amp;show=deleted&amp;deldel=' . $arr['faq_id'] . '">Löschen </a></td></tr>';
         }
         echo '</table><br/>';
     } else {
         echo "Keine Fragen vorhanden!<br/><br/>";
     }
-    echo '<input type="button" value="Zur &Uuml;bersicht" onclick="document.location=\'?page=' . $page . '\'" /> &nbsp;';
+    echo '<input type="button" value="Zur Übersicht" onclick="document.location=\'?page=' . $page . '\'" /> &nbsp;';
     echo '<input type="button" value="Papierkorb leeren" onclick="document.location=\'?page=' . $page . '&amp;action=flushbin\'" />';
 }
 
@@ -424,7 +427,7 @@ else {
 	");
     $uarr = mysql_fetch_array($ures);
     if ($uarr['cnt'] > 0) {
-        echo '<tr><td><a href="?page=' . $page . '&amp;show=deleted">Gel&ouml;schte Fragen</a></td>';
+        echo '<tr><td><a href="?page=' . $page . '&amp;show=deleted">Gelöschte Fragen</a></td>';
         echo '<td>' . $uarr['cnt'] . '</td></tr>';
     }
     echo '</table><br/>';

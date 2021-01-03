@@ -6,6 +6,7 @@ $keys = [
     'rules_thread',
     'ts_link',
     'faq_admin',
+    'registered_user_group',
     'loginadmin_group',
     'infobox_board_blacklist',
     'status_board',
@@ -28,4 +29,4 @@ foreach ($keys as $key) {
     echo "<tr><td>" . $key . "</td>";
     echo "<td><textarea name=\"config_value[" . $key . "]\" rows=\"5\" cols=\"50\">" . get_config($key, null, false) . "</textarea></td>";
 }
-echo "</table><br/><input type=\"submit\" name=\"submit\" value=\"&Uuml;bernehmen\" /> ";
+echo "</table><br/><input type=\"submit\" name=\"submit\" value=\"Übernehmen\" /> ";

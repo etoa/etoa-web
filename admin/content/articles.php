@@ -1,5 +1,8 @@
 <h1>Hilfe-Artikel</h1>
 <?php
+
+use App\Support\StringUtil;
+
 if (isset($_POST['new_submit']) && $_POST['new_title'] != "") {
     dbquery("
             INSERT INTO " . dbtable('articles ') . "
@@ -57,14 +60,14 @@ if (mysql_num_rows($res) > 0) {
     }
     echo "</select> <input type=\"button\" value=\"Anzeigen\" onclick=\"document.location='?page=$page&id='+document.getElementById('text_select').options[document.getElementById('text_select').selectedIndex].value\" /></td></tr>";
     echo "<tr><th>Name:</th><td><input type=\"text\" size=\"40\" name=\"title\" value=\"" . $first['title'] . "\" /></td></tr>";
-    echo "<tr><th>Letzte Änderung:</th><td>" . df($first['changed']) . "</td></tr>";
+    echo "<tr><th>Letzte Änderung:</th><td>" . StringUtil::dateFormat($first['changed']) . "</td></tr>";
     echo "<tr><td colspan=\"2\"><textarea name=\"text_text\" rows=\"28\" cols=\"100\">" . stripslashes($first['text']) . "</textarea>
 		<br/><a href=\"http://daringfireball.net/projects/markdown/syntax\" target=\"_blank\">Syntax</a> &nbsp;
 		<a href=\"http://michelf.com/projects/php-markdown/extra/\" target=\"_blank\">Erweiterte Syntax</a>
 		</td></tr>";
     echo "</table><br/>
 		<input type=\"hidden\" name=\"text_id\" value=\"" . $first['id'] . "\" />
-		<input type=\"submit\" name=\"submit\" value=\"&Uuml;bernehmen\" />";
+		<input type=\"submit\" name=\"submit\" value=\"Übernehmen\" />";
     echo "&nbsp; <input type=\"button\" value=\"Vorschau\" onclick=\"window.open('http://etoa.ch/help/?page=article&amp;article=" . $first['id'] . "');\" />";
     echo "&nbsp; <input type=\"submit\" name=\"del\" value=\"Löschen\" onclick=\"return confirm('Wirklich löschen?')\" /> ";
 } else {

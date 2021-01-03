@@ -1,7 +1,7 @@
 /archiv/*
 /cache/compile/*.php
 /.ftpquota
-/site/config/conf.inc.php
+/config/app.php
 /pub/.ftpquota
 /forum/
 /vendor/

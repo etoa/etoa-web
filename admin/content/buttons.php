@@ -6,5 +6,5 @@ if (isset($_POST['submit'])) {
 }
 echo "<form action=\"?page=$page\" method=\"post\">";
 echo "<textarea name=\"config_value\" rows=\"30\" cols=\"120\">" . get_config('buttons', '') . "</textarea>";
-echo "<br/><br/><input type=\"submit\" name=\"submit\" value=\"&Uuml;bernehmen\" /> ";
+echo "<br/><br/><input type=\"submit\" name=\"submit\" value=\"Übernehmen\" /> ";
 echo "</form>";

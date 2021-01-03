@@ -1,15 +1,20 @@
-<?PHP
-echo "<br/><div class=\"boxLine\"></div>";
-echo "<div class=\"boxTitle\"><h2>Melde dich f&uuml;r eine Runde an</h2></div>";
-echo "<div class=\"boxLine\"></div>";
-echo "<div class=\"boxData\">";
-echo "Bitte w&auml;hle eine Runde aus:<ul>";
-foreach ($rounds as $k => $v) {
-    echo "<li><a href=\"" . $v['url'] . "/show.php?index=register\">" . $v['name'] . "</a>";
-    if ($v['startdate'] > 0)
-        echo " (online seit " . date("d.m.Y", $v['startdate']) . ")";
-    echo "</li>";
-}
-echo "</ul>";
-echo "</div>";
-echo "<div class=\"boxLine\"></div>";
+<br />
+<div class="boxLine"></div>
+<div class="boxTitle">
+    <h2>Melde dich für eine Runde an</h2>
+</div>
+<div class="boxLine"></div>
+<div class="boxData">
+    Bitte wähle die Runde aus:
+    <ul>
+        <?php foreach (App\Models\Round::active() as $round) : ?>
+            <li>
+                <a href="<?= $round->url ?>/show.php?index=register"><?= $round->name ?></a>
+                <?php if ($round->startdate > 0) : ?>
+                    (online seit <?= App\Support\StringUtil::dateFormat($round->startdate) ?>)
+                <?php endif; ?>
+            </li>
+        <?php endforeach ?>
+    </ul>
+</div>
+<div class="boxLine"></div>

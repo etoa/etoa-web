@@ -6,11 +6,11 @@
     <meta name="author" content="EtoA Gaming" />
     <meta name="description" content="EtoA - Das kostenlose Sci-Fi Browsergame." />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="{asset file='favicon.ico'}" type="image/x-icon" />
 
-    <link rel="stylesheet" href="{$apppurl}css/app.css">
-    <script src="{$apppurl}js/app.js" defer></script>
-    <script src="{$apppurl}js/fslightbox.js" defer></script>
+    <link rel="stylesheet" href="{asset file='site/css/app.css'}">
+    <script src="{asset file='site/js/app.js'}" defer></script>
+    <script src="{asset file='site/js/fslightbox.js'}" defer></script>
 
     {$headerJs}
 </head>
@@ -19,36 +19,23 @@
 
     <div class="Table_01">
         <div class="Header_">
-            <img alt="img" id="Header" src="{$apppurl}images/headers/{$page}.png" style="width:263px;height:45px" />
+            {assign "header_img" "site/images/headers/{$page}.png"}
+            <img alt="img" id="Header" src="{asset file=$header_img}" style="width:263px;height:45px" />
         </div>
         <div class="Scr-up_">
-            <img alt="img" id="line_top" src="{$apppurl}images/line_top.gif" style="width:35px;height:36px" />
+            <img alt="img" id="line_top" src="{asset file='site/images/line_top.gif'}" style="width:35px;height:36px" />
         </div>
         <div class="Line1_">
-            <img alt="img" id="Line1" src="{$apppurl}images/Line1.gif" style="width:390px;height:20px" />
+            <img alt="img" id="Line1" src="{asset file='site/images/Line1.gif'}" style="width:390px;height:20px" />
         </div>
         <div class="Line2_">
-            <img alt="img" id="Line2" src="{$apppurl}images/Line2.gif" style="width:14px;height:608px" />
+            <img alt="img" id="Line2" src="{asset file='site/images/Line2.gif'}" style="width:14px;height:608px" />
         </div>
         <div class="Line1009_">
-            <img alt="img" id="Line1009" src="{$apppurl}images/Line1-09.gif" style="width:8px;height:600px" />
+            <img alt="img" id="Line1009" src="{asset file='site/images/Line1-09.gif'}" style="width:8px;height:600px" />
         </div>
 
-        <ul id="mainMenu">
-            {foreach from=$nav item=n}
-            <li>
-                {if isset($n.hr)}
-                <img src="{$apppurl}images/hline.gif" alt="hline" class="hline" />
-                {else}
-                {if $n.url eq $page}
-                <a href="{$n.url}" class="current">{$n.name}</a>
-                {else}
-                <a href="{$n.url}">{$n.name}</a>
-                {/if}
-                {/if}
-            </li>
-            {/foreach}
-        </ul>
+        {$mainMenu}
 
         <div class="Votebanner_">
             {$votebanner}
@@ -56,21 +43,7 @@
 
         <!-- Login -->
         <div class="login">
-            <form action="{$loginform.rnd}" method="post" id="loginform">
-                <input type="text" name="{$loginform.nickField}" size="11" maxlength="100" autofocus />
-                <input type="password" name="{$loginform.passwordField}" size="11" maxlength="100" />
-                <select id="loginround" name="round">
-                    {foreach from=$rounds key=k item=v}
-                    {if $v.url eq $selectedRound}
-                    <option value="{$v.url}" selected="selected">{$v.name}</option>
-                    {else}
-                    <option value="{$v.url}">{$v.name}</option>
-                    {/if}
-                    {/foreach}
-                </select><br />
-                <input class="btn-login_" type="submit" value=" " name="login" />
-                <input type="hidden" name="token" value="{$loginform.logintoken}" />
-            </form>
+            {$gameLogin}
         </div>
 
     </div>
@@ -78,8 +51,8 @@
     <!-- Content -->
     <div id="divScrollTextCont">
         <div id="divText">
-            {$content_for_layout}
-            <p class="generateTime">Generated in {$generate_time} sec</p>
+            <!-- {if $title|default:'' != ''}<h1>{$title}</h1>{/if} -->
+            {$content}
         </div>
     </div>
 

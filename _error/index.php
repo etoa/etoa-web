@@ -7,9 +7,9 @@ $e = isset($_GET['e']) ? $_GET['e'] : 404;
 switch ($e) {
     case 403:
         $errname = "Fehler 403 - Zugriff verweigert";
-        $errtext = "Der Zugriff auf das angeforderte Verzeichnis ist nicht m&ouml;glich.
+        $errtext = "Der Zugriff auf das angeforderte Verzeichnis ist nicht möglich.
     Entweder ist kein Index-Dokument vorhanden oder das Verzeichnis
-    ist zugriffsgesch&uuml;tzt.";
+    ist zugriffsgeschützt.";
         break;
     case 401:
         $errname = "Fehler 401 - Authentisierung fehlgeschlagen";
@@ -17,8 +17,8 @@ switch ($e) {
     auf diese URL zuzugreifen.
     Entweder wurden falsche Referenzen (z.B. ein falsches Passwort)
     angegeben oder ihr Browser versteht nicht, wie die geforderten
-    Referenzen zu &uuml;bermitteln sind.<br/>
-    Sofern Sie f&uuml;r den Zugriff berechtigt sind, &uuml;berpr&uuml;fen
+    Referenzen zu übermitteln sind.<br/>
+    Sofern Sie für den Zugriff berechtigt sind, überprüfen
     Sie bitte die eingegebene User-ID und das Passwort und versuchen Sie
     es erneut.";
         break;
