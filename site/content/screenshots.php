@@ -15,11 +15,10 @@ foreach ($files as $f) {
     $file_small = $dir . "/" . $f . "_small.jpg";
     $fs = getimagesize($file);
     $name = ucfirst($f);
-    echo "&nbsp; &nbsp; &nbsp;
-        <a href=\"" . $file . "\" onclick=\"return hs.expand(this)\">
-        <img src=\"" . $file_small . "\" style=\"width:250px;height:187px;\" alt=\"" . $name . "\" title=" . $name . "/></a> &nbsp;
-        <div class=\"highslide-caption\">" . $name . "</div>";
-
+    echo '&nbsp; &nbsp; &nbsp;
+        <a href="' . $file . '" data-fslightbox="gallery" data-caption="' . $name . '">
+            <img src="' . $file_small . '" style="width:250px;height:187px;" alt="' . $name . '" title="' . $name . '"/>
+        </a> &nbsp;';
     if ($cnt == 2) {
         $cnt = 0;
         echo "<br/><br/>";

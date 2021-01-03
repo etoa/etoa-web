@@ -48,13 +48,21 @@ if (mysql_num_rows($res) > 0) {
     echo "<table class=\"tbl\" style=\"width:750px;\">";
     echo "<tr><th>Name:</th><th>Url:</th><th>Anzeigen:</th><th>Löschen:</th></tr>";
     while ($arr = mysql_fetch_array($res)) {
-        echo "<tr><td><input type=\"text\" name=\"round_name[" . $arr['round_id'] . "]\" value=\"" . $arr['round_name'] . "\" size=\"20\" /></td>";
-        echo "<td><input type=\"text\" name=\"round_url[" . $arr['round_id'] . "]\" value=\"" . $arr['round_url'] . "\" size=\"50\" /></td>";
-        echo "<td><input type=\"radio\" name=\"round_active[" . $arr['round_id'] . "]\" value=\"1\" checked=\"checked\" /> Ja <input type=\"radio\" name=\"round_active[" . $arr['round_id'] . "]\" value=\"0\"";
-        if ($arr['round_active'] == 0)
-            echo "checked=\"checked\"";
-        echo "/> Nein</td>";
-        echo "<td><input type=\"checkbox\" name=\"round_del[" . $arr['round_id'] . "]\" value=\"1\"/></td></tr>";
+        echo "<tr>
+            <td>
+                <input type=\"text\" name=\"round_name[" . $arr['round_id'] . "]\" value=\"" . $arr['round_name'] . "\" size=\"20\" />
+            </td>
+            <td>
+                <input type=\"text\" name=\"round_url[" . $arr['round_id'] . "]\" value=\"" . $arr['round_url'] . "\" size=\"50\" />
+            </td>
+            <td>
+                <label><input type=\"radio\" name=\"round_active[" . $arr['round_id'] . "]\" value=\"1\"" . ($arr['round_active'] == 1 ? "checked=\"checked\"" : '') . " /> Ja</label>
+                <label><input type=\"radio\" name=\"round_active[" . $arr['round_id'] . "]\" value=\"0\"" . ($arr['round_active'] == 0 ? "checked=\"checked\"" : '') . "/> Nein</label>
+            </td>
+            <td>
+                <input type=\"checkbox\" name=\"round_del[" . $arr['round_id'] . "]\" value=\"1\"/>
+            </td>
+        </tr>";
     }
     echo "</table><br/><input type=\"submit\" name=\"submit\" value=\"&Uuml;bernehmen\" /> ";
 } else {
