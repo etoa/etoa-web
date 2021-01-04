@@ -46,10 +46,12 @@ function abort(string $message, string $title = 'Error')
 function dbconnect()
 {
     global $db_handle;
-    $host = config('database.host');
-    $user = config('database.user');
-    $password = config('database.password');
-    $database = config('database.database');
+    global $db_driver;
+    $db_driver = 'default';
+    $host = config("database.$db_driver.host");
+    $user = config("database.$db_driver.user");
+    $password = config("database.$db_driver.password");
+    $database = config("database.$db_driver.database");
     if (!$db_handle = @mysql_connect($host, $user, $password)) {
         abort("Zum Datenbankserver auf <strong>" . $host . "</strong> kann keine Verbindung hergestellt werden! Bitte schaue später nochmals vorbei.", "MySQL-Verbindungsproblem");
     }
@@ -80,7 +82,8 @@ function dbclose()
  */
 function dbtable($name)
 {
-    return config('database.table_prefix', '') . $name;
+    global $db_driver;
+    return config("database.$db_driver.table_prefix", '') . $name;
 }
 
 /**

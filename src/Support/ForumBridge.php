@@ -2,13 +2,13 @@
 
 namespace App\Support;
 
-use StringUtil;
+use App\Support\Database\DB;
 
 class ForumBridge
 {
     public static function activeUsers()
     {
-        $res = dbquery("
+        $res = DB::instance('forum')->query("
             SELECT
                 u.*,
                 a.avatarExtension,
@@ -34,7 +34,7 @@ class ForumBridge
                 u.username
             ;");
         $items = [];
-        while ($arr = mysql_Fetch_assoc($res)) {
+        while ($arr = $res->fetch()) {
             $items[] = [
                 'id' => $arr['userID'],
                 'username' => $arr['username'],
@@ -46,7 +46,7 @@ class ForumBridge
 
     public static function userById(int $userId): ?array
     {
-        $ures = dbquery("
+        $res = DB::instance('forum')->preparedQuery("
             SELECT
                 u.userID,
                 u.username,
@@ -60,10 +60,11 @@ class ForumBridge
                 " . self::wcftable('avatar') . " a
                 ON u.avatarID = a.avatarID
             WHERE
-                u.userID = '" . $userId . "'
-        ;");
-        if (mysql_num_rows($ures) > 0) {
-            $arr = mysql_Fetch_assoc($ures);
+                u.userID = :userId
+            ;", [
+                'userId' => $userId
+             ]);
+        if ($arr = $res->fetch()) {
             return [
                 'id' => $arr['userID'],
                 'username' => $arr['username'],
@@ -77,7 +78,7 @@ class ForumBridge
 
     public static function userByName(string $username): ?array
     {
-        $res = dbquery("
+        $res = DB::instance('forum')->preparedQuery("
             SELECT
                 userID,
                 username,
@@ -86,10 +87,11 @@ class ForumBridge
             FROM
                 " . self::wcftable('user') . "
             WHERE
-                username='" . $username . "'
-        ;");
-        if (mysql_num_rows($res) > 0) {
-            $arr = mysql_fetch_array($res);
+                username = :username
+            ;", [
+                'username' => $username,
+            ]);
+        if ($arr = $res->fetch()) {
             return [
                 'id' => $arr['userID'],
                 'username' => $arr['username'],
@@ -102,17 +104,19 @@ class ForumBridge
 
     public static function authenticateUser(array $user, string $password): bool
     {
-        $res = dbquery("
+        $res = DB::instance('forum')->preparedQuery("
             SELECT
                 userID
             FROM
                 " . self::wcftable('user') . "
             WHERE
-                password='" . self::getDoubleSaltedHash($password, $user['salt']) . "'
-            AND
-                userID='" . $user['id'] . "'
-        ;");
-        return mysql_num_rows($res) > 0;
+                password = :password
+                AND userID = :userId
+            ;", [
+                'userId' => $user['id'],
+                'password' => self::getDoubleSaltedHash($password, $user['salt']),
+            ]);
+        return is_array($res->fetch());
     }
 
     /**
@@ -187,24 +191,26 @@ class ForumBridge
 
     public static function groupIdsOfUser(int $userId): array
     {
-        $res = dbquery("
+        $res = DB::instance('forum')->preparedQuery("
             SELECT
                 groupID
             FROM
                 " . self::wcftable('user_to_groups') . "
             WHERE
-                userID='" . $userId . "'
-            ;");
+                userID=:userId
+            ;", [
+                'userId' => $userId,
+            ]);
         $data = [];
-        while ($arr = mysql_fetch_row($res)) {
-            $data[] = $arr[0];
+        while ($arr = $res->fetch()) {
+            $data[] = $arr['groupID'];
         }
         return $data;
     }
 
     public static function usersOfGroup(int $groupId): array
     {
-        $res = dbquery("
+        $res = DB::instance('forum')->preparedQuery("
             SELECT
                 u.userID,
                 u.username
@@ -212,11 +218,13 @@ class ForumBridge
                 " . self::wcftable('user_to_groups') . " t
             INNER JOIN
                 " . self::wcftable('user') . " u
-                ON t.userID=u.userID
-                AND t.groupID = " . $groupId . ";
-        ;");
+                ON t.userID = u.userID
+                AND t.groupID = :groupId
+            ;", [
+                'groupId' => $groupId,
+            ]);
         $data = [];
-        while ($arr = mysql_fetch_assoc($res)) {
+        while ($arr = $res->fetch()) {
             $data[] = [
                 'id' => $arr['userID'],
                 'username' => $arr['username'],
@@ -227,16 +235,18 @@ class ForumBridge
 
     public static function usersOnline(int $threshold = 1000): int
     {
-        $res = dbquery("
+        $res = DB::instance('forum')->preparedQuery("
             SELECT
-                COUNT(sessionID)
+                COUNT(sessionID) as cnt
             FROM
                 " . self::wcftable('session') . "
             WHERE
-                lastActivityTime >" . (time() - $threshold) . "
-            ;");
-        $arr = mysql_fetch_row($res);
-        return $arr[0];
+                lastActivityTime > :time
+            ;", [
+                'time' => time() - $threshold,
+            ]);
+        $arr = $res->fetch();
+        return $arr['cnt'];
     }
 
     public static function latestPosts($limit, $blacklist_boards = [])
@@ -247,7 +257,7 @@ class ForumBridge
             $bls .= 't.boardid NOT IN (' . implode(',', $blacklist_boards) . ')';
         }
 
-        $res = dbquery("
+        $res = DB::instance('forum')->preparedQuery("
             SELECT
                 t.topic,
                 p.postID,
@@ -267,9 +277,12 @@ class ForumBridge
                 )
             WHERE " . $bls . "
             ORDER BY p.time DESC
-            LIMIT " . $limit . ";");
+            LIMIT :limit
+            ;", [
+                'limit' => $limit
+            ]);
         $items = [];
-        while ($arr = mysql_fetch_assoc($res)) {
+        while ($arr = $res->fetch()) {
             $items[] = [
                 'id' => $arr['postID'],
                 'topic' => $arr['topic'],
@@ -281,7 +294,7 @@ class ForumBridge
 
     public static function newsPosts(int $limit, int $news_board_id, int $status_board_id)
     {
-        $res = dbquery("
+        $res = DB::instance('forum')->preparedQuery("
             SELECT
                 t.topic,
                 t.time,
@@ -317,21 +330,25 @@ class ForumBridge
                 ) pp
                 ON pp.threadID=t.threadID
                 AND (
-                    t.boardID=" . $news_board_id . "
+                    t.boardID = :news_board
                     OR
                     (
-                        t.boardID=" . $status_board_id . "
-                        AND t.isClosed=0
+                        t.boardID = :status_board
+                        AND t.isClosed = 0
                     )
                 )
             GROUP BY
                 t.threadID
             ORDER BY
                 t.time DESC
-            LIMIT " . $limit . "
-            ;");
+            LIMIT :limit
+            ;", [
+                'limit' => $limit,
+                'news_board' => $news_board_id,
+                'status_board' => $status_board_id,
+            ]);
         $items = [];
-        while ($arr = mysql_fetch_array($res)) {
+        while ($arr = $res->fetch()) {
             $items[] = [
                 'id' => $arr['threadID'],
                 'topic' => $arr['topic'],
@@ -349,14 +366,16 @@ class ForumBridge
 
     public static function thread($threadId)
     {
-        $res = dbquery("
+        $res = DB::instance('forum')->preparedQuery("
             SELECT *
             FROM " . self::wbbtable('post') . "
-            WHERE threadid = " . $threadId . "
+            WHERE threadid = :threadId
             ORDER BY time ASC
-            LIMIT 1;");
-        if (mysql_num_rows($res) > 0) {
-            $arr = mysql_fetch_array($res);
+            LIMIT 1
+            ;", [
+                'threadId' => $threadId,
+            ]);
+        if ($arr = $res->fetch()) {
             return [
                 'subject' => $arr['subject'],
                 'message' => $arr['message'],
