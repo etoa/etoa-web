@@ -237,11 +237,19 @@ class ForumBridge
     {
         $res = DB::instance('forum')->preparedQuery("
             SELECT
-                COUNT(sessionID) as cnt
+                COUNT(*)  as cnt
             FROM
-                " . self::wcftable('session') . "
-            WHERE
-                lastActivityTime > :time
+                (
+                    SELECT
+                        COUNT(*)
+                    FROM
+                        " . self::wcftable('session') . "
+                    WHERE
+                        lastActivityTime > :time
+                    GROUP BY
+                        ipAddress,
+                        userID
+                ) as q
             ;", [
                 'time' => time() - $threshold,
             ]);
