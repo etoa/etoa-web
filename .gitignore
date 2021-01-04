@@ -1,4 +1,5 @@
 /archiv/*
+/pub/*
 /cache/compile/*.php
 /.ftpquota
 /config/app.php
