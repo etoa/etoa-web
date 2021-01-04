@@ -233,7 +233,7 @@ class ForumBridge
         return $data;
     }
 
-    public static function usersOnline(int $threshold = 1000): int
+    public static function usersOnline(int $threshold = 300): int
     {
         $res = DB::instance('forum')->preparedQuery("
             SELECT
@@ -248,7 +248,8 @@ class ForumBridge
                         lastActivityTime > :time
                     GROUP BY
                         ipAddress,
-                        userID
+                        userID,
+                        userAgent
                 ) as q
             ;", [
                 'time' => time() - $threshold,
