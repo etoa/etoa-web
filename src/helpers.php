@@ -153,7 +153,7 @@ function forward($page, $debug = 0)
 
 function forwardInternal($page, $debug = 0)
 {
-    forward("http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . $page, $debug);
+    forward($_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . $page, $debug);
 }
 
 function pushText($text)
