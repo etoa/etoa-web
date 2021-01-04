@@ -1,11 +1,8 @@
-<?PHP
-
-use App\Support\TextUtil;
-
-echo "<br/><div class=\"boxLine\"></div>";
-echo "<div class=\"boxTitle\">Wer für dieses Projekt verantwortlich ist:</div>";
-echo "<div class=\"boxLine\"></div>";
-echo "<div class=\"boxData\">";
-echo TextUtil::get("impressum");
-echo "</div>";
-echo "<div class=\"boxLine\"></div>";
+<br/>
+<div class="boxLine"></div>
+<div class="boxTitle">Wer für dieses Projekt verantwortlich ist</div>
+<div class="boxLine"></div>
+<div class="boxData">
+    <?= App\Support\TextUtil::get("impressum") ?>
+</div>
+<div class="boxLine"></div>

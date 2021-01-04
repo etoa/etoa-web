@@ -10,9 +10,9 @@ Bitte wähle eine Runde aus der Navigation, um deren Hilfe anzuzeigen!<br/>
     <fieldset style="float:left;width:250px;margin-right:20px;">
         <legend><?= $round->name ?></legend>
         <ul>
-            <li><a target="_blank" href="<?= $round->url ?>/show.php?index=register">Anmelden</a></li>
-            <li><a target="_blank" href="<?= $round->url ?>/show.php?index=pwforgot">Passwort vergessen</a></li>
-            <li><a target="_blank" href="<?= $round->url ?>/show.php?index=contact">Admin kontaktieren</a></li>
+            <li><a target="_blank" href="<?= loginRoundUrl($round, 'register') ?>">Anmelden</a></li>
+            <li><a target="_blank" href="<?= loginRoundUrl($round, 'pwforgot') ?>">Passwort vergessen</a></li>
+            <li><a target="_blank" href="<?= loginRoundUrl($round, 'contact') ?>">Admin kontaktieren</a></li>
         </ul>
     </fieldset>
 <?php endforeach; ?>

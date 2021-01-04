@@ -77,18 +77,9 @@
         <td>
             <h3>Runden</h3>
             <a href="?page=rounds"><img src="<?= baseUrl('public/images/icons/earth.png') ?>" alt="Runden" /></a><br /><br />
-            <?PHP
-            $res = dbquery("
-                SELECT *
-                FROM " . dbtable('rounds') . "
-                WHERE round_active=1 ORDER BY round_name
-                ;");
-            if (mysql_num_rows($res) > 0) {
-                while ($arr = mysql_fetch_array($res)) {
-                    echo '<a target="_blank" href="' . $arr['round_url'] . '/show.php?index=help">Game-Hilfe ' . $arr['round_name'] . '</a><br/>';
-                }
-            }
-            ?>
+            <?php foreach (App\Models\Round::active() as $round) : ?>
+                <a target="_blank" href="<?= loginRoundUrl($round, 'contact') ?>">Kontakt <?= $round->name ?></a><br/>
+            <?php endforeach ?>
         </td>
     </tr>
     <tr>

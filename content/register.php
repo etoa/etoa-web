@@ -9,7 +9,7 @@
     <ul>
         <?php foreach (App\Models\Round::active() as $round) : ?>
             <li>
-                <a href="<?= $round->url ?>/show.php?index=register"><?= $round->name ?></a>
+                <a href="<?= loginRoundUrl($round, 'register') ?>"><?= $round->name ?></a>
                 <?php if ($round->startdate > 0) : ?>
                     (online seit <?= App\Support\StringUtil::dateFormat($round->startdate) ?>)
                 <?php endif; ?>

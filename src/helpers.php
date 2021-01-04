@@ -1,6 +1,7 @@
 <?PHP
 
 use Adbar\Dot;
+use App\Models\Round;
 
 require_once 'mysql_polyfill.php';
 
@@ -202,4 +203,9 @@ function baseUrl($path = null): string
 function helpUrl($page, $key = null, $value = null): string
 {
     return baseUrl('help/?page=' . $page . '&amp;' . $key . '=' . $value);
+}
+
+function loginRoundUrl(Round $round, string $page)
+{
+    return $round->url . '/show.php?index=' . $page;
 }

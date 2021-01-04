@@ -8,26 +8,21 @@ $news_board_id = get_config('news_board');
 $status_board_id = get_config('status_board');
 $num_news = 3;
 
-echo '<h1>Herzlich willkommen zu Escape to Andromeda!</h1>';
-echo "<div class=\"boxLine\"></div>";
-echo "<div class=\"boxTitle\"><h2>Über das Spiel</h2></div>";
-echo "<div class=\"boxLine\"></div>";
-echo "<div class=\"boxData\">";
-echo TextUtil::get("home");
-echo "</div>";
-echo "<div class=\"boxLine\"></div>";
+?>
 
-echo "<br/>";
+<h1>Herzlich willkommen zu Escape to Andromeda!</h1>
+<div class="boxLine"></div>
+<div class="boxTitle">
+    <h2>Über das Spiel</h2>
+</div>
+<div class="boxLine"></div>
+<div class="boxData">
+    <?= TextUtil::get("home") ?>
+</div>
+<div class="boxLine"></div>
+<br />
 
-if (get_config('adds_news') != "") {
-    echo "<div style=\"text-align:center;\">";
-    $adds = explode("<br/>", get_config('adds_news'));
-    echo stripslashes($adds[array_rand($adds)]);
-    echo "</div>";
-    echo "<div style=\"font-size:8pt;color:#0f0;text-align:center;font-weight:bold\">Unterstütze EtoA indem du die Angebote
-	unserer Werbepartner beachtest</div>";
-}
-
+<?php
 if (!$newsContent = apcu_fetch('etoa-news-section')) {
     ob_start();
     echo "<h1>News</h1>";

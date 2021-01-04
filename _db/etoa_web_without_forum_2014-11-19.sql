@@ -99,7 +99,6 @@ CREATE TABLE `config` (
 --
 
 INSERT INTO `config` (`config_id`, `config_name`, `config_value`) VALUES
-(189, 'adds_news', ''),
 (226, 'infobox_board_blacklist', '11,57,58,59,4,2,3,82,42,99,8,20,114,116,117,138,139,151,159,152,153,154,155,171,182,183,202,212,213,214,215,217,218,219,220,221,222,223,235,236,237,238,239,250,260,271,272,273,274,286,287,303,313,331'),
 (55, 'server_notice', ''),
 (225, 'loginadmin_group', '22'),
