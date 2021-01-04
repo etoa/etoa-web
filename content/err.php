@@ -24,7 +24,7 @@ $err = isset($_GET['err']) && preg_match('/^[a-z0-9]+$/', $_GET['err']) ? $_GET[
 <div class="boxTitle">Da ist was schiefgegangen...</div>
 <div class="boxLine"></div>
 <div class="boxData">
-    <strong><?= $messages[$err] ?? $messages['default'] ?></strong><br><br>
+    <strong><?= $messages[$err] ?? $messages['unknown'] ?></strong><br><br>
     Solltest du diesen Fehler nicht lösen können besuche unser <a href="help">HelpCenter</a> <br/>
     oder unser <a href="<?= App\Support\ForumBridge::url('board', get_config('support_board')) ?>">Technik-Support-Forum</a>
     um eine Antwort auf dein Problem zu finden!<br/><br/>
