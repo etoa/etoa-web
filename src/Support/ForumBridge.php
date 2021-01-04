@@ -102,20 +102,88 @@ class ForumBridge
 
     public static function authenticateUser(array $user, string $password): bool
     {
-        require_once(__DIR__ . "/../../forum/wcf/lib/util/StringUtil.class.php");
-
         $res = dbquery("
             SELECT
                 userID
             FROM
                 " . self::wcftable('user') . "
             WHERE
-                password='" . StringUtil::getDoubleSaltedHash($password, $user['salt']) . "'
+                password='" . self::getDoubleSaltedHash($password, $user['salt']) . "'
             AND
                 userID='" . $user['id'] . "'
         ;");
         return mysql_num_rows($res) > 0;
     }
+
+    /**
+	 * Returns a salted hash of the given value.
+     *
+     * Source: wcf/lib/util/StringUtil.class.php
+	 *
+	 * @param 	string 		$value
+	 * @param	string		$salt
+	 * @return 	string 		$hash
+	 */
+	private static function getSaltedHash($value, $salt) {
+		if (!defined('ENCRYPTION_ENABLE_SALTING') || ENCRYPTION_ENABLE_SALTING) {
+			$hash = '';
+			// salt
+			if (!defined('ENCRYPTION_SALT_POSITION') || ENCRYPTION_SALT_POSITION == 'before') {
+				$hash .= $salt;
+			}
+
+			// value
+			if (!defined('ENCRYPTION_ENCRYPT_BEFORE_SALTING') || ENCRYPTION_ENCRYPT_BEFORE_SALTING) {
+				$hash .= self::encrypt($value);
+			}
+			else {
+				$hash .= $value;
+			}
+
+			// salt
+			if (defined('ENCRYPTION_SALT_POSITION') && ENCRYPTION_SALT_POSITION == 'after') {
+				$hash .= $salt;
+			}
+
+			return self::encrypt($hash);
+		}
+		else {
+			return self::encrypt($value);
+		}
+	}
+
+	/**
+	 * Returns a double salted hash of the given value.
+     *
+     * Source: wcf/lib/util/StringUtil.class.php
+	 *
+	 * @param 	string 		$value
+	 * @param	string		$salt
+	 * @return 	string 		$hash
+	 */
+	private static function getDoubleSaltedHash($value, $salt) {
+		return self::encrypt($salt . self::getSaltedHash($value, $salt));
+	}
+
+	/**
+	 * encrypts the given value.
+     *
+     * Source: wcf/lib/util/StringUtil.class.php
+	 *
+	 * @param 	string 		$value
+	 * @return 	string 		$hash
+	 */
+	private static function encrypt($value) {
+		if (defined('ENCRYPTION_METHOD')) {
+			switch (ENCRYPTION_METHOD) {
+				case 'sha1': return sha1($value);
+				case 'md5': return md5($value);
+				case 'crc32': return crc32($value);
+				case 'crypt': return crypt($value);
+			}
+		}
+		return sha1($value);
+	}
 
     public static function groupIdsOfUser(int $userId): array
     {
