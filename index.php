@@ -36,10 +36,10 @@ $tpl->assign("sitename", ucfirst($page));
 
 // Content
 if (preg_match('/^[a-z0-9_\/\-]+$/i', $page) > 0) {
-    $pagepath = __DIR__ . "/site/content/$page.php";
+    $pagepath = __DIR__ . "/content/$page.php";
     if (is_file($pagepath)) {
         ob_start();
-        include $pagepath;
+        require $pagepath;
         $ob = ob_get_clean();
         $tpl->assign("content", $ob);
     } else {

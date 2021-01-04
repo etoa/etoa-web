@@ -2,7 +2,7 @@
     {foreach from=$nav item=n}
     <li>
         {if isset($n.hr)}
-        <img src="{asset file='site/images/hline.gif'}" alt="hline" class="hline" />
+        <img src="{asset file='public/images/hline.gif'}" alt="hline" class="hline" />
         {else}
         {if $n.url eq $page}
         <a href="{$n.url}" class="current">{$n.name}</a>
