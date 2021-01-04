@@ -159,6 +159,18 @@ function forwardInternal($page, $debug = 0)
     forward($_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . $page, $debug);
 }
 
+function redirectHttps()
+{
+    if ($_SERVER['HTTP_HOST'] != 'localhost') {
+        if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
+            $location = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            header('HTTP/1.1 301 Moved Permanently');
+            header('Location: ' . $location);
+            exit;
+        }
+    }
+}
+
 function pushText($text)
 {
     $_SESSION['textstore'] = $text;
