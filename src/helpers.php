@@ -176,14 +176,14 @@ function message($type, $msg)
     return "<div class=\"messagebox\"><div class=\"" . $type . "\">" . $msg . "</div></div>";
 }
 
-function baseUrl(): string
+function baseUrl($path = null): string
 {
-    $str = substr($_SERVER['SCRIPT_FILENAME'], strlen($_SERVER['DOCUMENT_ROOT']));
-    $url = substr($str, 0, strrpos($str, "/") + 1);
-    return $url;
+    $str = substr(realpath(__DIR__ . '/../'), strlen(realpath($_SERVER['DOCUMENT_ROOT'])));
+    $url = str_replace(DIRECTORY_SEPARATOR, '/', $str) . '/';
+    return $url . ($path ?? '');
 }
 
 function helpUrl($page, $key = null, $value = null): string
 {
-    return baseUrl() . 'help/?page=' . $page . '&amp;' . $key . '=' . $value;
+    return baseUrl('help/?page=' . $page . '&amp;' . $key . '=' . $value);
 }

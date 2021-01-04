@@ -8,7 +8,7 @@
     <tr>
         <td>
             <h3>FAQ</h3>
-            <a href="?page=faq"><img src="web/images/icons/help.png" alt="FAQ" /></a><br /><br />
+            <a href="?page=faq"><img src="<?= baseUrl('public/images/icons/help.png') ?>" alt="FAQ" /></a><br /><br />
             <?PHP
 
             use App\Support\ForumBridge;
@@ -43,7 +43,7 @@
         </td>
         <td>
             <h3>Wiki</h3>
-            <a href="?page=article"><img src="web/images/icons/Documents.png" alt="Wiki" /></a><br /><br />
+            <a href="?page=article"><img src="<?= baseUrl('public/images/icons/Documents.png') ?>" alt="Wiki" /></a><br /><br />
             <?PHP
             $res = dbquery("
                 SELECT count(*) FROM (SELECT hash FROM (SELECT
@@ -76,7 +76,7 @@
         </td>
         <td>
             <h3>Runden</h3>
-            <a href="?page=rounds"><img src="web/images/icons/earth.png" alt="Runden" /></a><br /><br />
+            <a href="?page=rounds"><img src="<?= baseUrl('public/images/icons/earth.png') ?>" alt="Runden" /></a><br /><br />
             <?PHP
             $res = dbquery("
                 SELECT *
@@ -94,7 +94,7 @@
     <tr>
         <td>
             <h3>Forum</h3>
-            <a href="<?= ForumBridge::url() ?>"><img src="web/images/icons/chat.png" alt="Forum" /></a><br /><br />
+            <a href="<?= ForumBridge::url() ?>"><img src="<?= baseUrl('public/images/icons/chat.png') ?>" alt="Forum" /></a><br /><br />
             <a href="<?= ForumBridge::url('board', 13) ?>">Alles zum Forum</a><br />
             <a href="<?= ForumBridge::url('board', 21) ?>">Technischer Support</a><br />
             <a href="<?= ForumBridge::url('board', 15) ?>">Fragen und Antworten</a><br />
@@ -103,13 +103,13 @@
         </td>
         <td>
             <h3>Entwicklung</h3>
-            <a href="https://github.com/etoa/etoa"><img src="web/images/icons/Tools.png" alt="Entwicklung" /></a><br /><br />
+            <a href="https://github.com/etoa/etoa"><img src="<?= baseUrl('public/images/icons/Tools.png') ?>" alt="Entwicklung" /></a><br /><br />
             <a href="https://github.com/etoa/etoa">Entwickler-Portal</a><br />
         </td>
         <td>
             <h3>Weitere Links</h3>
-            <a href="http://etoa.ch/downloads"><img src="web/images/icons/star.png" alt="Weiteres" /></a><br /><br />
-            <a href="http://etoa.ch/downloads">Downloads</a>
+            <a href="<?= baseUrl('archiv') ?>"><img src="<?= baseUrl('public/images/icons/star.png') ?>" alt="Weiteres" /></a><br /><br />
+            <a href="<?= baseUrl('archiv') ?>">Downloads</a>
         </td>
     </tr>
 </table>

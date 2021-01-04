@@ -2,6 +2,10 @@
 // Used as error page if a file is not found or access has been denied
 // see .htaccess for configuration
 
+use App\Support\ForumBridge;
+
+require __DIR__ . '/../vendor/autoload.php';
+
 $e = isset($_GET['e']) ? $_GET['e'] : 404;
 
 switch ($e) {
@@ -29,7 +33,6 @@ switch ($e) {
 			Wähle eine Seite aus folgender Liste:";
 }
 
-
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -38,7 +41,7 @@ switch ($e) {
 <style type="text/css">
     body {
         color: #fff;
-        background: #000 url('http://etoa.ch/_error/bg.jpg') no-repeat center 0px;
+        background: #000 url('<?= baseUrl('public/images/blackhole.jpg') ?>') no-repeat center 0px;
         font-family: arial, helvetica, verdana;
         font-size: 10pt;
     }
@@ -113,11 +116,12 @@ switch ($e) {
         border: 1px solid #373737;
     }
 </style>
+<link rel="shortcut icon" href="<?= baseUrl('favicon.ico') ?>" type="image/x-icon" />
 </head>
 
 <body>
     <div class="logo">
-        <p><img src="http://etoa.ch/_error/logo.png" alt="logo" /></p>
+        <p><img src="<?= baseUrl('public/images/logo.png') ?>" alt="logo" /></p>
     </div>
     <div class="message">
         <h1><?PHP echo $errname; ?></h1>
@@ -125,9 +129,9 @@ switch ($e) {
     </div>
     <div class="links">
         <ul>
-            <li><a href="http://etoa.ch">Startseite</a></li>
-            <li><a href="http://forum.etoa.ch">Forum</a></li>
-            <li><a href="http://etoa.ch/help">Hilfecenter</a></li>
+            <li><a href="<?= baseUrl() ?>">Startseite</a></li>
+            <li><a href="<?= ForumBridge::url() ?>">Forum</a></li>
+            <li><a href="<?= baseUrl('help') ?>">Hilfecenter</a></li>
             <li><a href="javascript:history.back();">Zurück zur vorherigen Seite</a></li>
         </ul>
     </div>

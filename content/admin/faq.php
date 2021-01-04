@@ -151,7 +151,7 @@ if (isset($_GET['faq_edit']) && $_GET['faq_edit'] > 0) {
         }
         echo '</table><br/><input type="submit" name="faq_edit_submit" value="Speichern" /> &nbsp;
 		<input type="submit" name="cancel" value="Abbrechen" /> &nbsp;
-		<input type="button" onclick="document.location=\'http://etoa.ch/help/?page=faq&amp;faq=' . $arr['faq_id'] . '\'" value="Anzeigen" /> <br/><br/>
+		<input type="button" onclick="document.location=\''. helpUrl('faq', 'faq', $arr['faq_id']) . '\'" value="Anzeigen" /> <br/><br/>
 		<input type="button" onclick="document.location=\'?page=' . $page . '&amp;faq_answers=' . $arr['faq_id'] . '\'" value="Antworten verwalten" /> &nbsp;
 		<input type="button" onclick="document.location=\'?page=' . $page . '&amp;faq_del=' . $arr['faq_id'] . '\'" value="Löschen" /> &nbsp;
 		';

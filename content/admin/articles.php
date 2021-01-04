@@ -68,7 +68,7 @@ if (mysql_num_rows($res) > 0) {
     echo "</table><br/>
 		<input type=\"hidden\" name=\"text_id\" value=\"" . $first['id'] . "\" />
 		<input type=\"submit\" name=\"submit\" value=\"Übernehmen\" />";
-    echo "&nbsp; <input type=\"button\" value=\"Vorschau\" onclick=\"window.open('http://etoa.ch/help/?page=article&amp;article=" . $first['id'] . "');\" />";
+    echo "&nbsp; <input type=\"button\" value=\"Vorschau\" onclick=\"window.open('" . helpUrl('article', 'article', $first['hash']) . "');\" />";
     echo "&nbsp; <input type=\"submit\" name=\"del\" value=\"Löschen\" onclick=\"return confirm('Wirklich löschen?')\" /> ";
 } else {
     echo "<i>Keine Texte vorhanden!</i><br/><br/>";

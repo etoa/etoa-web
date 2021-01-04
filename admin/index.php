@@ -27,7 +27,7 @@ if (isset($_SERVER['PHP_AUTH_USER']) && $_SERVER['PHP_AUTH_USER'] != "" && $_SER
     }
 }
 if (!$auth) {
-    header("WWW-Authenticate: Basic realm=\"EtoA.ch Administration\"");
+    header("WWW-Authenticate: Basic realm=\"EtoA Administration\"");
     header("HTTP/1.0 401 Unauthorized");
 }
 $tpl->assign('auth', $auth);

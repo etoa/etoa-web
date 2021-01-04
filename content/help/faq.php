@@ -267,17 +267,17 @@ elseif (isset($_GET['faq']) && $_GET['faq'] > 0) {
 
         echo "<div class=\"faqquestionvote\">
         <a href=\"?page=$page&amp;votefaq=" . $arr['faq_id'] . "&amp;vote=up\" title=\"Diese Frage ist sinnvoll und klar formuliert (nochmals klicken um Wahl rückgängig zu machen)\">
-        <img src=\"web/images/$upImg\" src=\"Up\"/></a>
+        <img src=\"" . baseUrl('public/images/' . $upImg) . "\" alt=\"Up\"/></a>
         <div class=\"faqvotes\">" . $arr['faq_vote'] . "</div>
         <a href=\"?page=$page&amp;votefaq=" . $arr['faq_id'] . "&amp;vote=down\" title=\"Diese Frage ist nicht sinnvoll oder unklar (nochmals klicken um Wahl rückgängig zu machen)\">
-        <img src=\"web/images/$downImg\" src=\"Down\"/></a>";
+        <img src=\"" . baseUrl('public/images/' . $downImg) . "\" alt=\"Down\"/></a>";
         echo "</div>
         <div class=\"faqquestiondesc\">
         <div class=\"faqquestiondesc\">" . StringUtil::text2html($arr['faq_description']) . "</div>";
         $author = $arr['faq_user_nick'] != "" && $arr['faq_user_id'] > 0 ? "<a href=\"?page=user&id=" . $arr['faq_user_id'] . "\">" . stripslashes($arr['faq_user_nick']) . "</a>"  : "Unbekannt";
         $timestr = $arr['faq_user_time'] > 0 ? ", " . StringUtil::diffFromNow($arr['faq_user_time']) : ", vor langer Zeit";
         echo "<div class=\"faqanswerinfo\"><span class=\"answerinfo_tools\">";
-        if ($arr['faq_user_id'] == $_SESSION['etoahelp']['uid']) {
+        if (isset($_SESSION['etoahelp']['uid']) && $arr['faq_user_id'] == $_SESSION['etoahelp']['uid']) {
             echo "<a href=\"?page=$page&amp;editfaq=" . $arr['faq_id'] . "\">bearbeiten</a>";
         }
         echo "</span><span class=\"answerinfo_author\">" . $author . $timestr . "</span>";
@@ -327,7 +327,6 @@ elseif (isset($_GET['faq']) && $_GET['faq'] > 0) {
                 echo message("success", "Vielen Dank für deine Antwort!");
 
                 $text = $username . " hat eine neue Antwort zu deiner Frage\n\n'" . $arr['faq_question'] . "'\n\nin der EtoA-Hilfe geschrieben";
-                //$text .= "\n\nUser-Agent: ".$_SERVER['HTTP_USER_AGENT']."\nHost: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."";
                 $text .= "\n\nhttp://etoa.ch/help/?page=faq&faq=" . $arr['faq_id'] . "";
                 mail($arr['faq_user_email'], "EtoA-FAQ: Neuer Antwort zu deiner Frage", $text);
             } else {
@@ -382,10 +381,10 @@ elseif (isset($_GET['faq']) && $_GET['faq'] > 0) {
                 echo "<div class=\"faqanswercontainer\">
                 <div class=\"faqquestionvote\">
                 <a href=\"?page=$page&amp;voteanswer=" . $carr['comment_id'] . "&amp;vote=up\" title=\"Diese Antwort ist hilfreich (nochmals klicken um Wahl rückgängig zu machen)\">
-                <img src=\"web/images/$upImg\" src=\"Up\"/></a>
+                <img src=\"" . baseUrl('public/images/' . $upImg) . "\" alt=\"Up\"/></a>
                 <div class=\"faqvotes\">" . $carr['comment_vote'] . "</div>
                 <a href=\"?page=$page&amp;voteanswer=" . $carr['comment_id'] . "&amp;vote=down\" title=\"Diese Antwort ist nicht hilfreich (nochmals klicken um Wahl rückgängig zu machen)\">
-                <img src=\"web/images/$downImg\" src=\"Down\"/></a>";
+                <img src=\"" . baseUrl('public/images/' . $downImg) . "\" alt=\"Down\"/></a>";
 
                 if ($carr['comment_correct'] == 1) {
                     $correctImg = "correct.png";
@@ -397,7 +396,7 @@ elseif (isset($_GET['faq']) && $_GET['faq'] > 0) {
                 if (isset($correctImg)) {
                     echo "<br/>";
                     echo "<a href=\"?page=$page&amp;acceptanswer=" . $carr['comment_id'] . "\" title=\"$correctTitle\">
-                    <img src=\"web/images/$correctImg\" src=\"Correct\"/></a>";
+                    <img src=\"public/images/help/$correctImg\" src=\"Correct\"/></a>";
                 }
 
                 echo "</div>";
@@ -405,7 +404,7 @@ elseif (isset($_GET['faq']) && $_GET['faq'] > 0) {
                 <div class=\"faqquestiondesc\">" . StringUtil::text2html($carr['comment_text']) . "</div>";
                 echo "<div class=\"faqanswerinfo\">";
                 echo "<span class=\"answerinfo_tools\">";
-                if ($carr['comment_user_id'] == $_SESSION['etoahelp']['uid']) {
+                if (isset($_SESSION['etoahelp']['uid']) && $carr['comment_user_id'] == $_SESSION['etoahelp']['uid']) {
                     echo "<a href=\"?page=$page&amp;editanswer=" . $carr['comment_id'] . "\">bearbeiten</a>";
                 }
                 echo "</span><span class=\"answerinfo_author\">" . $answerer . $timestr . "</span>";
@@ -497,7 +496,7 @@ elseif (isset($_GET['faq']) && $_GET['faq'] > 0) {
             }
             echo "</ul>";
         }
-        echo "<p><br/><br/><input type=\"button\" onclick=\"document.location='http://etoa.ch/admin/?page=faq&faq_edit=" . $arr['faq_id'] . "'\" value=\"Admin: Bearbeiten\" /></p>";
+        echo "<p><br/><br/><input type=\"button\" onclick=\"document.location='" . baseUrl('admin/?page=faq&faq_edit=' . $arr['faq_id']) . "'\" value=\"Admin: Bearbeiten\" /></p>";
 
         echo "</div>";
         echo "<br class=\"clearer\" />";

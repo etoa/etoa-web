@@ -10,5 +10,5 @@
  */
 function smarty_function_asset($params, Smarty_Internal_Template $template)
 {
-    return baseUrl() . $params['file'];
+    return baseUrl($params['file']);
 }
