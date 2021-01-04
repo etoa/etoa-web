@@ -51,6 +51,9 @@ class MainMenu implements
             [
                 "url" => 'help', "name" => "Hilfe"
             ],
+            !empty(get_config('ts_link')) ? [
+                "url" => get_config('ts_link'), "name" => "Discord"
+            ] : null,
             [
                 "url" => 'archiv',
                 "name" => "Downloads"
@@ -87,7 +90,7 @@ class MainMenu implements
 
     public function render(TemplateEngine $tpl): string
     {
-        $tpl->assign('nav', $this->items());
+        $tpl->assign('nav', array_filter($this->items(), fn ($i) => $i !== null));
         return $tpl->fetch('widgets/main-menu.html');
     }
 }
