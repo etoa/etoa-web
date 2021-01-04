@@ -2,7 +2,7 @@
 <html lang="de">
 
 <head>
-    <title>EtoA | Das Sci-Fi Browsergame | Administration</title>
+    <title>Administration | EtoA | Das Sci-Fi Browsergame</title>
     <meta name="author" content="EtoA Gaming" />
     <meta name="description" content="EtoA - Das kostenlose Sci-Fi Browsergame." />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -43,7 +43,11 @@
             <div id="content">
                 <div>
                     {if $auth}
-                        {$content}
+                        {if $title|default:'' != ''}<h1>{$title}</h1>{/if}
+                        {if isset($error)}
+                        <div class="messagebox"><div class="error">{$error}</div></div>
+                        {/if}
+                        {$content|default:''}
                     {else}
                         <h1>Fehler</h1>
                         Nicht eingeloggt!<br/><br/>

@@ -7,8 +7,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-dbconnect();
-
 // Templating engine
 $tpl = new TemplateEngine();
 
@@ -29,28 +27,29 @@ $tpl->assign("loginbox", ob_get_clean());
 
 // Content
 $page = isset($_GET['page']) ? $_GET['page'] : 'index';
-$pagepath = "content/$page.php";
 if (preg_match('/^[a-z0-9_\/\-]+$/i', $page) > 0) {
+    $pagepath = __DIR__ . "/../content/help/$page.php";
 	if (is_file($pagepath)) {
-		$view = $page;
 		ob_start();
-		include($pagepath);
+		require $pagepath;
         $content = ob_get_clean();
 		$tpl->assign("content", $content);
 		if (isset($header_content)) {
 			$tpl->assign("header_content", $header_content);
 		}
 	} else {
+        http_response_code(404);
 		$tpl->assign("title", "Fehler");
 		$tpl->assign("error", "Seite wurde nicht gefunden!");
 	}
 } else {
+    http_response_code(400);
     $tpl->assign("title", "Fehler");
 	$tpl->assign("error", "Ungültige Abfrage!");
 }
 
 // Site nbame
-$tpl->assign("sitename", "Hilfe | " . ucfirst($page));
+$tpl->assign("site_title", $site_title ?? ucfirst($page));
 
 // Render
 $tpl->render('layouts/help.html');

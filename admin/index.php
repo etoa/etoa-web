@@ -7,8 +7,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-dbconnect();
-
 // Templating engine
 $tpl = new TemplateEngine();
 
@@ -35,21 +33,23 @@ if (!$auth) {
 $tpl->assign('auth', $auth);
 
 // Router
-if (isset($_GET['page']) && preg_match("#^[a-z\_]+$#", $_GET['page'])  && strlen($_GET['page']) <= 50) {
-    $page = $_GET['page'];
+$page = isset($_GET['page']) ? $_GET['page'] : 'home';
+if (preg_match('/^[a-z0-9_\/\-]+$/i', $page) > 0) {
+    $pagepath = __DIR__ . "/../content/admin/$page.php";
+	if (is_file($pagepath)) {
+		ob_start();
+		require $pagepath;
+        $content = ob_get_clean();
+		$tpl->assign("content", $content);
+	} else {
+        http_response_code(404);
+		$tpl->assign("title", "Fehler");
+		$tpl->assign("error", "Seite wurde nicht gefunden!");
+	}
 } else {
-    $page = "home";
+    http_response_code(400);
+    $tpl->assign("title", "Fehler");
+	$tpl->assign("error", "Ungültige Abfrage!");
 }
-
-// Content
-ob_start();
-$page_path = "content/" . $page . ".php";
-if (file_exists($page_path)) {
-    require($page_path);
-} else {
-    require('content/error404.php');
-}
-$content = ob_get_clean();
-$tpl->assign('content', $content);
 
 $tpl->render('layouts/admin.html');

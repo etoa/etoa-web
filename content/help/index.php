@@ -1,3 +1,7 @@
+<?php
+    $site_title = 'Willkommen';
+?>
+
 <h1>Willkommen im EtoA-Hilfe-Center</h1>
 
 <table class="indextable">

@@ -8,6 +8,8 @@ use App\Models\Tag;
 use App\Support\ForumBridge;
 use App\Support\TagCloud;
 
+$site_title = 'Tags';
+
 if (isset($_GET['id']) && $_GET['id'] > 0) {
     $tag = Tag::find($_GET['id']);
     if ($tag !== null) {

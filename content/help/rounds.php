@@ -1,3 +1,7 @@
+<?php
+    $site_title = 'Runden';
+?>
+
 <h1>Runden</h1>
 Bitte wähle eine Runde aus der Navigation, um deren Hilfe anzuzeigen!<br/>
 <h2>Status und Links</h2>

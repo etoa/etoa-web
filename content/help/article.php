@@ -3,6 +3,8 @@
 use App\Support\ForumBridge;
 use App\Support\StringUtil;
 
+$site_title = 'Artikel';
+
 $rulesText = message("info", "<b>Regeln:</b> Keine Namen von Mitspielern im Text, keine Koordinaten, kein Spam, kein Fluchwörter, keine Werbung.
     Es gelten dieselben <a href=\"" . ForumBridge::url('board', get_config('rules_board')) . "\">Regeln</a> wie im Forum (z.B. betreffend illegaler Inhalte) sowie die allgemeine Nettiquette.
     Missbrauch dieser Funktion kann zu einer Sperre im Forum und/oder im Spiel selbst führen.

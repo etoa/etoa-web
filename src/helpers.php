@@ -90,15 +90,16 @@ function dbtable($name)
  * @param integer $fehler
  * @return void|\mysqli_result|bool
  */
-function dbquery($string, $fehler = 1)
+function dbquery($string)
 {
+    global $db_handle;
+    if (!isset($db_handle)) {
+        dbconnect();
+    }
     if ($result = mysql_query($string)) {
         return $result;
-    } else {
-        if ($fehler == 1) {
-            abort(mysql_error() . '<br><br><strong>Query:</strong> ' . $string, 'Datenbank-Fehler');
-        }
     }
+    abort(mysql_error() . '<br><br><strong>Query:</strong> ' . $string, 'Datenbank-Fehler');
 }
 
 function get_config($key, $default = null, $useCache = true)

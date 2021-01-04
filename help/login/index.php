@@ -7,8 +7,6 @@ require __DIR__ . '/../../vendor/autoload.php';
 // Konfiguration laden
 session_start();
 
-dbconnect();
-
 $auth = false;
 if (isset($_SERVER['PHP_AUTH_USER']) && $_SERVER['PHP_AUTH_USER'] != "" && $_SERVER['PHP_AUTH_PW'] != "") {
     $user = ForumBridge::userByName($_SERVER['PHP_AUTH_USER']);
@@ -31,10 +29,11 @@ if (!$auth) {
 }
 
 if ($auth) {
-    if (isset($_SERVER["HTTP_REFERER"]) && !preg_match('/\/login/', $_SERVER["HTTP_REFERER"]))
+    if (isset($_SERVER["HTTP_REFERER"]) && !preg_match('/\/login/', $_SERVER["HTTP_REFERER"])) {
         forward($_SERVER["HTTP_REFERER"]);
-    else
+    } else {
         forwardInternal('..');
+    }
 } else {
     ?>
         <h1>Fehler</h1>

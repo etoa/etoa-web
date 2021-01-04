@@ -7,6 +7,7 @@ use App\Support\ForumBridge;
 use App\Support\StringUtil;
 
 if (isset($_GET['id']) && $_GET['id'] > 0) {
+    $site_title = 'Benutzerprofil';
     echo "<h1>Benutzerprofil</h1>";
     $user = ForumBridge::userById($_GET['id']);
     if ($user !== null) {
@@ -216,6 +217,8 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
         echo message("error", "Benutzer nicht gefunden!");
     }
 } else {
+    $site_title = 'Aktive Benutzer';
+
     echo "<h1>Aktive Benutzer</h1>";
 
     echo "<h2>Fragen & Antworten</h2>";
