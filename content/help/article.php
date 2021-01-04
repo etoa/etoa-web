@@ -195,7 +195,7 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
         echo message("error", "Dieser Artikel existiert nicht!");
     }
 } elseif (isset($_GET['edit']) && $_GET['edit'] != '') {
-    if (LOGIN) {
+    if ($auth) {
         $hash = $_GET['edit'];
 
         echo "<h2>Artikel bearbeiten</h2>";
@@ -321,7 +321,7 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
         echo $requireLoginMsg;
     }
 } elseif (isset($_GET['action']) && $_GET['action'] == 'create') {
-    if (LOGIN) {
+    if ($auth) {
         echo "<h2>Neuer Artikel</h2>";
 
         $title = $text = '';
@@ -441,7 +441,7 @@ if ((isset($_GET['article']) && $_GET['article'] != "") || (isset($_GET['a']) &&
     }
 
     echo "<br/><br/>";
-    if (LOGIN) {
+    if ($auth) {
         echo "<input type=\"button\" onclick=\"document.location='?page=$page&amp;action=create'\" value=\"Neuer Artikel\" /> &nbsp;";
     } else {
         echo message("warning", "Du musst eingeloggt sein um einen neuen Artikel erstelen zu können! Bitte logge dich <a href=\"login\">hier</a> mit deinem Forum-Account ein!");

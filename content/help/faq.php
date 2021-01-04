@@ -42,7 +42,7 @@ if (count($_POST) == 0) {
  * Vote question *
  *****************/
 if (isset($_GET['votefaq']) && $_GET['votefaq'] > 0 && isset($_GET['vote'])) {
-    if (LOGIN) {
+    if ($auth) {
         $res = dbquery("
         SELECT value
         FROM " . dbtable('faq_vote') . "
@@ -106,7 +106,7 @@ if (isset($_GET['votefaq']) && $_GET['votefaq'] > 0 && isset($_GET['vote'])) {
 * Vote answer *
 ***************/
 elseif (isset($_GET['voteanswer']) && $_GET['voteanswer'] > 0 && isset($_GET['vote'])) {
-    if (LOGIN) {
+    if ($auth) {
         $res = dbquery("
         SELECT comment_faq_id
         FROM " . dbtable('faq_comments') . "
@@ -180,7 +180,7 @@ elseif (isset($_GET['voteanswer']) && $_GET['voteanswer'] > 0 && isset($_GET['vo
 * Mark correct answer *
 **********************/
 elseif (isset($_GET['acceptanswer']) && $_GET['acceptanswer'] > 0) {
-    if (LOGIN) {
+    if ($auth) {
         $res = dbquery("
         SELECT comment_faq_id,comment_correct
         FROM " . dbtable('faq_comments') . "
@@ -249,7 +249,7 @@ elseif (isset($_GET['faq']) && $_GET['faq'] > 0) {
 
         $upImg = "up.png";
         $downImg = "down.png";
-        if (LOGIN) {
+        if ($auth) {
             $vres = dbquery("
             SELECT value
             FROM " . dbtable('faq_vote') . "
@@ -360,7 +360,7 @@ elseif (isset($_GET['faq']) && $_GET['faq'] > 0) {
             while ($carr = mysql_fetch_array($cres)) {
                 $upImg = "up.png";
                 $downImg = "down.png";
-                if (LOGIN) {
+                if ($auth) {
                     $vres = dbquery("
                     SELECT value
                     FROM " . dbtable('faq_comment_vote') . "
@@ -389,7 +389,7 @@ elseif (isset($_GET['faq']) && $_GET['faq'] > 0) {
                 if ($carr['comment_correct'] == 1) {
                     $correctImg = "correct.png";
                     $correctTitle = "Der Fragesteller akzeptierte dies als die beste Antwort (nochmals klicken um Wahl rückgängig zu machen)";
-                } elseif (LOGIN && $arr['faq_user_id'] == $_SESSION['etoahelp']['uid'] && $carr['comment_correct'] == 0) {
+                } elseif ($auth && $arr['faq_user_id'] == $_SESSION['etoahelp']['uid'] && $carr['comment_correct'] == 0) {
                     $correctImg = "correct_vote.png";
                     $correctTitle = "Klicke hier um dies als die beste Antwort zu akzeptieren";
                 }
@@ -418,7 +418,7 @@ elseif (isset($_GET['faq']) && $_GET['faq'] > 0) {
         }
 
         echo "<h3>Deine Antwort:</h3>";
-        if (!LOGIN) {
+        if (!$auth) {
             echo $requireLoginMsg;
         } else {
             echo "<div id=\"submitForm\"><form action=\"?page=$page&amp;faq=" . $arr['faq_id'] . "\" method=\"post\">";
@@ -580,7 +580,7 @@ elseif (isset($_GET['editanswer']) && $_GET['editanswer'] > 0) {
         $arr = mysql_fetch_assoc($res);
         $id = $_GET['editanswer'];
 
-        if (LOGIN && $arr['comment_user_id'] == $_SESSION['etoahelp']['uid']) {
+        if ($auth && $arr['comment_user_id'] == $_SESSION['etoahelp']['uid']) {
             if ($_POST[encfname('faq_user_question_submit')] != "") {
                 if ($_POST[encfname('comment_text')] != "") {
                     dbquery("
@@ -613,7 +613,7 @@ elseif (isset($_GET['editanswer']) && $_GET['editanswer'] > 0) {
             echo '<input type="submit" name="' . encfname('faq_user_question_submit') . '" value="Speichern" /> &nbsp; ';
             echo '<a href="?page=' . $page . '&amp;faq=' . $arr['comment_faq_id'] . '">Abbrechen</a>';
             echo '</form>';
-        } elseif (!LOGIN) {
+        } elseif (!$auth) {
             echo $requireLoginMsg;
         } else {
             echo message("error", "Du hast keine Berechtigung um diese Frage zu bearbeiten!");
@@ -640,7 +640,7 @@ elseif (isset($_GET['editfaq']) && $_GET['editfaq'] > 0) {
         $arr = mysql_fetch_assoc($res);
         $id = $_GET['editfaq'];
 
-        if (LOGIN && $arr['faq_user_id'] == $_SESSION['etoahelp']['uid']) {
+        if ($auth && $arr['faq_user_id'] == $_SESSION['etoahelp']['uid']) {
             if ($_POST[encfname('faq_user_question_submit')] != "") {
                 if ($_POST[encfname('faq_user_question')] != "" && $_POST[encfname('faq_description')] != "") {
                     dbquery("
@@ -721,7 +721,7 @@ elseif (isset($_GET['editfaq']) && $_GET['editfaq'] > 0) {
             echo '<input type="submit" name="' . encfname('faq_user_question_submit') . '" value="Speichern" /> &nbsp; ';
             echo '<a href="?page=' . $page . '&amp;faq=' . $arr['faq_id'] . '">Abbrechen</a>';
             echo '</form>';
-        } elseif (!LOGIN) {
+        } elseif (!$auth) {
             echo $requireLoginMsg;
         } else {
             echo message("error", "Du hast keine Berechtigung um diese Frage zu bearbeiten!");
@@ -736,7 +736,7 @@ elseif (isset($_GET['editfaq']) && $_GET['editfaq'] > 0) {
 * Einsendung *
 *************/
 elseif ($cat == "submit") {
-    if ($_POST[encfname('faq_user_question_submit')] != "") {
+    if (isset($_POST[encfname('faq_user_question_submit')]) && $_POST[encfname('faq_user_question_submit')] != "") {
         if ($_POST[encfname('faq_user_question')] != "" && $_POST[encfname('faq_description')] != "") {
             $res = dbquery("
             SELECT
@@ -821,7 +821,7 @@ elseif ($cat == "submit") {
     echo '<p>Stelle hier deine Frage, von der du denkst dass sie für die anderen Spieler auch interessant sein könnte.<br/>
 Die Frage wird anschliessend durch einen Admin beantwortet und freigeschaltet.</p>';
 
-    if (!LOGIN) {
+    if (!$auth) {
         echo $requireLoginMsg;
     } else {
 
@@ -908,7 +908,7 @@ else {
             $limit;
         ");
         //,			faq_rating/faq_ratings AS rating
-    } elseif ($cat == "my" && LOGIN) {
+    } elseif ($cat == "my" && $auth) {
         $res = dbquery("
         SELECT
             *
@@ -1005,7 +1005,7 @@ else {
         ");
     }
 
-    if ($cat == "my" && !LOGIN) {
+    if ($cat == "my" && !$auth) {
         echo $requireLoginMsg;
     } else {
         $nr = mysql_num_rows($res);

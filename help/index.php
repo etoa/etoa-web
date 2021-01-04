@@ -12,16 +12,15 @@ $tpl = new TemplateEngine();
 
 // Login
 ob_start();
+$auth = false;
 if (isset($_SESSION['etoahelp']['username']) && isset($_SESSION['etoahelp']['uid']) && $_SESSION['etoahelp']['uid'] > 0) {
-	define('LOGIN', true);
+	$auth = true;
 	echo "<p>Eingeloggt als <b>" . $_SESSION['etoahelp']['username'] . "</b></p>
 		<p>
 		<a href=\"" . ForumBridge::url('account') . "\">Accountverwaltung</a><br/>
         <a href=\"?page=user&amp;id=" . $_SESSION['etoahelp']['uid'] . "\">Benutzerprofil</a><br/>
         <a href=\"logout\">Logout</a><br/>
 		</p>";
-} else {
-	define('LOGIN', false);
 }
 $tpl->assign("loginbox", ob_get_clean());
 
