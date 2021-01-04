@@ -52,13 +52,14 @@ function dbconnect()
     $user = config("database.$db_driver.user");
     $password = config("database.$db_driver.password");
     $database = config("database.$db_driver.database");
+    $charset = config("database.$db_driver.charset", 'utf8');
     if (!$db_handle = @mysql_connect($host, $user, $password)) {
         abort("Zum Datenbankserver auf <strong>" . $host . "</strong> kann keine Verbindung hergestellt werden! Bitte schaue später nochmals vorbei.", "MySQL-Verbindungsproblem");
     }
     if (!mysql_select_db($database)) {
         abort("Auf die Datenbank <strong>" . $database . "</strong> auf <b>" . $host . "</b> kann nicht zugegriffen werden! Bitte schaue später nochmals vorbei.", "MySQL-Verbindungsproblem");
     }
-    dbquery("SET NAMES 'utf8';");
+    dbquery("SET NAMES '$charset';");
 }
 
 /**

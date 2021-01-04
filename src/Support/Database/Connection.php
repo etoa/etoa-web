@@ -15,7 +15,7 @@ class Connection
         $db   = config("database.$driver.database");
         $user = config("database.$driver.user");
         $pass = config("database.$driver.password");
-        $charset = config("database.$driver.charset", 'utf8mb4');;
+        $charset = config("database.$driver.charset", 'utf8mb4');
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
         $options = [
