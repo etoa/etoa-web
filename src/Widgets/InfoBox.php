@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Support\ForumBridge;
 use App\Support\StringUtil;
 use App\TemplateEngine;
+use PDOException;
 
 class InfoBox implements Widget
 {
@@ -27,21 +28,29 @@ class InfoBox implements Widget
 
     private function forum()
     {
-        echo "<h2>Neues aus dem Forum</h2>
-        <span style=\"color:#0f0;font-size:9pt;\">" . ForumBridge::usersOnline() . " Leute online</span>";
+        echo "<h2>Neues aus dem Forum</h2>";
         if (!$formumNews = apcu_fetch('etoa-infobox-forum-news')) {
-            $board_blacklist = explode(",", get_config('infobox_board_blacklist'));
-            $posts = ForumBridge::latestPosts(self::LATEST_POSTS_NUM, $board_blacklist);
             ob_start();
-            echo "<div id=\"forum\" style=\"\">
-            <ul id=\"forumthreadlist\">";
-            foreach ($posts as $post) {
-                echo "<li>
-                <a href=\"" . ForumBridge::url('post', $post['id']) . "\">" . $post['topic'] . "</a>
-                <span style=\"color:#aaa;font-size:80%\">" . StringUtil::diffFromNow($post['time']) . "</span>
-            </li>";
+            try {
+                echo "<span style=\"color:#0f0;font-size:9pt;\">" . ForumBridge::usersOnline() . " Leute online</span>";
+            } catch (PDOException $ignored) {
+                echo "<span style=\"color:#f00;font-size:9pt;\">Status nicht verfügbar</span>";
             }
-            echo "</ul></div>";
+            try {
+                $board_blacklist = explode(",", get_config('infobox_board_blacklist'));
+                $posts = ForumBridge::latestPosts(self::LATEST_POSTS_NUM, $board_blacklist);
+                echo "<div id=\"forum\" style=\"\">
+                <ul id=\"forumthreadlist\">";
+                foreach ($posts as $post) {
+                    echo "<li>
+                    <a href=\"" . ForumBridge::url('post', $post['id']) . "\">" . $post['topic'] . "</a>
+                    <span style=\"color:#aaa;font-size:80%\">" . StringUtil::diffFromNow($post['time']) . "</span>
+                    </li>";
+                }
+                echo "</ul></div>";
+            } catch (PDOException $ignored) {
+                echo '<p>Die letzten Beiträge sind zurzeit nicht verfügbar.</p>';
+            }
             $formumNews = ob_get_clean();
             apcu_add('etoa-infobox-forum-news', $formumNews, config('caching.apcu_timeout'));
         }
