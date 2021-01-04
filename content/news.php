@@ -28,7 +28,7 @@ if (get_config('adds_news') != "") {
 	unserer Werbepartner beachtest</div>";
 }
 
-if (!$newsContent = apcu_fetch('page-news')) {
+if (!$newsContent = apcu_fetch('etoa-news-section')) {
     ob_start();
     echo "<h1>News</h1>";
     $threads = ForumBridge::newsPosts($num_news, $news_board_id, $status_board_id);
@@ -63,6 +63,6 @@ if (!$newsContent = apcu_fetch('page-news')) {
     }
 
     $newsContent = ob_get_clean();
-    apcu_add('page-news', $newsContent, config('caching.apcu_timeout'));
+    apcu_add('etoa-news-section', $newsContent, config('caching.apcu_timeout'));
 }
 echo $newsContent;

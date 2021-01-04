@@ -29,7 +29,7 @@ class InfoBox implements Widget
     {
         echo "<h2>Neues aus dem Forum</h2>
         <span style=\"color:#0f0;font-size:9pt;\">" . ForumBridge::usersOnline() . " Leute online</span>";
-        if (!$formumNews = apcu_fetch('infobox-forum-news')) {
+        if (!$formumNews = apcu_fetch('etoa-infobox-forum-news')) {
             $board_blacklist = explode(",", get_config('infobox_board_blacklist'));
             $posts = ForumBridge::latestPosts(self::LATEST_POSTS_NUM, $board_blacklist);
             ob_start();
@@ -43,7 +43,7 @@ class InfoBox implements Widget
             }
             echo "</ul></div>";
             $formumNews = ob_get_clean();
-            apcu_add('infobox-forum-news', $formumNews, config('caching.apcu_timeout'));
+            apcu_add('etoa-infobox-forum-news', $formumNews, config('caching.apcu_timeout'));
         }
         echo $formumNews;
     }
