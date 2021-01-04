@@ -14,7 +14,7 @@ $messages = [
     "wrongloginkey" => "Falscher Login-Schlüssel! Ein Login ist nur von der offiziellen EtoA-Startseite aus möglich!",
     "nologinkey" => "Kein Login-Schlüssel! Ein Login ist nur von der offiziellen EtoA-Startseite aus möglich!",
     "general" => "Ein allgemeiner Fehler ist aufgetreten. Bitte den Entwickler kontaktieren!",
-    "default" => "Unbekannter Fehler. Bitte den Entwickler kontaktieren!",
+    "unknown" => "Unbekannter Fehler. Bitte den Entwickler kontaktieren!",
 ];
 $err = isset($_GET['err']) && preg_match('/^[a-z0-9]+$/', $_GET['err']) ? $_GET['err'] : 'unknown';
 ?>
