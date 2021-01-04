@@ -299,7 +299,7 @@ class ForumBridge
 
     public static function url(?string $type = null, $value = null, $value2 = null): string
     {
-        $baseUrl = get_config('forum_url');
+        $baseUrl = get_config('forum_url', 'https://forum.etoa.ch/');
         if ($type == 'board') {
             return $baseUrl . '/index.php?page=Board&amp;boardID=' . $value;
         }
