@@ -8,25 +8,25 @@
     "packages": [
         {
             "name": "adbario/php-dot-notation",
-            "version": "2.2.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adbario/php-dot-notation.git",
-                "reference": "eee4fc81296531e6aafba4c2bbccfc5adab1676e"
+                "reference": "39ece8d385ce2f5e03718c693932d83ab0cb5972"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adbario/php-dot-notation/zipball/eee4fc81296531e6aafba4c2bbccfc5adab1676e",
-                "reference": "eee4fc81296531e6aafba4c2bbccfc5adab1676e",
+                "url": "https://api.github.com/repos/adbario/php-dot-notation/zipball/39ece8d385ce2f5e03718c693932d83ab0cb5972",
+                "reference": "39ece8d385ce2f5e03718c693932d83ab0cb5972",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=5.5"
+                "php": "^5.5 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.0|^5.0|^6.0",
-                "squizlabs/php_codesniffer": "^3.0"
+                "phpunit/phpunit": "^4.8|^5.7|^6.6|^7.5|^8.5|^9.5",
+                "squizlabs/php_codesniffer": "^3.6"
             },
             "type": "library",
             "autoload": {
@@ -53,20 +53,24 @@
                 "ArrayAccess",
                 "dotnotation"
             ],
-            "time": "2019-01-01T23:59:15+00:00"
+            "support": {
+                "issues": "https://github.com/adbario/php-dot-notation/issues",
+                "source": "https://github.com/adbario/php-dot-notation/tree/2.4.0"
+            },
+            "time": "2022-07-12T02:52:50+00:00"
         },
         {
             "name": "michelf/php-markdown",
-            "version": "1.9.0",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-markdown.git",
-                "reference": "c83178d49e372ca967d1a8c77ae4e051b3a3c75c"
+                "reference": "5024d623c1a057dcd2d076d25b7d270a1d0d55f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/c83178d49e372ca967d1a8c77ae4e051b3a3c75c",
-                "reference": "c83178d49e372ca967d1a8c77ae4e051b3a3c75c",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/5024d623c1a057dcd2d076d25b7d270a1d0d55f3",
+                "reference": "5024d623c1a057dcd2d076d25b7d270a1d0d55f3",
                 "shasum": ""
             },
             "require": {
@@ -102,7 +106,11 @@
             "keywords": [
                 "markdown"
             ],
-            "time": "2019-12-02T02:32:27+00:00"
+            "support": {
+                "issues": "https://github.com/michelf/php-markdown/issues",
+                "source": "https://github.com/michelf/php-markdown/tree/1.9.1"
+            },
+            "time": "2021-11-24T02:52:38+00:00"
         },
         {
             "name": "qazd/text-diff",
@@ -135,20 +143,24 @@
                 }
             ],
             "description": "A simple text differences visualization library",
+            "support": {
+                "issues": "https://github.com/qazd/text-diff/issues",
+                "source": "https://github.com/qazd/text-diff/tree/master"
+            },
             "time": "2018-11-17T05:27:50+00:00"
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.39",
+            "version": "v3.1.46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "e27da524f7bcd7361e3ea5cdfa99c4378a7b5419"
+                "reference": "b3ade90dece67812410954528e0039fb5b73bcf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/e27da524f7bcd7361e3ea5cdfa99c4378a7b5419",
-                "reference": "e27da524f7bcd7361e3ea5cdfa99c4378a7b5419",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/b3ade90dece67812410954528e0039fb5b73bcf7",
+                "reference": "b3ade90dece67812410954528e0039fb5b73bcf7",
                 "shasum": ""
             },
             "require": {
@@ -192,7 +204,13 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2021-02-17T21:57:51+00:00"
+            "support": {
+                "forum": "http://www.smarty.net/forums/",
+                "irc": "irc://irc.freenode.org/smarty",
+                "issues": "https://github.com/smarty-php/smarty/issues",
+                "source": "https://github.com/smarty-php/smarty/tree/v3.1.46"
+            },
+            "time": "2022-08-01T21:58:13+00:00"
         }
     ],
     "packages-dev": [],
@@ -203,5 +221,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.1.0"
 }
