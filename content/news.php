@@ -44,13 +44,11 @@ if (!$newsContent = apcu_fetch('etoa-news-section')) {
                 }
                 echo "</span></div>";
                 echo "<div class=\"boxLine\"></div>";
-                echo "<div class=\"boxData\">" . StringUtil::text2html($thread["message"]) . "";
+                echo "<div class=\"boxData\">" . $thread["message"] . "";
                 echo "<div style=\"color:#fb0;font-size:9pt;margin-top:10px;\">";
                 $replies = $thread['post_count'] - 1;
-                if ($replies > 0) {
-                    echo "<a style=\"color:#fb0;\" href=\"" . ForumBridge::url('thread', $thread['id']) . "\">" . $replies . " Kommentare vorhanden</a> | ";
-                }
-                echo "<a style=\"color:#fb0;\" href=\"" . ForumBridge::url('addpost', $thread['id']) . "\">Kommentiere diese Nachricht</a></div></div>";
+                echo "<a style=\"color:#fb0;\" href=\"" . ForumBridge::url('thread', $thread['id']) . "\">" . ($replies > 0 ? $replies . ' Kommentare vorhanden' : 'Kommentiere diese Nachricht') ."</a>";
+                echo "</div></div>";
                 echo "<div class=\"boxLine\"></div><br/><br/>";
             }
             echo "Alle älteren News findest du <a href=\"" . ForumBridge::url('board', $news_board_id) . "\">hier</a><br/><br/>";

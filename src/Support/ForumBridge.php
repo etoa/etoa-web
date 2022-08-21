@@ -16,7 +16,7 @@ class ForumBridge
             FROM
                 " . self::wcftable('user') . " u
             LEFT JOIN
-                " . self::wcftable('avatar') . " a
+                " . self::wcftable('user_avatar') . " a
                 ON u.avatarID=a.avatarID
             WHERE
                 u.userID In ((
@@ -57,7 +57,7 @@ class ForumBridge
             FROM
                 " . self::wcftable('user') . " u
             LEFT JOIN
-                " . self::wcftable('avatar') . " a
+                " . self::wcftable('user_avatar') . " a
                 ON u.avatarID = a.avatarID
             WHERE
                 u.userID = :userId
@@ -296,6 +296,7 @@ class ForumBridge
                 'id' => $arr['postID'],
                 'topic' => $arr['topic'],
                 'time' => $arr['time'],
+                'thead_id' => $arr['threadID'],
             ];
         }
         return $items;
@@ -397,36 +398,33 @@ class ForumBridge
     {
         $baseUrl = get_config('forum_url', 'https://forum.etoa.ch/');
         if ($type == 'board') {
-            return $baseUrl . '/index.php?page=Board&amp;boardID=' . $value;
+            return $baseUrl . '/forum/board/' . $value;
         }
         if ($type == 'thread') {
-            return $baseUrl . '/index.php?page=Thread&amp;threadID=' . $value;
+            return $baseUrl . '/forum/thread/' . $value;
         }
         if ($type == 'post') {
-            return $baseUrl . '/index.php?page=Thread&amp;postID=' . $value . '#post' . $value;
-        }
-        if ($type == 'addpost') {
-            return $baseUrl . '/index.php?form=PostAdd&amp;threadID=' . $value;
+            return $baseUrl . '/forum/thread/'.$value2.'?postID=' . $value . '#post' . $value;
         }
         if ($type == 'user') {
-            return $baseUrl . '/index.php?page=User&amp;userID=' . $value;
+            return $baseUrl . '/user/' . $value;
         }
         if ($type == 'admin') {
-            return $baseUrl . '/acp';
+            return $baseUrl . '/acp/';
         }
         if ($type == 'account') {
-            return $baseUrl . '/index.php?form=AccountManagement';
+            return $baseUrl . '/account-management/';
         }
         if ($type == 'team') {
-            return $baseUrl . '/index.php?page=Team';
+            return $baseUrl . '/team/';
         }
         if ($type == 'avatar') {
-            return $baseUrl . '/wcf/images/avatars/' . ($value > 0
+            return $baseUrl . '/images/avatars/' . ($value > 0
                 ? 'avatar-' . $value . "." . $value2
                 : 'avatar-default.png');
         }
         if ($type == 'register') {
-            return $baseUrl . '/index.php?page=Register';
+            return $baseUrl . '/register/';
         }
         return $baseUrl;
     }
@@ -438,6 +436,6 @@ class ForumBridge
 
     private static function wbbtable($name)
     {
-        return 'wbb1_1_' . $name;
+        return 'wbb1_' . $name;
     }
 }
