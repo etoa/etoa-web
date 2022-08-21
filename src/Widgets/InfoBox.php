@@ -43,7 +43,7 @@ class InfoBox implements Widget
                 <ul id=\"forumthreadlist\">";
                 foreach ($posts as $post) {
                     echo "<li>
-                    <a href=\"" . ForumBridge::url('post', $post['id']) . "\">" . $post['topic'] . "</a>
+                    <a href=\"" . ForumBridge::url('post', $post['id'], $post['thead_id']) . "\">" . $post['topic'] . "</a>
                     <span style=\"color:#aaa;font-size:80%\">" . StringUtil::diffFromNow($post['time']) . "</span>
                     </li>";
                 }

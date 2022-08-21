@@ -16,7 +16,7 @@ class ForumBridge
             FROM
                 " . self::wcftable('user') . " u
             LEFT JOIN
-                " . self::wcftable('avatar') . " a
+                " . self::wcftable('user_avatar') . " a
                 ON u.avatarID=a.avatarID
             WHERE
                 u.userID In ((
@@ -57,7 +57,7 @@ class ForumBridge
             FROM
                 " . self::wcftable('user') . " u
             LEFT JOIN
-                " . self::wcftable('avatar') . " a
+                " . self::wcftable('user_avatar') . " a
                 ON u.avatarID = a.avatarID
             WHERE
                 u.userID = :userId
@@ -82,7 +82,7 @@ class ForumBridge
             SELECT
                 userID,
                 username,
-                salt,
+                password,
                 email
             FROM
                 " . self::wcftable('user') . "
@@ -95,7 +95,7 @@ class ForumBridge
             return [
                 'id' => $arr['userID'],
                 'username' => $arr['username'],
-                'salt' => $arr['salt'],
+                'password' => $arr['password'],
                 'email' => $arr['email'],
             ];
         }
@@ -104,90 +104,9 @@ class ForumBridge
 
     public static function authenticateUser(array $user, string $password): bool
     {
-        $res = DB::instance('forum')->preparedQuery("
-            SELECT
-                userID
-            FROM
-                " . self::wcftable('user') . "
-            WHERE
-                password = :password
-                AND userID = :userId
-            ;", [
-                'userId' => $user['id'],
-                'password' => self::getDoubleSaltedHash($password, $user['salt']),
-            ]);
-        return is_array($res->fetch());
+        $hash = str_starts_with($user['password'], 'Bcrypt:') ? substr($user['password'], strlen('Bcrypt:')) : $user['password'];
+        return password_verify($password, $hash);
     }
-
-    /**
-	 * Returns a salted hash of the given value.
-     *
-     * Source: wcf/lib/util/StringUtil.class.php
-	 *
-	 * @param 	string 		$value
-	 * @param	string		$salt
-	 * @return 	string 		$hash
-	 */
-	private static function getSaltedHash($value, $salt) {
-		if (!defined('ENCRYPTION_ENABLE_SALTING') || ENCRYPTION_ENABLE_SALTING) {
-			$hash = '';
-			// salt
-			if (!defined('ENCRYPTION_SALT_POSITION') || ENCRYPTION_SALT_POSITION == 'before') {
-				$hash .= $salt;
-			}
-
-			// value
-			if (!defined('ENCRYPTION_ENCRYPT_BEFORE_SALTING') || ENCRYPTION_ENCRYPT_BEFORE_SALTING) {
-				$hash .= self::encrypt($value);
-			}
-			else {
-				$hash .= $value;
-			}
-
-			// salt
-			if (defined('ENCRYPTION_SALT_POSITION') && ENCRYPTION_SALT_POSITION == 'after') {
-				$hash .= $salt;
-			}
-
-			return self::encrypt($hash);
-		}
-		else {
-			return self::encrypt($value);
-		}
-	}
-
-	/**
-	 * Returns a double salted hash of the given value.
-     *
-     * Source: wcf/lib/util/StringUtil.class.php
-	 *
-	 * @param 	string 		$value
-	 * @param	string		$salt
-	 * @return 	string 		$hash
-	 */
-	private static function getDoubleSaltedHash($value, $salt) {
-		return self::encrypt($salt . self::getSaltedHash($value, $salt));
-	}
-
-	/**
-	 * encrypts the given value.
-     *
-     * Source: wcf/lib/util/StringUtil.class.php
-	 *
-	 * @param 	string 		$value
-	 * @return 	string 		$hash
-	 */
-	private static function encrypt($value) {
-		if (defined('ENCRYPTION_METHOD')) {
-			switch (ENCRYPTION_METHOD) {
-				case 'sha1': return sha1($value);
-				case 'md5': return md5($value);
-				case 'crc32': return crc32($value);
-				case 'crypt': return crypt($value);
-			}
-		}
-		return sha1($value);
-	}
 
     public static function groupIdsOfUser(int $userId): array
     {
@@ -195,7 +114,7 @@ class ForumBridge
             SELECT
                 groupID
             FROM
-                " . self::wcftable('user_to_groups') . "
+                " . self::wcftable('user_to_group') . "
             WHERE
                 userID=:userId
             ;", [
@@ -215,7 +134,7 @@ class ForumBridge
                 u.userID,
                 u.username
             FROM
-                " . self::wcftable('user_to_groups') . " t
+                " . self::wcftable('user_to_group') . " t
             INNER JOIN
                 " . self::wcftable('user') . " u
                 ON t.userID = u.userID
@@ -296,6 +215,7 @@ class ForumBridge
                 'id' => $arr['postID'],
                 'topic' => $arr['topic'],
                 'time' => $arr['time'],
+                'thead_id' => $arr['threadID'],
             ];
         }
         return $items;
@@ -397,36 +317,33 @@ class ForumBridge
     {
         $baseUrl = get_config('forum_url', 'https://forum.etoa.ch/');
         if ($type == 'board') {
-            return $baseUrl . '/index.php?page=Board&amp;boardID=' . $value;
+            return $baseUrl . '/forum/board/' . $value;
         }
         if ($type == 'thread') {
-            return $baseUrl . '/index.php?page=Thread&amp;threadID=' . $value;
+            return $baseUrl . '/forum/thread/' . $value;
         }
         if ($type == 'post') {
-            return $baseUrl . '/index.php?page=Thread&amp;postID=' . $value . '#post' . $value;
-        }
-        if ($type == 'addpost') {
-            return $baseUrl . '/index.php?form=PostAdd&amp;threadID=' . $value;
+            return $baseUrl . '/forum/thread/'.$value2.'?postID=' . $value . '#post' . $value;
         }
         if ($type == 'user') {
-            return $baseUrl . '/index.php?page=User&amp;userID=' . $value;
+            return $baseUrl . '/user/' . $value;
         }
         if ($type == 'admin') {
-            return $baseUrl . '/acp';
+            return $baseUrl . '/acp/';
         }
         if ($type == 'account') {
-            return $baseUrl . '/index.php?form=AccountManagement';
+            return $baseUrl . '/account-management/';
         }
         if ($type == 'team') {
-            return $baseUrl . '/index.php?page=Team';
+            return $baseUrl . '/team/';
         }
         if ($type == 'avatar') {
-            return $baseUrl . '/wcf/images/avatars/' . ($value > 0
+            return $baseUrl . '/images/avatars/' . ($value > 0
                 ? 'avatar-' . $value . "." . $value2
                 : 'avatar-default.png');
         }
         if ($type == 'register') {
-            return $baseUrl . '/index.php?page=Register';
+            return $baseUrl . '/register/';
         }
         return $baseUrl;
     }
@@ -438,6 +355,6 @@ class ForumBridge
 
     private static function wbbtable($name)
     {
-        return 'wbb1_1_' . $name;
+        return 'wbb1_' . $name;
     }
 }
