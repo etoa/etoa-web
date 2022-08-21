@@ -82,7 +82,7 @@ class ForumBridge
             SELECT
                 userID,
                 username,
-                salt,
+                password,
                 email
             FROM
                 " . self::wcftable('user') . "
@@ -95,7 +95,7 @@ class ForumBridge
             return [
                 'id' => $arr['userID'],
                 'username' => $arr['username'],
-                'salt' => $arr['salt'],
+                'password' => $arr['password'],
                 'email' => $arr['email'],
             ];
         }
@@ -104,90 +104,9 @@ class ForumBridge
 
     public static function authenticateUser(array $user, string $password): bool
     {
-        $res = DB::instance('forum')->preparedQuery("
-            SELECT
-                userID
-            FROM
-                " . self::wcftable('user') . "
-            WHERE
-                password = :password
-                AND userID = :userId
-            ;", [
-                'userId' => $user['id'],
-                'password' => self::getDoubleSaltedHash($password, $user['salt']),
-            ]);
-        return is_array($res->fetch());
+        $hash = str_starts_with($user['password'], 'Bcrypt:') ? substr($user['password'], strlen('Bcrypt:')) : $user['password'];
+        return password_verify($password, $hash);
     }
-
-    /**
-	 * Returns a salted hash of the given value.
-     *
-     * Source: wcf/lib/util/StringUtil.class.php
-	 *
-	 * @param 	string 		$value
-	 * @param	string		$salt
-	 * @return 	string 		$hash
-	 */
-	private static function getSaltedHash($value, $salt) {
-		if (!defined('ENCRYPTION_ENABLE_SALTING') || ENCRYPTION_ENABLE_SALTING) {
-			$hash = '';
-			// salt
-			if (!defined('ENCRYPTION_SALT_POSITION') || ENCRYPTION_SALT_POSITION == 'before') {
-				$hash .= $salt;
-			}
-
-			// value
-			if (!defined('ENCRYPTION_ENCRYPT_BEFORE_SALTING') || ENCRYPTION_ENCRYPT_BEFORE_SALTING) {
-				$hash .= self::encrypt($value);
-			}
-			else {
-				$hash .= $value;
-			}
-
-			// salt
-			if (defined('ENCRYPTION_SALT_POSITION') && ENCRYPTION_SALT_POSITION == 'after') {
-				$hash .= $salt;
-			}
-
-			return self::encrypt($hash);
-		}
-		else {
-			return self::encrypt($value);
-		}
-	}
-
-	/**
-	 * Returns a double salted hash of the given value.
-     *
-     * Source: wcf/lib/util/StringUtil.class.php
-	 *
-	 * @param 	string 		$value
-	 * @param	string		$salt
-	 * @return 	string 		$hash
-	 */
-	private static function getDoubleSaltedHash($value, $salt) {
-		return self::encrypt($salt . self::getSaltedHash($value, $salt));
-	}
-
-	/**
-	 * encrypts the given value.
-     *
-     * Source: wcf/lib/util/StringUtil.class.php
-	 *
-	 * @param 	string 		$value
-	 * @return 	string 		$hash
-	 */
-	private static function encrypt($value) {
-		if (defined('ENCRYPTION_METHOD')) {
-			switch (ENCRYPTION_METHOD) {
-				case 'sha1': return sha1($value);
-				case 'md5': return md5($value);
-				case 'crc32': return crc32($value);
-				case 'crypt': return crypt($value);
-			}
-		}
-		return sha1($value);
-	}
 
     public static function groupIdsOfUser(int $userId): array
     {
@@ -195,7 +114,7 @@ class ForumBridge
             SELECT
                 groupID
             FROM
-                " . self::wcftable('user_to_groups') . "
+                " . self::wcftable('user_to_group') . "
             WHERE
                 userID=:userId
             ;", [
@@ -215,7 +134,7 @@ class ForumBridge
                 u.userID,
                 u.username
             FROM
-                " . self::wcftable('user_to_groups') . " t
+                " . self::wcftable('user_to_group') . " t
             INNER JOIN
                 " . self::wcftable('user') . " u
                 ON t.userID = u.userID
