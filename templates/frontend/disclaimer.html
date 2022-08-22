@@ -1,0 +1,16 @@
+{% extends "layouts/site.html" %}
+
+{% block site_title %}Haftungsausschluss{% endblock %}
+
+{% set header_img = 'disclaimer.png' %}
+
+{% block content %}
+<br />
+<div class="boxLine"></div>
+<div class="boxTitle">Haftungsausschluss</div>
+<div class="boxLine"></div>
+<div class="boxData">
+    {{ text|raw }}
+</div>
+<div class="boxLine"></div>
+{% endblock %}

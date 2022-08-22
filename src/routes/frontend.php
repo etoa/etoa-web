@@ -2,15 +2,20 @@
 
 declare(strict_types=1);
 
-use App\Controllers\StoryController;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use App\Controllers\Frontend\BannerController;
+use App\Controllers\Frontend\DisclaimerController;
+use App\Controllers\Frontend\FeaturesController;
+use App\Controllers\Frontend\HistoryController;
+use App\Controllers\Frontend\ImprintController;
+use App\Controllers\Frontend\PrivacyController;
+use App\Controllers\Frontend\StoryController;
 
 /** @var \Slim\App $app */
 
-$app->get('/', function (Request $request, Response $response, array $args = []): Response {
-    $response->getBody()->write("Hello world!");
-    return $response;
-});
-
 $app->get('/story', StoryController::class)->setName('story');
+$app->get('/disclaimer', DisclaimerController::class)->setName('disclaimer');
+$app->get('/privacy', PrivacyController::class)->setName('privacy');
+$app->get('/impressum', ImprintController::class)->setName('impressum');
+$app->get('/history', HistoryController::class)->setName('history');
+$app->get('/features', FeaturesController::class)->setName('features');
+$app->get('/banner', BannerController::class)->setName('banner');

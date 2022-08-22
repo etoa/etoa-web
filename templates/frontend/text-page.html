@@ -1,0 +1,14 @@
+{% extends "layouts/site.html" %}
+
+{% block site_title %}{{ site_title|default(title) }}{% endblock %}
+
+{% block content %}
+<br />
+<div class="boxLine"></div>
+<div class="boxTitle">{{ title }}</div>
+<div class="boxLine"></div>
+<div class="boxData">
+    {{ text|raw }}
+</div>
+<div class="boxLine"></div>
+{% endblock %}

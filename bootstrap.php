@@ -6,7 +6,6 @@ use App\Support\TwigConfigurationInitializer;
 use DI\Bridge\Slim\Bridge;
 use DI\Container;
 use Dotenv\Dotenv;
-use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
@@ -24,7 +23,6 @@ $debug = !in_array($environment, ['prod', 'production']);
 $twig = TwigConfigurationInitializer::create($debug, !$debug);
 
 // Init app
-$app = AppFactory::create();
 $container = new Container();
 $container->set(Twig::class, fn () => $twig);
 $app = Bridge::create($container);

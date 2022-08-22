@@ -8,3 +8,4 @@
 /vendor/
 .env
 /storage/cache/twig
+.vscode/settings.json
