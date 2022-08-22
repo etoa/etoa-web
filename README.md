@@ -4,7 +4,7 @@ Portal site for the Escape to Andromeda browser game.
 
 ## Requirements
 
-* PHP 7.x
+* PHP 8.x
 * APCu PHP Extension
 * MySQL
 * Composer
@@ -16,7 +16,6 @@ Portal site for the Escape to Andromeda browser game.
 Run:
 
     composer install
-    composer dump-autoload
 
 ### Setup database connection
 

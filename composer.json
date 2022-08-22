@@ -23,5 +23,13 @@
         "files": [
             "src/helpers.php"
         ]
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "composer dump-autoload"
+        ],
+        "post-update-cmd": [
+            "composer dump-autoload"
+        ]
     }
 }
