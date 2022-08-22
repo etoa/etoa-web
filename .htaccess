@@ -4,8 +4,9 @@ ErrorDocument 404 /_error/index.php?e=404
 
 Redirect /forum http://forum.etoa.ch/
 
-Redirect /faq http://etoa.ch/help?page=faq
-Redirect /wiki http://etoa.ch/help?page=article
+Redirect /faq http://forum.etoa.ch/
+Redirect /wiki http://forum.etoa.ch/
+Redirect /help http://forum.etoa.ch/
 
 Redirect /rules http://etoa.ch/regeln
 

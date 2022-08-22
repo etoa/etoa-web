@@ -48,9 +48,6 @@ class MainMenu implements
             [
                 "url" => ForumBridge::url(), "name" => "Forum"
             ],
-            [
-                "url" => 'help', "name" => "Hilfe"
-            ],
             !empty(get_config('ts_link')) ? [
                 "url" => get_config('ts_link'), "name" => "Discord"
             ] : null,

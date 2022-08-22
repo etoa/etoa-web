@@ -137,30 +137,6 @@ function set_config($key, $value)
     ;");
 }
 
-function genfkey()
-{
-    $_SESSION['encfkey'] = rand(1000, 9999) . rand(1000, 9999) . rand(1000, 9999);
-}
-
-function encfname($name)
-{
-    return md5($name . $_SESSION['encfkey']);
-}
-
-function forward($page, $debug = 0)
-{
-    if ($debug == 0) {
-        header("Location: $page");
-    }
-    echo "Falls die automatische Weiterleitung nicht klappt, <a href=\"" . $page . "\">hier</a> klicken.";
-    exit;
-}
-
-function forwardInternal($page, $debug = 0)
-{
-    forward($_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . $page, $debug);
-}
-
 function redirectHttps()
 {
     if ($_SERVER['HTTP_HOST'] != 'localhost') {
@@ -173,21 +149,6 @@ function redirectHttps()
     }
 }
 
-function pushText($text)
-{
-    $_SESSION['textstore'] = $text;
-}
-
-function popText()
-{
-    $text = "";
-    if (isset($_SESSION['textstore'])) {
-        $text = $_SESSION['textstore'];
-        unset($_SESSION['textstore']);
-    }
-    return $text;
-}
-
 function message($type, $msg)
 {
     return "<div class=\"messagebox\"><div class=\"" . $type . "\">" . $msg . "</div></div>";
@@ -198,11 +159,6 @@ function baseUrl($path = null): string
     $str = substr(realpath(__DIR__ . '/../'), strlen(realpath($_SERVER['DOCUMENT_ROOT'])));
     $url = str_replace(DIRECTORY_SEPARATOR, '/', $str) . '/';
     return $url . ($path ?? '');
-}
-
-function helpUrl($page, $key = null, $value = null): string
-{
-    return baseUrl('help/?page=' . $page . '&amp;' . $key . '=' . $value);
 }
 
 function loginRoundUrl(Round $round, string $page)

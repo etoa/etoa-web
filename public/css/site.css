@@ -261,21 +261,6 @@ textarea {
     background-repeat: no-repeat;
 }
 
-table.faq {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-table.faq th,
-table.faq td {
-    font-size: 9pt;
-    text-align: left;
-    vertical-align: top;
-    padding: 2px;
-    margin: 0px;
-    color: #fff;
-}
-
 tr.d0 td {
     background-color: #337;
 }
@@ -334,8 +319,7 @@ tr.d1 th {
     margin: 0;
 }
 
-#forumthreadlist,
-#helplist {
+#forumthreadlist {
     margin: 10px 0;
     padding-left: 20px;
 }

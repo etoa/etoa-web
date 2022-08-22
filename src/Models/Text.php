@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Support\StringUtil;
-
 class Text
 {
     public static function findByKeyword(string $keyword): ?Text
