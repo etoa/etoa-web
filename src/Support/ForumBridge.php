@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Support\Database\DB;
+use PDO;
 
 class ForumBridge
 {
@@ -287,4 +288,168 @@ class ForumBridge
     {
         return 'wbb1_' . $name;
     }
+
+    public static function migrateHelp($boardId)
+    {
+        $ures = DB::instance('forum')->preparedQuery("
+            SELECT userID, username
+            FROM " . self::wcftable('user') . "
+            order by userID
+            ;", []);
+        $users = [];
+        foreach ($ures->fetchAll() as $arr) {
+            $users[$arr['userID']] = $arr['username'];
+        }
+
+        $earliestTime = DB::instance('default')->query("
+            SELECT faq_user_time FROM " . dbtable('faq') . "
+            where faq_user_time > 0
+            order by faq_user_time ASC
+            limit 1;")
+            ->fetchColumn();
+
+        $res = DB::instance('default')->preparedQuery("
+            SELECT *
+            FROM " . dbtable('faq') . "
+            LIMIT 50
+            ;", []);
+        foreach ($res->fetchAll() as $faq) {
+            echo $faq['faq_question']."\n";
+
+            $cres = DB::instance('default')->preparedQuery("
+            SELECT *
+            FROM " . dbtable('faq_comments') . "
+            WHERE comment_faq_id = :faq_id
+            ;", [
+                'faq_id' => $faq['faq_id'],
+            ]);
+            $comments = $cres->fetchAll();
+
+            $tres = DB::instance('default')->preparedQuery("
+            SELECT t.name
+            FROM " . dbtable('help_tag') . " as t
+            INNER JOIN " . dbtable('help_tag_rel') . " r ON t.id = r.tag_id AND domain='faq'
+            AND r.item_id = :faq_id
+            ;", [
+                'faq_id' => $faq['faq_id'],
+            ]);
+            $tags = $tres->fetchAll(PDO::FETCH_COLUMN);
+
+            echo "Insert thread ".$faq['faq_question']."\n";
+            DB::instance('forum')->preparedQuery("
+                INSERT INTO " . self::wbbtable('thread') . "
+                (boardID, topic, time, userID, username, views, replies)
+                VALUES (:boardID, :topic, :time, :userID, :username, :views, :replies)
+                ;", [
+                    'boardID' => $boardId,
+                    'topic' => $faq['faq_question'],
+                    'time' => $faq['faq_user_time'] > 0 ? $faq['faq_user_time'] : $earliestTime,
+                    'userID' => $faq['faq_user_id'] > 0 && isset($users[$faq['faq_user_id']]) ? $faq['faq_user_id'] : null,
+                    'username' => $faq['faq_user_id'] > 0 && isset($users[$faq['faq_user_id']]) ? $users[$faq['faq_user_id']] : '',
+                    'views' => $faq['faq_views'],
+                    'replies' => count($comments),
+                ]);
+            $threadId = DB::instance('forum')->lastInsertId();
+
+            foreach ($tags as $tag) {
+                $tres = DB::instance('forum')->preparedQuery("
+                    SELECT tagID FROM " . self::wcftable('tag') . "
+                    WHERE name = :name
+                    ;", [
+                        'name' => $tag,
+                    ]);
+                $tagId = $tres->fetchColumn();
+                if (!$tagId) {
+                    echo "Insert tag $tag\n";
+                    DB::instance('forum')->preparedQuery("
+                        INSERT INTO " . self::wcftable('tag') . "
+                        (languageID, name)
+                        VALUES (1, :name)
+                        ;", [
+                            'name' => $tag,
+                        ]);
+                    $tagId = DB::instance('forum')->lastInsertId();
+                }
+
+                echo "Insert tag relation for $tagId\n";
+                DB::instance('forum')->preparedQuery("
+                    INSERT INTO " . self::wcftable('tag_to_object') . "
+                    (objectID, tagID, objectTypeID, languageID)
+                    VALUES (:objectID, :tagID, 349, 1)
+                    ;", [
+                        'objectID' => $threadId,
+                        'tagID' => $tagId,
+                    ]);
+            }
+
+            echo "Insert first post\n";
+            DB::instance('forum')->preparedQuery("
+                INSERT INTO " . self::wbbtable('post') . "
+                (threadID, userID, username, message, time, ipAddress)
+                VALUES (:threadID, :userID, :username, :message, :time, :ipAddress)
+                ;", [
+                    'threadID' => $threadId,
+                    'userID' => $faq['faq_user_id'] > 0 && isset($users[$faq['faq_user_id']]) ? $faq['faq_user_id'] : null,
+                    'username' => $faq['faq_user_id'] > 0 && isset($users[$faq['faq_user_id']]) ? $users[$faq['faq_user_id']] : $faq['faq_user_nick'],
+                    'message' => $faq['faq_description'],
+                    'time' => $faq['faq_user_time'] > 0 ? $faq['faq_user_time'] : $earliestTime,
+                    'ipAddress' => $faq['faq_user_ip'],
+                ]);
+            $firstPostID = DB::instance('forum')->lastInsertId();
+            $lastPostID = null;
+            $lastPostTime  = 0;
+            $lastPosterID = null;
+            $lastPoster = '';
+            $bestAnswerPostID = null;
+
+            foreach ($comments as $comment) {
+                $lastPosterID = $comment['comment_user_id'] > 0 && isset($users[$comment['comment_user_id']]) ? $comment['comment_user_id'] : null;
+                $lastPoster = $comment['comment_user_id'] > 0 && isset($users[$comment['comment_user_id']]) ? $users[$comment['comment_user_id']] : $comment['comment_nick'];
+                $lastPostTime = $comment['comment_time'] > 0 ? $comment['comment_time'] : $earliestTime;
+                echo "Insert post ".substr($comment['comment_text'], 20)."\n";
+                DB::instance('forum')->preparedQuery("
+                    INSERT INTO " . self::wbbtable('post') . "
+                    (threadID, userID, username, message, time, enableHtml, ipAddress)
+                    VALUES (:threadID, :userID, :username, :message, :time, 1, :ipAddress)
+                    ;", [
+                        'threadID' => $threadId,
+                        'userID' => $lastPosterID,
+                        'username' => $lastPoster,
+                        'message' => StringUtil::text2html($comment['comment_text']),
+                        'time' => $lastPostTime,
+                        'ipAddress' => $comment['comment_ip'],
+                    ]);
+                $lastPostID = DB::instance('forum')->lastInsertId();
+                if ($comment['comment_correct']) {
+                    $bestAnswerPostID = $lastPostID;
+                }
+            }
+
+            DB::instance('forum')->preparedQuery("
+                UPDATE " . self::wbbtable('thread') . "
+                SET firstPostID = :firstPostID,
+                    lastPostID = :lastPostID,
+                    lastPostTime = :lastPostTime,
+                    lastPosterID = :lastPosterID,
+                    lastPoster = :lastPoster,
+                    bestAnswerPostID = :bestAnswerPostID
+                WHERE threadID = :threadID
+                ;", [
+                    'firstPostID' => $firstPostID,
+                    'lastPostID' => $lastPostID,
+                    'lastPostTime' => $lastPostTime,
+                    'lastPosterID' => $lastPosterID,
+                    'lastPoster' => $lastPoster,
+                    'threadID' => $threadId,
+                    'bestAnswerPostID' => $bestAnswerPostID,
+            ]);
+
+            $res = DB::instance('default')->preparedQuery("
+            DELETE FROM " . dbtable('faq') . " WHERE faq_id=:faq_id
+            ;", [
+                'faq_id' => $faq['faq_id'],
+            ]);
+        }
+    }
+
 }
