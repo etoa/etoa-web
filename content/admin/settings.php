@@ -5,7 +5,6 @@ $keys = [
     'rules_board',
     'rules_thread',
     'ts_link',
-    'faq_admin',
     'registered_user_group',
     'loginadmin_group',
     'infobox_board_blacklist',

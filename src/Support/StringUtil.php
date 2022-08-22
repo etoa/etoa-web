@@ -4,28 +4,6 @@ namespace App\Support;
 
 class StringUtil
 {
-    public static function prettyUrlString(string $str): string
-    {
-        $ut = $str;
-        $ut = str_replace("Ä", "ae", $ut);
-        $ut = str_replace("Ö", "oe", $ut);
-        $ut = str_replace("Ü", "ue", $ut);
-        $ut = str_replace("ä", "ae", $ut);
-        $ut = str_replace("ö", "oe", $ut);
-        $ut = str_replace("ü", "ue", $ut);
-        $ut = str_replace("ß", "ss", $ut);
-        $ut = str_replace('/', "-", $ut);
-        $ut = str_replace(" ", "-", $ut);
-        $ut = str_replace("_", "-", $ut);
-        $ut = str_replace("..", "", $ut);
-        $ut = str_replace(".", "-", $ut);
-        $ut = str_replace("'", "", $ut);
-        $ut = str_replace('"', "", $ut);
-        $ut = preg_replace("/[^a-z0-9-]/i", "", $ut);
-        $ut = strtolower($ut);
-        return $ut;
-    }
-
     /**
      *	BB-Code Wrapper
      *
@@ -205,38 +183,6 @@ class StringUtil
         return $string;
     }
 
-    /**
-     * Zahlen formatieren
-     *
-     * @param int|float $number
-     * @return string
-     */
-    public static function numberFormat($number): string
-    {
-        return number_format($number, 0, ".", "'");
-    }
-
-    /**
-     * Zeit formatieren
-     *
-     * @param int $ts
-     * @return string
-     */
-    public static function timeFormat(int $ts): string
-    {
-        $t = floor($ts / 3600 / 24);
-        $h = floor(($ts - ($t * 24 * 3600)) / 3600);
-        $m = floor(($ts - ($t * 24 * 3600) - ($h * 3600)) / 60);
-        $s = floor(($ts - ($t * 24 * 3600) - ($h * 3600) - ($m * 60)));
-
-        $str = "";
-        if ($t > 0) $str .= $t . "d ";
-        if ($h > 0) $str .= $h . "h ";
-        if ($m > 0) $str .= $m . "m ";
-        if ($s > 0) $str .= $s . "s ";
-        return $str;
-    }
-
     public static function diffFromNow(int $time): string
     {
         return self::timeDiffFormat(time() - $time);
@@ -279,30 +225,5 @@ class StringUtil
             return "Heute, " . date("H:i", $date);
         }
         return date("d.m.y, H:i", $date);
-    }
-
-    /**
-     * Format file size to human readable format
-     *
-     * @param int $file_size
-     * @return string
-     */
-    public static function formatfilesize(int $file_size): string
-    {
-        if ($file_size < pow(1024, 1)) $file_size = $file_size . " Byte";
-        elseif ($file_size < pow(1024, 2)) {
-            $file_size = round($file_size / pow(1024, 1), 2);
-            $file_size = $file_size . " KB";
-        } elseif ($file_size < pow(1024, 3)) {
-            $file_size = round($file_size / pow(1024, 2), 2);
-            $file_size = $file_size . " MB";
-        } elseif ($file_size < pow(1024, 4)) {
-            $file_size = round($file_size / pow(1024, 2), 3);
-            $file_size = $file_size . " GB";
-        } elseif ($file_size < pow(1024, 5)) {
-            $file_size = round($file_size / pow(1024, 2), 4);
-            $file_size = $file_size . " TB";
-        }
-        return $file_size;
     }
 }

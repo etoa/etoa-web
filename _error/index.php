@@ -131,7 +131,6 @@ switch ($e) {
         <ul>
             <li><a href="<?= baseUrl() ?>">Startseite</a></li>
             <li><a href="<?= ForumBridge::url() ?>">Forum</a></li>
-            <li><a href="<?= baseUrl('help') ?>">Hilfecenter</a></li>
             <li><a href="javascript:history.back();">Zurück zur vorherigen Seite</a></li>
         </ul>
     </div>
