@@ -20,3 +20,16 @@ Run:
 ### Setup database connection
 
 Copy `config/app.dist.php` to `config/app.php` and configure the database connection parameters.
+
+## Use docker images
+
+Build and start application:
+
+    cp config/app.docker.php config/app.php
+    docker-compose build
+    docker-compose up -d
+    docker exec -it -w /app etoa-web-php-1 composer install
+
+Terminate application:
+
+    docker-compose down
