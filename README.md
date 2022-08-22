@@ -28,7 +28,7 @@ Build and start application:
     cp config/app.docker.php config/app.php
     docker-compose build
     docker-compose up -d
-    docker exec -it -w /app etoa-web-php-1 composer install
+    docker-compose run --rm -w /app php composer install
 
 Terminate application:
 
