@@ -8,6 +8,7 @@ use App\Controllers\Frontend\FeaturesController;
 use App\Controllers\Frontend\HistoryController;
 use App\Controllers\Frontend\ImprintController;
 use App\Controllers\Frontend\PrivacyController;
+use App\Controllers\Frontend\RulesController;
 use App\Controllers\Frontend\StoryController;
 
 /** @var \Slim\App $app */
@@ -19,3 +20,4 @@ $app->get('/impressum', ImprintController::class)->setName('impressum');
 $app->get('/history', HistoryController::class)->setName('history');
 $app->get('/features', FeaturesController::class)->setName('features');
 $app->get('/banner', BannerController::class)->setName('banner');
+$app->get('/regeln', RulesController::class)->setName('regeln');

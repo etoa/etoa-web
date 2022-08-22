@@ -20,13 +20,18 @@ abstract class TextPageController
         return null;
     }
 
+    function getText(): ?string
+    {
+        return TextUtil::get($this->getTextKey());
+    }
+
     function __invoke(Request $request, Response $response, Twig $view): Response
     {
         return $view->render($response, 'frontend/text-page.html', [
             'title' => $this->getTitle(),
             'site_title' => $this->getSiteTitle(),
             'header_img' => $this->getHeaderImage(),
-            'text' => TextUtil::get($this->getTextKey()),
+            'text' => $this->getText(),
         ]);
     }
 }
