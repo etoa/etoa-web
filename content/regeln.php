@@ -1,7 +1,6 @@
 <?PHP
 
 use App\Support\ForumBridge;
-use App\Support\StringUtil;
 
 $thread_id = get_config('rules_thread', 0);
 $thread = ForumBridge::thread($thread_id);
@@ -14,7 +13,7 @@ $thread = ForumBridge::thread($thread_id);
     </div>
     <div class="boxLine"></div>
     <div class="boxData">
-        <?= StringUtil::text2html($thread["message"]) ?>
+        <?= $thread["message"] ?>
     </div>
 <?php else : ?>
     <div class="boxTitle">Es trat ein Fehler auf!</div>
