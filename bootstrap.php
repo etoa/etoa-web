@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Controllers\StoryController;
 use Dotenv\Dotenv;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -45,12 +46,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
     return $response;
 });
 
-$app->get('/test', function ($request, $response, $args) {
-    $view = Twig::fromRequest($request);
-    return $view->render($response, 'test.html', [
-        'header_img' => 'news.png',
-    ]);
-})->setName('test');
+$app->get('/test', StoryController::class)->setName('test');
 
 // Run app
 $app->run();
