@@ -6,3 +6,4 @@
 /pub/.ftpquota
 /forum/
 /vendor/
+.env
