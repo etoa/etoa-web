@@ -8,9 +8,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 /** @var \Slim\App $app */
 
-$app->get('/', function (Request $request, Response $response, $args) {
+$app->get('/', function (Request $request, Response $response, array $args = []): Response {
     $response->getBody()->write("Hello world!");
     return $response;
 });
 
-$app->get('/test', StoryController::class)->setName('test');
+$app->get('/story', StoryController::class)->setName('story');

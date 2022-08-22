@@ -15,10 +15,12 @@
         "michelf/php-markdown": "^1.9",
         "qazd/text-diff": "^0.1.1",
         "adbario/php-dot-notation": "^3.1",
+        "php-di/slim-bridge": "^3.2",
         "slim/slim": "4.*",
         "slim/psr7": "^1.5",
         "vlucas/phpdotenv": "^5.4",
-        "slim/twig-view": "^3.3"
+        "slim/twig-view": "^3.3",
+        "nesbot/carbon": "^2.61"
     },
     "autoload": {
         "psr-4": {

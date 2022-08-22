@@ -11,9 +11,8 @@ use Slim\Views\Twig;
 
 class StoryController {
 
-    function __invoke(Request $request, Response $response): Response
+    function __invoke(Request $request, Response $response, Twig $view): Response
     {
-        $view = Twig::fromRequest($request);
         return $view->render($response, 'story.html', [
             'text' => TextUtil::get("story"),
         ]);
