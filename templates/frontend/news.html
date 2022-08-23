@@ -1,0 +1,52 @@
+{% extends "layouts/site.html" %}
+
+{% block site_title %}{{ site_title|default(title) }}{% endblock %}
+
+{% block content %}
+
+<h1>Herzlich willkommen zu Escape to Andromeda!</h1>
+<div class="boxLine"></div>
+<div class="boxTitle">
+    <h2>Über das Spiel</h2>
+</div>
+<div class="boxLine"></div>
+<div class="boxData">
+    {{ text|raw }}
+</div>
+<div class="boxLine"></div>
+<br />
+
+<h1>News</h1>
+{% if message %}
+<p class="loginmsg"><i>{{ message }}</i></p>
+{% endif %}
+{% if news %}
+{% for thread in news %}
+<div class="boxLine"></div>
+<div class="boxTitle">
+    <img src="{{ base_path() }}/images/logo_mini.gif" alt="Logo Mini"
+        style="width:53px;height:30px;float:left;margin-right:10px;" />
+    {{ thread.prefix }}
+    <a href="{{ thread.url }}">{{ thread.topic }}</a>
+    {% if thread.suffix %}
+    &nbsp; <span style="color:#0f0;">{{ thread.suffix }}</span>
+    {% endif %}
+    <br /><span class="subtitle">{{ thread.date }} von
+        <a href=" {{ thread.autor_url }}">{{ thread.autor }}</a>
+        {{ thread.autor_suffix }}
+    </span>
+</div>
+<div class="boxLine"></div>
+<div class="boxData"> {{ thread.message }}
+    <div style="color:#fb0;font-size:9pt;margin-top:10px;">
+        <a style="color:#fb0;" href="{{ thread.url }}">{{ thread.replies }}</a>
+    </div>
+</div>
+<div class="boxLine"></div><br /><br />
+{% endfor %}
+<p>Alle älteren News findest du <a href="{{ board_url }}">hier</a></p>
+{% else %}
+<p class="loginmsg"><i>Keine News vorhanden!</i></p>
+{% endif %}
+
+{% endblock %}
