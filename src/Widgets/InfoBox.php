@@ -4,14 +4,14 @@ namespace App\Widgets;
 
 use App\Support\ForumBridge;
 use App\Support\StringUtil;
-use App\TemplateEngine;
 use PDOException;
+use Slim\Views\Twig;
 
 class InfoBox implements Widget
 {
     const LATEST_POSTS_NUM = 5;
 
-    public function render(TemplateEngine $tpl): string
+    public function render(Twig $view): string
     {
         ob_start();
         $this->forum();

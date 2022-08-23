@@ -51,12 +51,6 @@ try {
         $tpl->assign("error", "Ungültige Abfrage!");
     }
 
-    // Widgets
-    $tpl->assign('infobox', new InfoBox());
-
-    // Text blocks
-
-
     // Site nbame
     $tpl->assign("site_title", $site_title ?? ucfirst($page));
 
