@@ -17,25 +17,32 @@ use App\Controllers\Frontend\RequestPasswordController;
 use App\Controllers\Frontend\RulesController;
 use App\Controllers\Frontend\ScreenshotsController;
 use App\Controllers\Frontend\StoryController;
+use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Views\Twig;
 
 /** @var \Slim\App $app */
 
-$app->redirect('/', 'news');
-$app->get('/story', StoryController::class)->setName('story');
-$app->get('/disclaimer', DisclaimerController::class)->setName('disclaimer');
-$app->get('/privacy', PrivacyController::class)->setName('privacy');
-$app->redirect('/impressum', 'imprint');
-$app->get('/imprint', ImprintController::class)->setName('imprint');
-$app->get('/history', HistoryController::class)->setName('history');
-$app->get('/features', FeaturesController::class)->setName('features');
-$app->get('/banner', BannerController::class)->setName('banner');
-$app->redirect('/regeln', 'rules');
-$app->get('/rules', RulesController::class)->setName('rules');
-$app->get('/news', NewsController::class)->setName('news');
-$app->get('/logout', LogoutController::class)->setName('logout');
-$app->get('/err', ErrorController::class)->setName('error');
-$app->get('/screenshots', ScreenshotsController::class)->setName('screenshots');
-$app->redirect('/spenden', 'donate');
-$app->get('/donate', DonateController::class)->setName('donate');
-$app->get('/register', RegisterController::class)->setName('register');
-$app->get('/pwrequest', RequestPasswordController::class)->setName('pwrequest');
+if (isMaintenanceModeActive()) {
+    $app->any('/', fn (Response $response, Twig $view) => $view->render($response, 'maintenance.html'));
+    $app->any('/{any}', fn (Response $response, Twig $view) => $view->render($response, 'maintenance.html'));
+} else {
+    $app->redirect('/', 'news');
+    $app->get('/story', StoryController::class)->setName('story');
+    $app->get('/disclaimer', DisclaimerController::class)->setName('disclaimer');
+    $app->get('/privacy', PrivacyController::class)->setName('privacy');
+    $app->redirect('/impressum', 'imprint');
+    $app->get('/imprint', ImprintController::class)->setName('imprint');
+    $app->get('/history', HistoryController::class)->setName('history');
+    $app->get('/features', FeaturesController::class)->setName('features');
+    $app->get('/banner', BannerController::class)->setName('banner');
+    $app->redirect('/regeln', 'rules');
+    $app->get('/rules', RulesController::class)->setName('rules');
+    $app->get('/news', NewsController::class)->setName('news');
+    $app->get('/logout', LogoutController::class)->setName('logout');
+    $app->get('/err', ErrorController::class)->setName('error');
+    $app->get('/screenshots', ScreenshotsController::class)->setName('screenshots');
+    $app->redirect('/spenden', 'donate');
+    $app->get('/donate', DonateController::class)->setName('donate');
+    $app->get('/register', RegisterController::class)->setName('register');
+    $app->get('/pwrequest', RequestPasswordController::class)->setName('pwrequest');
+}

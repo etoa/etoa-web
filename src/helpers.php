@@ -166,7 +166,8 @@ function loginRoundUrl(Round $round, string $page)
     return $round->url . '/show.php?index=' . $page;
 }
 
-function getAppBasePath(): string {
+function getAppBasePath(): string
+{
     $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
     $uri = (string) parse_url('http://a' . $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
     if (stripos($uri, $_SERVER['SCRIPT_NAME']) === 0) {
@@ -176,4 +177,9 @@ function getAppBasePath(): string {
         return $scriptDir;
     }
     return '';
+}
+
+function isMaintenanceModeActive()
+{
+    return file_exists(__DIR__ . '/../storage/maintenance');
 }

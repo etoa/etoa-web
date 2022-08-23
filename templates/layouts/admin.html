@@ -23,17 +23,16 @@
                 <div id="menu_center">
                     <b>Navigation</b><br />
                     {if $auth}
-                        <a href="?page=home">Übersicht</a>
-                        <a href="?page=serverinfo">Servermeldung</a>
-                        <a href="?page=maintenance">Wartungsmodus</a>
-                        <a href="?page=rounds">Runden</a>
-                        <a href="?page=buttons">Buttons</a>
-                        <a href="?page=adds">Werbung</a>
-                        <a href="?page=script">Java-Script</a>
-                        <a href="?page=texts">Texte</a>
-                        <a href="?page=settings">Einstellungen</a>
+                    <a href="?page=home">Übersicht</a>
+                    <a href="?page=serverinfo">Servermeldung</a>
+                    <a href="?page=rounds">Runden</a>
+                    <a href="?page=buttons">Buttons</a>
+                    <a href="?page=adds">Werbung</a>
+                    <a href="?page=script">Java-Script</a>
+                    <a href="?page=texts">Texte</a>
+                    <a href="?page=settings">Einstellungen</a>
                     {else}
-                        <a href="?">Login</a>
+                    <a href="?">Login</a>
                     {/if}
                 </div>
                 <div id="menu_bottom"></div>
@@ -41,15 +40,17 @@
             <div id="content">
                 <div>
                     {if $auth}
-                        {if $title|default:'' != ''}<h1>{$title}</h1>{/if}
-                        {if isset($error)}
-                        <div class="messagebox"><div class="error">{$error}</div></div>
-                        {/if}
-                        {$content|default:''}
+                    {if $title|default:'' != ''}<h1>{$title}</h1>{/if}
+                    {if isset($error)}
+                    <div class="messagebox">
+                        <div class="error">{$error}</div>
+                    </div>
+                    {/if}
+                    {$content|default:''}
                     {else}
-                        <h1>Fehler</h1>
-                        Nicht eingeloggt!<br/><br/>
-                        <input type="button" value="Neu einloggen" onclick="document.location='?page=$page'" />
+                    <h1>Fehler</h1>
+                    Nicht eingeloggt!<br /><br />
+                    <input type="button" value="Neu einloggen" onclick="document.location='?page=$page'" />
                     {/if}
                 </div>
             </div>

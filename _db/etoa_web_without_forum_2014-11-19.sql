@@ -47,7 +47,6 @@ INSERT INTO `config` (`config_id`, `config_name`, `config_value`) VALUES
 (222, 'rules_thread', '9904'),
 (223, 'ts_link', 'https://discord.gg/w6pKn9c'),
 (227, 'status_board', '103'),
-(63, 'maintenance_mode', '0'),
 (64, 'footer_js', ''),
 (221, 'rules_board', '10'),
 (228, 'support_board', '21'),

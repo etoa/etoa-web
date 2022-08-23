@@ -16,12 +16,6 @@ try {
     // Session
     session_start();
 
-    // Maintenance mode
-    if (get_config('maintenance_mode') == 1) {
-        include('_maintenance/index.html');
-        exit;
-    }
-
     dbclose();
 } catch (\PDOException $ex) {
     abort($ex->getMessage(), 'Datenbankfehler');

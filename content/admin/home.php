@@ -7,7 +7,7 @@ Besuche folgende Seiten für andere Administrationsmöglichkeiten:
 
 use App\Support\ForumBridge;
 
-if (get_config('maintenance_mode', 0) == 1) {
+if (isMaintenanceModeActive()) {
     echo "<h2 style=\"color:#f00\">Wartungsmodus</h2>
 		    <div>Der Wartungsmodus der Loginseite ist aktiv!</div>";
 }

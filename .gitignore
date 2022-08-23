@@ -9,3 +9,4 @@
 .env
 /storage/cache/twig
 .vscode/settings.json
+storage/maintenance
