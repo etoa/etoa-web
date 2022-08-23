@@ -35,7 +35,7 @@
             <img alt="img" id="Line1009" src="{{ base_path() }}/images/Line1-09.gif" style="width:8px;height:600px" />
         </div>
 
-        {% block mainMenu %}{% endblock %}
+        {{mainMenu | raw}}
 
         {% if votebanner %}
         <div class="Votebanner_">

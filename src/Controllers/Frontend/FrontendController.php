@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
+use App\Widgets\MainMenu;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 
@@ -34,6 +35,7 @@ abstract class FrontendController
                 'adds' => get_config('adds'),
                 'footerJs' => get_config('footer_js'),
                 'headerJs' => get_config('indexjscript'),
+                'mainMenu' => (new MainMenu())->render($this->view),
             ], $args)
         );
     }

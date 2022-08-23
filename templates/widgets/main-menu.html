@@ -1,15 +1,14 @@
 <ul id="mainMenu">
-    {foreach from=$nav item=n}
+    {% for item in nav %}
     <li>
-        {if isset($n.hr)}
-        <img src="{asset file='public/images/hline.gif'}" alt="hline" class="hline" />
-        {else}
-        {if $n.url eq $page}
-        <a href="{$n.url}" class="current">{$n.name}</a>
-        {else}
-        <a href="{$n.url}">{$n.name}</a>
-        {/if}
-        {/if}
+        {% if item.type == 'divider' %}
+        <img src="{{ base_path() }}/images/hline.gif" alt="hline" class="hline" />
+        {% elseif item.type == 'route' %}
+        <a href="{{ url_for(item.route) }}" {% if is_current_url(item.route) %}class="current" {% endif %}>{{ item.label
+            }}</a>
+        {% elseif item.type == 'url' %}
+        <a href="{{ item.url }}">{{ item.label }}</a>
+        {% endif %}
     </li>
-    {/foreach}
+    {% endfor %}
 </ul>

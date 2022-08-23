@@ -3,91 +3,109 @@
 namespace App\Widgets;
 
 use App\Support\ForumBridge;
-use App\TemplateEngine;
+use Slim\Views\Twig;
 
-class MainMenu implements
-    Widget
+class MainMenu implements Widget
 {
     private function items()
     {
         return [
             [
-                "url" => "news",
-                "name" => "News"
+                'type' => 'route',
+                'route' => "news",
+                'label' => "News"
             ],
             [
-                "url" => "features",
-                "name" => "Über EtoA"
+                'type' => 'route',
+                'route' => "features",
+                'label' => "Über EtoA"
             ],
             [
-                "url" => "screenshots",
-                "name" => "Bilder"
+                'type' => 'route',
+                'route' => "screenshots",
+                'label' => "Bilder"
             ],
             [
-                "url" => "story",
-                "name" => "Story"
+                'type' => 'route',
+                'route' => "story",
+                'label' => "Story"
             ],
             [
-                "url" => "regeln",
-                "name" => "Regeln"
+                'type' => 'route',
+                'route' => "rules",
+                'label' => "Regeln"
             ],
             [
-                "hr" => true
+                'type' => 'divider',
             ],
             [
-                "url" => "register",
-                "name" => "Mitspielen"
+                'type' => 'route',
+                'route' => "register",
+                'label' => "Mitspielen"
             ],
             [
-                "url" => "pwrequest",
-                "name" => "Passwort vergessen?"
+                'type' => 'route',
+                'route' => "pwrequest",
+                'label' => "Passwort vergessen?"
             ],
             [
-                "hr" => true
+                'type' => 'divider',
             ],
             [
-                "url" => ForumBridge::url(), "name" => "Forum"
+                'type' => 'url',
+                "url" => ForumBridge::url(),
+                'label' => "Forum",
             ],
             !empty(get_config('ts_link')) ? [
-                "url" => get_config('ts_link'), "name" => "Discord"
+                'type' => 'url',
+                "url" => get_config('ts_link'),
+                'label' => "Discord"
             ] : null,
             [
+                'type' => 'url',
                 "url" => 'archiv',
-                "name" => "Downloads"
+                'label' => "Downloads"
             ],
             [
+                'type' => 'url',
                 "url" => "https://github.com/etoa/etoa",
-                "name" => "Entwicklung"
+                'label' => "Entwicklung"
             ],
             [
-                "hr" => true
+                'type' => 'divider',
             ],
             [
-                "url" => "banner",
-                "name" => "Weitersagen"
+                'type' => 'route',
+                'route' => "banner",
+                'label' => "Weitersagen"
             ],
             [
-                "url" => "spenden",
-                "name" => "Spenden"
+                'type' => 'route',
+                'route' => "donate",
+                'label' => "Spenden"
             ],
             [
-                "url" => "disclaimer",
-                "name" => "Disclaimer"
+                'type' => 'route',
+                'route' => "disclaimer",
+                'label' => "Disclaimer"
             ],
             [
-                "url" => "privacy",
-                "name" => "Datenschutz"
+                'type' => 'route',
+                'route' => "privacy",
+                'label' => "Datenschutz"
             ],
             [
-                "url" => "impressum",
-                "name" => "Impressum"
+                'type' => 'route',
+                'route' => "imprint",
+                'label' => "Impressum"
             ]
         ];
     }
 
-    public function render(TemplateEngine $tpl): string
+    public function render(Twig $view): string
     {
-        $tpl->assign('nav', array_filter($this->items(), fn ($i) => $i !== null));
-        return $tpl->fetch('widgets/main-menu.html');
+        return $view->fetch('widgets/main-menu.html', [
+            'nav' => array_filter($this->items(), fn ($i) => $i !== null),
+        ]);
     }
 }

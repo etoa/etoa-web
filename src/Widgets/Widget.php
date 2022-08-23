@@ -2,9 +2,9 @@
 
 namespace App\Widgets;
 
-use App\TemplateEngine;
+use Slim\Views\Twig;
 
 interface Widget
 {
-    function render(TemplateEngine $tpl): string;
+    function render(Twig $tpl): string;
 }

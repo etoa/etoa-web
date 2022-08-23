@@ -53,7 +53,7 @@ try {
 
     // Widgets
     $tpl->assign('gameLogin', new GameLogin());
-    $tpl->assign('mainMenu', new MainMenu());
+
     $tpl->assign('infobox', new InfoBox());
 
     // Text blocks
