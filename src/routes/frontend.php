@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Controllers\Frontend\BannerController;
 use App\Controllers\Frontend\DisclaimerController;
+use App\Controllers\Frontend\DonateController;
 use App\Controllers\Frontend\ErrorController;
 use App\Controllers\Frontend\FeaturesController;
 use App\Controllers\Frontend\HistoryController;
@@ -29,3 +30,4 @@ $app->get('/news', NewsController::class)->setName('news');
 $app->get('/logout', LogoutController::class)->setName('logout');
 $app->get('/err', ErrorController::class)->setName('error');
 $app->get('/screenshots', ScreenshotsController::class)->setName('screenshots');
+$app->get('/spenden', DonateController::class)->setName('donate');
