@@ -37,7 +37,7 @@
     </span>
 </div>
 <div class="boxLine"></div>
-<div class="boxData"> {{ thread.message }}
+<div class="boxData"> {{ thread.message | raw }}
     <div style="color:#fb0;font-size:9pt;margin-top:10px;">
         <a style="color:#fb0;" href="{{ thread.url }}">{{ thread.replies }}</a>
     </div>
