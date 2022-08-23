@@ -1,0 +1,28 @@
+{% extends "layouts/site.html" %}
+
+{% block site_title %}{{ site_title|default(title) }}{% endblock %}
+
+{% block content %}
+<br />
+<div class="boxLine"></div>
+<div class="boxTitle">{{ title }}</div>
+<div class="boxLine"></div>
+<div class="boxData">
+    {% if rounds %}
+    Bitte wähle die Runde aus:
+    <ul>
+        {% for round in rounds %}
+        <li>
+            <a href="{{ round.url }}">
+                {{ round.name }}
+            </a>
+            {{ round.suffix }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="loginmsg"><i>Momentan gibt es keine aktiven Runden.</i></p>
+    {% endif %}
+</div>
+<div class="boxLine"></div>
+{% endblock %}
