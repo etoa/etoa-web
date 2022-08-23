@@ -6,9 +6,8 @@ namespace App\Controllers\Frontend;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
 
-class ScreenshotsController
+class ScreenshotsController extends FrontendController
 {
     private static array $files = [
         'allianz',
@@ -23,7 +22,22 @@ class ScreenshotsController
 
     private static string $baseUrl = "/images/screenshots";
 
-    function __invoke(Request $request, Response $response, Twig $view): Response
+    protected function getTitle(): string
+    {
+        return 'Bilder von EtoA';
+    }
+
+    protected function getSiteTitle(): ?string
+    {
+        return 'Screenshots';
+    }
+
+    protected function getHeaderImage(): string
+    {
+        return 'screenshots.png';
+    }
+
+    function __invoke(Request $request, Response $response): Response
     {
         $items = array_map(fn (String $f) => [
             'name' => ucfirst($f),
@@ -31,10 +45,7 @@ class ScreenshotsController
             'thumb_url' => self::$baseUrl . "/" . $f . "_small.jpg",
         ], self::$files);
 
-        return $view->render($response, 'frontend/screenshots.html', [
-            'site_title' => 'Screenshots',
-            'title' => 'Bilder von EtoA',
-            'header_img' => 'screenshots.png',
+        return parent::render($response, 'screenshots.html', [
             'items' => $items,
         ]);
     }

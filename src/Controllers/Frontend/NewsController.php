@@ -10,11 +10,20 @@ use App\Support\TextUtil;
 use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
 
-class NewsController
+class NewsController extends FrontendController
 {
-    function __invoke(Request $request, Response $response, Twig $view): Response
+    protected function getTitle(): string
+    {
+        return 'News';
+    }
+
+    protected function getHeaderImage(): string
+    {
+        return 'news.png';
+    }
+
+    function __invoke(Request $request, Response $response): Response
     {
         $news_board_id = intval(get_config('news_board'));
         $status_board_id = intval(get_config('status_board'));
@@ -43,9 +52,7 @@ class NewsController
             }
         }
 
-        return $view->render($response, 'frontend/news.html', [
-            'site_title' => 'News',
-            'header_img' => 'news.png',
+        return parent::render($response, 'news.html', [
             'text' => TextUtil::get("home"),
             'news' => $news,
             'board_url' => ForumBridge::url('board', $news_board_id),

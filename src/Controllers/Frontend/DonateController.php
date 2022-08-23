@@ -7,16 +7,27 @@ namespace App\Controllers\Frontend;
 use App\Support\TextUtil;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
 
-class DonateController
+class DonateController extends FrontendController
 {
-    function __invoke(Request $request, Response $response, Twig $view): Response
+    protected function getTitle(): string
     {
-        return $view->render($response, 'frontend/donate.html', [
-            'site_title' => 'Spenden',
-            'title' => 'Damit EtoA am Laufen bleibt...',
-            'header_img' => 'spenden.png',
+        return 'Damit EtoA am Laufen bleibt...';
+    }
+
+    protected function getHeaderImage(): string
+    {
+        return 'spenden.png';
+    }
+
+    protected function getSiteTitle(): ?string
+    {
+        return 'Spenden';
+    }
+
+    function __invoke(Request $request, Response $response): Response
+    {
+        return parent::render($response, 'donate.html', [
             'text' => TextUtil::get("spenden"),
         ]);
     }

@@ -8,11 +8,25 @@ use App\Models\Round;
 use App\Support\StringUtil;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
 
-class RegisterController
+class RegisterController extends FrontendController
 {
-    function __invoke(Request $request, Response $response, Twig $view): Response
+    protected function getTitle(): string
+    {
+        return 'Melde dich für eine Runde an';
+    }
+
+    protected function getHeaderImage(): string
+    {
+        return 'register.png';
+    }
+
+    protected function getSiteTitle(): ?string
+    {
+        return 'Registration';
+    }
+
+    function __invoke(Request $request, Response $response): Response
     {
         $rounds = array_map(fn (Round $round) => [
             'url' => loginRoundUrl($round, 'register'),
@@ -20,10 +34,7 @@ class RegisterController
             'startdate' => $round->startdate > 0 ? StringUtil::dateFormat($round->startdate) : null,
         ], Round::active());
 
-        return $view->render($response, 'frontend/rounds.html', [
-            'site_title' => 'Registration',
-            'title' => 'Melde dich für eine Runde an',
-            'header_img' => 'register.png',
+        return parent::render($response, 'rounds.html', [
             'text' => 'Bitte wähle die Runde aus:',
             'rounds' => $rounds,
         ]);

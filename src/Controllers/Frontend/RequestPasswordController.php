@@ -8,11 +8,25 @@ use App\Models\Round;
 use App\Support\StringUtil;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
 
-class RequestPasswordController
+class RequestPasswordController extends FrontendController
 {
-    function __invoke(Request $request, Response $response, Twig $view): Response
+    protected function getTitle(): string
+    {
+        return 'Neues Passwort anfordern';
+    }
+
+    protected function getHeaderImage(): string
+    {
+        return 'pwrequest.png';
+    }
+
+    protected function getSiteTitle(): ?string
+    {
+        return 'Passwort anfordern';
+    }
+
+    function __invoke(Request $request, Response $response): Response
     {
         $rounds = array_map(fn (Round $round) => [
             'url' => loginRoundUrl($round, 'pwforgot'),
@@ -20,10 +34,7 @@ class RequestPasswordController
             'startdate' => $round->startdate > 0 ? StringUtil::dateFormat($round->startdate) : null,
         ], Round::active());
 
-        return $view->render($response, 'frontend/rounds.html', [
-            'site_title' => 'Passwort anfordern',
-            'title' => 'Neues Passwort anfordern',
-            'header_img' => 'pwrequest.png',
+        return parent::render($response, 'rounds.html', [
             'text' => 'Bitte wähle die Runde aus, in der sich dein Account befindet:',
             'rounds' => $rounds,
         ]);

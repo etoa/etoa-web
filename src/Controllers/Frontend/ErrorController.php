@@ -7,9 +7,8 @@ namespace App\Controllers\Frontend;
 use App\Support\ForumBridge;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
 
-class ErrorController
+class ErrorController extends FrontendController
 {
     private static array $messages = [
         "name" => "Du hast vergessen einen Namen oder ein Passwort einzugeben!",
@@ -29,14 +28,26 @@ class ErrorController
         "unknown" => "Unbekannter Fehler. Bitte den Entwickler kontaktieren!",
     ];
 
-    function __invoke(Request $request, Response $response, Twig $view): Response
+    protected function getTitle(): string
+    {
+        return 'Da ist was schiefgegangen...';
+    }
+
+    protected function getHeaderImage(): string
+    {
+        return 'err.png';
+    }
+
+    protected function getSiteTitle(): ?string
+    {
+        return 'Fehler';
+    }
+
+    function __invoke(Request $request, Response $response): Response
     {
         $code = $request->getQueryParams()['err'] ?? 'unknown';
 
-        return $view->render($response, 'frontend/error.html', [
-            'site_title' => 'Fehler',
-            'title' => 'Da ist was schiefgegangen...',
-            'header_img' => 'err.png',
+        return parent::render($response, 'error.html', [
             'message' => self::$messages[$code] ?? self::$messages['unknown'],
             'support_url' => ForumBridge::url('board', get_config('support_board')),
             'developer_url' => 'https://github.com/etoa/etoa',

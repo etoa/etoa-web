@@ -20,6 +20,7 @@ use App\Controllers\Frontend\StoryController;
 
 /** @var \Slim\App $app */
 
+$app->redirect('/', 'news');
 $app->get('/story', StoryController::class)->setName('story');
 $app->get('/disclaimer', DisclaimerController::class)->setName('disclaimer');
 $app->get('/privacy', PrivacyController::class)->setName('privacy');
