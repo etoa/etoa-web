@@ -1,18 +1,9 @@
-{% extends "layouts/site.html" %}
+{% extends "frontend/default.html" %}
 
-{% block site_title %}{{ site_title|default(title) }}{% endblock %}
-
-{% block content %}
-<br />
-<div class="boxLine"></div>
-<div class="boxTitle">{{ title }}</div>
-<div class="boxLine"></div>
-<div class="boxData">
-    <strong>{{ message }}</strong><br><br>
-    Solltest du diesen Fehler nicht lösen können besuche unser
-    <a href="{{ support_url }}">Technik-Support-Forum</a>
-    um eine Antwort auf dein Problem zu finden!<br /><br />
-    Programmfehler bitte an das <a href="{{ developer_url }}">Entwickler-Team</a> melden.
-</div>
-<div class="boxLine"></div>
+{% block main %}
+<strong>{{ message }}</strong><br><br>
+Solltest du diesen Fehler nicht lösen können besuche unser
+<a href="{{ support_url }}">Technik-Support-Forum</a>
+um eine Antwort auf dein Problem zu finden!<br /><br />
+Programmfehler bitte an das <a href="{{ developer_url }}">Entwickler-Team</a> melden.
 {% endblock %}

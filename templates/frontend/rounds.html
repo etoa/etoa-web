@@ -1,28 +1,19 @@
-{% extends "layouts/site.html" %}
+{% extends "frontend/default.html" %}
 
-{% block site_title %}{{ site_title|default(title) }}{% endblock %}
-
-{% block content %}
-<br />
-<div class="boxLine"></div>
-<div class="boxTitle">{{ title }}</div>
-<div class="boxLine"></div>
-<div class="boxData">
-    {% if rounds %}
-    {{ text }}
-    <ul>
-        {% for round in rounds %}
-        <li>
-            <a href="{{ round.url }}">{{ round.name }}</a>
-            {% if round.startdate %}
-            (online seit {{ round.startdate }})
-            {% endif %}
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p class="loginmsg"><i>Momentan gibt es keine aktiven Runden.</i></p>
-    {% endif %}
-</div>
-<div class="boxLine"></div>
+{% block main %}
+{% if rounds %}
+{{ text }}
+<ul>
+    {% for round in rounds %}
+    <li>
+        <a href="{{ round.url }}">{{ round.name }}</a>
+        {% if round.startdate %}
+        (online seit {{ round.startdate }})
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="loginmsg"><i>Momentan gibt es keine aktiven Runden.</i></p>
+{% endif %}
 {% endblock %}
