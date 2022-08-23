@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Controllers\Frontend\BannerController;
 use App\Controllers\Frontend\DisclaimerController;
+use App\Controllers\Frontend\ErrorController;
 use App\Controllers\Frontend\FeaturesController;
 use App\Controllers\Frontend\HistoryController;
 use App\Controllers\Frontend\ImprintController;
@@ -25,3 +26,4 @@ $app->get('/banner', BannerController::class)->setName('banner');
 $app->get('/regeln', RulesController::class)->setName('regeln');
 $app->get('/news', NewsController::class)->setName('news');
 $app->get('/logout', LogoutController::class)->setName('logout');
+$app->get('/err', ErrorController::class)->setName('error');
