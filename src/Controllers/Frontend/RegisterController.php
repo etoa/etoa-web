@@ -14,14 +14,12 @@ class RegisterController
 {
     function __invoke(Request $request, Response $response, Twig $view): Response
     {
-        $rounds = [];
-        foreach (Round::active() as $round) {
-            $rounds[] = [
-                'url' => loginRoundUrl($round, 'register'),
-                'name' => $round->name,
-                'suffix' => ($round->startdate > 0) ? '(online seit ' . StringUtil::dateFormat($round->startdate) . ')' : '',
-            ];
-        }
+        $rounds = array_map(fn (Round $round) => [
+            'url' => loginRoundUrl($round, 'register'),
+            'name' => $round->name,
+            'suffix' => ($round->startdate > 0) ? '(online seit ' . StringUtil::dateFormat($round->startdate) . ')' : '',
+        ], Round::active());
+
         return $view->render($response, 'frontend/register.html', [
             'site_title' => 'Registration',
             'title' => 'Melde dich für eine Runde an',

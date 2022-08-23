@@ -25,14 +25,11 @@ class ScreenshotsController
 
     function __invoke(Request $request, Response $response, Twig $view): Response
     {
-        $items = [];
-        foreach (self::$files as $f) {
-            $items[] = [
-                'name' => ucfirst($f),
-                'url' =>  self::$baseUrl . "/" . $f . ".jpg",
-                'thumb_url' => self::$baseUrl . "/" . $f . "_small.jpg",
-            ];
-        }
+        $items = array_map(fn (String $f) => [
+            'name' => ucfirst($f),
+            'url' =>  self::$baseUrl . "/" . $f . ".jpg",
+            'thumb_url' => self::$baseUrl . "/" . $f . "_small.jpg",
+        ], self::$files);
 
         return $view->render($response, 'frontend/screenshots.html', [
             'site_title' => 'Screenshots',

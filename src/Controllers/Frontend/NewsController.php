@@ -25,23 +25,18 @@ class NewsController
         if (!$news = apcu_fetch('etoa-news-section')) {
             try {
                 $threads = ForumBridge::newsPosts($num_news, $news_board_id, $status_board_id);
-                if (count($threads) > 0) {
-                    foreach ($threads as $thread) {
-                        $replies = $thread['post_count'] - 1;
-                        $news[] = [
-                            'prefix' => $thread['board_id'] == $status_board_id ? "SERVERSTATUS " : "",
-                            'url' => ForumBridge::url('thread', $thread['id']),
-                            'topic'                    => $thread['topic'],
-                            'sufix' => $thread['board_id'] == $status_board_id && $thread['closed'] == 1 ? "Abgeschlossen (" . StringUtil::dateFormat($thread['lastposttime']) . ")" : '',
-                            'date' => StringUtil::dateFormat($thread['time']),
-                            'author_url' => ForumBridge::url('user', $thread['user_id']),
-                            'author' => $thread['user_name'],
-                            'author_suffix' => $thread['updated_at'] > 0 ? " (Letzte Änderung: " . StringUtil::dateFormat($thread['updated_at']) . ")" : '',
-                            'message' =>  $thread["message"],
-                            'replies' => ($replies > 0 ? $replies . ' Kommentare vorhanden' : 'Kommentiere diese Nachricht'),
-                        ];
-                    }
-                }
+                $news = array_map(fn (array $thread) => [
+                    'prefix' => $thread['board_id'] == $status_board_id ? "SERVERSTATUS " : "",
+                    'url' => ForumBridge::url('thread', $thread['id']),
+                    'topic' => $thread['topic'],
+                    'sufix' => $thread['board_id'] == $status_board_id && $thread['closed'] == 1 ? "Abgeschlossen (" . StringUtil::dateFormat($thread['lastposttime']) . ")" : '',
+                    'date' => StringUtil::dateFormat($thread['time']),
+                    'author_url' => ForumBridge::url('user', $thread['user_id']),
+                    'author' => $thread['user_name'],
+                    'author_suffix' => $thread['updated_at'] > 0 ? " (Letzte Änderung: " . StringUtil::dateFormat($thread['updated_at']) . ")" : '',
+                    'message' =>  $thread["message"],
+                    'replies' => $thread['post_count'] > 1 ? (($thread['post_count'] - 1) . ' Kommentare vorhanden') : 'Kommentiere diese Nachricht',
+                ], $threads);
                 apcu_add('etoa-news-section', $news, config('caching.apcu_timeout'));
             } catch (PDOException $ignored) {
                 $message = 'Der Newsfeed ist momentan nicht verfügbar!';
