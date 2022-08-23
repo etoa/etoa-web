@@ -2,13 +2,11 @@
     <input type="text" name="{$loginform.nickField}" size="11" maxlength="100" autofocus />
     <input type="password" name="{$loginform.passwordField}" size="11" maxlength="100" />
     <select id="loginround" name="round">
-        {foreach from=$rounds item=round}
-        {if $round->url eq $selectedRound}
-        <option value="{$round->url}" selected="selected">{$round->name}</option>
-        {else}
-        <option value="{$round->url}">{$round->name}</option>
-        {/if}
-        {/foreach}
+        {% for round in rounds %}
+        <option value="{{ round.url }}" {% if round.url==selectedRound %}selected="selected" {% endif %}>
+            {{ round.name }}
+        </option>
+        {% endfor %}
     </select><br />
     <input class="btn-login_" type="submit" value=" " name="login" />
     <input type="hidden" name="token" value="{$loginform.logintoken}" />

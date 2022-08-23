@@ -52,8 +52,6 @@ try {
     }
 
     // Widgets
-    $tpl->assign('gameLogin', new GameLogin());
-
     $tpl->assign('infobox', new InfoBox());
 
     // Text blocks
