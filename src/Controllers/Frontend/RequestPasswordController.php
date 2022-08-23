@@ -10,21 +10,21 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 
-class RegisterController
+class RequestPasswordController
 {
     function __invoke(Request $request, Response $response, Twig $view): Response
     {
         $rounds = array_map(fn (Round $round) => [
-            'url' => loginRoundUrl($round, 'register'),
+            'url' => loginRoundUrl($round, 'pwforgot'),
             'name' => $round->name,
             'startdate' => $round->startdate > 0 ? StringUtil::dateFormat($round->startdate) : null,
         ], Round::active());
 
         return $view->render($response, 'frontend/rounds.html', [
-            'site_title' => 'Registration',
-            'title' => 'Melde dich für eine Runde an',
-            'header_img' => 'register.png',
-            'text' => 'Bitte wähle die Runde aus:',
+            'site_title' => 'Passwort anfordern',
+            'title' => 'Neues Passwort anfordern',
+            'header_img' => 'pwrequest.png',
+            'text' => 'Bitte wähle die Runde aus, in der sich dein Account befindet:',
             'rounds' => $rounds,
         ]);
     }

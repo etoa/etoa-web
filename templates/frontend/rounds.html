@@ -9,14 +9,14 @@
 <div class="boxLine"></div>
 <div class="boxData">
     {% if rounds %}
-    Bitte wähle die Runde aus:
+    {{ text }}
     <ul>
         {% for round in rounds %}
         <li>
-            <a href="{{ round.url }}">
-                {{ round.name }}
-            </a>
-            {{ round.suffix }}
+            <a href="{{ round.url }}">{{ round.name }}</a>
+            {% if round.startdate %}
+            (online seit {{ round.startdate }})
+            {% endif %}
         </li>
         {% endfor %}
     </ul>
