@@ -30,6 +30,10 @@ abstract class FrontendController
                 'title' => $this->getTitle(),
                 'site_title' => $this->getSiteTitle(),
                 'header_img' => $this->getHeaderImage(),
+                'votebanner' => get_config('buttons'),
+                'adds' => get_config('adds'),
+                'footerJs' => get_config('footer_js'),
+                'headerJs' => get_config('indexjscript'),
             ], $args)
         );
     }

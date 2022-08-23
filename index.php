@@ -57,10 +57,7 @@ try {
     $tpl->assign('infobox', new InfoBox());
 
     // Text blocks
-    $tpl->assign('votebanner', get_config('buttons'));
-    $tpl->assign('adds', get_config('adds'));
-    $tpl->assign('footerJs', get_config('footer_js'));
-    $tpl->assign('headerJs', get_config('indexjscript'));
+
 
     // Site nbame
     $tpl->assign("site_title", $site_title ?? ucfirst($page));
@@ -69,7 +66,6 @@ try {
     $tpl->render('layouts/site.html');
 
     dbclose();
-
 } catch (\PDOException $ex) {
     abort($ex->getMessage(), 'Datenbankfehler');
 }
