@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Middleware\HttpsRedirectMiddleware;
 use App\Support\TwigConfigurationInitializer;
 use DI\Bridge\Slim\Bridge;
 use DI\Container;
@@ -31,6 +32,11 @@ $app = Bridge::create($container);
 $app->addErrorMiddleware($debug, true, true);
 if (!$debug) {
     ini_set('display_errors', '0');
+}
+
+// HTTPS redirect
+if (!$debug) {
+    $app->add(HttpsRedirectMiddleware::class);
 }
 
 // Base path

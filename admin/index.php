@@ -7,8 +7,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 try {
 
-    redirectHttps();
-
     // Session
     session_start();
 
@@ -58,7 +56,6 @@ try {
     }
 
     $tpl->render('layouts/admin.html');
-
 } catch (\PDOException $ex) {
     abort($ex->getMessage(), 'Datenbankfehler');
 }

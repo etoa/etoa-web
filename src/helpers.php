@@ -137,18 +137,6 @@ function set_config($key, $value)
     ;");
 }
 
-function redirectHttps()
-{
-    if ($_SERVER['HTTP_HOST'] != 'localhost') {
-        if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
-            $location = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-            header('HTTP/1.1 301 Moved Permanently');
-            header('Location: ' . $location);
-            exit;
-        }
-    }
-}
-
 function message($type, $msg)
 {
     return "<div class=\"messagebox\"><div class=\"" . $type . "\">" . $msg . "</div></div>";
