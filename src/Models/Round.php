@@ -4,6 +4,20 @@ namespace App\Models;
 
 class Round
 {
+    public static function all()
+    {
+        $res = dbquery("
+            SELECT *
+            FROM " . dbtable('rounds') . "
+            ORDER BY round_name
+        ;");
+        $items = [];
+        while ($arr = mysql_fetch_array($res)) {
+            $items[] = self::fromArray($arr);
+        }
+        return $items;
+    }
+
     public static function active()
     {
         $res = dbquery("
@@ -14,14 +28,20 @@ class Round
         ;");
         $items = [];
         while ($arr = mysql_fetch_array($res)) {
-            $item = new Round();
-            $item->id = $arr['round_id'];
-            $item->name = $arr['round_name'];
-            $item->url = $arr['round_url'];
-            $item->startdate = $arr['round_startdate'];
-            $item->active = (bool)$arr['round_active'];
-            $items[] = $item;
+
+            $items[] = self::fromArray($arr);
         }
         return $items;
+    }
+
+    public static function fromArray(array $data): Round
+    {
+        $round = new Round();
+        $round->id = $data['round_id'];
+        $round->name = $data['round_name'];
+        $round->url = $data['round_url'];
+        $round->startdate = $data['round_startdate'];
+        $round->active = (bool)$data['round_active'];
+        return $round;
     }
 }

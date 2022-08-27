@@ -166,8 +166,3 @@ function getAppBasePath(): string
     }
     return '';
 }
-
-function isMaintenanceModeActive()
-{
-    return file_exists(__DIR__ . '/../storage/maintenance');
-}

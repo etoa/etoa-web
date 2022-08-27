@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Authentication\ForumAuthenticator;
+use App\Controllers\Backend\OverviewController;
 use App\Controllers\Frontend\BannerController;
 use App\Controllers\Frontend\DisclaimerController;
 use App\Controllers\Frontend\DonateController;
@@ -26,7 +27,7 @@ use Tuupola\Middleware\HttpBasicAuthentication;
 
 /** @var \Slim\App $app */
 
-if (isMaintenanceModeActive()) {
+if (file_exists(__DIR__ . '/../storage/maintenance')) {
     $app->any('/', fn (Response $response, Twig $view) => $view->render($response, 'maintenance.html'));
     $app->any('/{any}', fn (Response $response, Twig $view) => $view->render($response, 'maintenance.html'));
 } else {
@@ -68,10 +69,7 @@ if (isMaintenanceModeActive()) {
     });
 
     $app->group('/admin', function (RouteCollectorProxy $group) {
-        $group->get('', function (Response $response) {
-            $response->getBody()->write('test');
-            return $response;
-        })
+        $group->get('', OverviewController::class)
             ->setName('admin');
     })->add(new HttpBasicAuthentication([
         "realm" => "EtoA Login Administration",

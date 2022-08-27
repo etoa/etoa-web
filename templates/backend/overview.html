@@ -1,0 +1,31 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+<p>Willkommen in der Loginserver-Administration!</p>
+<p>
+    Diese Seite dient der Verwaltung gewisser Bereiche der Login-Page.<br />
+    Besuche folgende Seiten für andere Administrationsmöglichkeiten:
+</p>
+
+<h2>Community-Administration</h2>
+<ul>
+    <li><a href="{{ forumAdminUrl }}" target="_blank">Forum-Administration</a></li>
+</ul>
+
+<h2>Game-Administration</h2>
+{% if rounds %}
+<ul>
+    {% for round in rounds %}
+    <li><a href="{{ round.url }}admin" target="_blank">{{ round.name }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h2>Zugriff</h2>
+<p>Folgende Leute haben Zugang auf diese Tool:</p>
+<ul>
+    {% for admin in admins %}
+    <li><a href="{{ admin.url }}" target="_blank">{{ admin.name }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
