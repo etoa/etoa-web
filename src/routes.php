@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Authentication\ForumAuthenticator;
 use App\Controllers\Frontend\BannerController;
 use App\Controllers\Frontend\DisclaimerController;
 use App\Controllers\Frontend\DonateController;
@@ -21,6 +22,7 @@ use App\Controllers\PageNotFoundController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\Twig;
+use Tuupola\Middleware\HttpBasicAuthentication;
 
 /** @var \Slim\App $app */
 
@@ -64,6 +66,23 @@ if (isMaintenanceModeActive()) {
         $group->get('/pwrequest', RequestPasswordController::class)
             ->setName('pwrequest');
     });
+
+    $app->group('/admin', function (RouteCollectorProxy $group) {
+        $group->get('', function (Response $response) {
+            $response->getBody()->write('test');
+            return $response;
+        })
+            ->setName('admin');
+    })->add(new HttpBasicAuthentication([
+        "realm" => "EtoA Login Administration",
+        "authenticator" => new ForumAuthenticator,
+        "before" => function ($request, $arguments) {
+            return $request
+                ->withAttribute("user", $arguments["user"])
+                ->withAttribute("password", $arguments["password"]);
+        },
+        'secure' => false,
+    ]));
 
     $app->any('/{path:.*}', PageNotFoundController::class);
 }
