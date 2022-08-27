@@ -46,7 +46,7 @@ $app->setBasePath($_ENV['APP_BASEPATH'] ?? getAppBasePath());
 $app->add(TwigMiddleware::create($app, $twig));
 
 // Routing
-require __DIR__ . '/src/routes/frontend.php';
+require __DIR__ . '/src/routes.php';
 
 // Run app
 $app->run();

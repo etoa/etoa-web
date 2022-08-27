@@ -65,5 +65,5 @@ if (isMaintenanceModeActive()) {
             ->setName('pwrequest');
     });
 
-    $app->any('/{any}', PageNotFoundController::class);
+    $app->any('/{path:.*}', PageNotFoundController::class);
 }
