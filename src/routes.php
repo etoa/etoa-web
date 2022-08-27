@@ -3,18 +3,16 @@
 declare(strict_types=1);
 
 use App\Authentication\ForumAuthenticator;
+use App\Controllers\MaintenancePageController;
 use App\Controllers\PageNotFoundController;
 use App\Routing\BackendRoutes;
 use App\Routing\FrontendRoutes;
-use Psr\Http\Message\ResponseInterface as Response;
-use Slim\Views\Twig;
 use Tuupola\Middleware\HttpBasicAuthentication;
 
 /** @var \Slim\App $app */
 
 if (file_exists(__DIR__ . '/../storage/maintenance')) {
-    $app->any('/', fn (Response $response, Twig $view) => $view->render($response, 'maintenance.html'));
-    $app->any('/{any}', fn (Response $response, Twig $view) => $view->render($response, 'maintenance.html'));
+    $app->any('/{path:.*}', MaintenancePageController::class);
 } else {
     $app->group('', FrontendRoutes::class);
     $app->group('/admin', BackendRoutes::class)
