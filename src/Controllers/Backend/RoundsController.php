@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Backend;
 
 use App\Service\RoundService;
+use Carbon\Carbon;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -28,13 +29,13 @@ class RoundsController extends BackendController
         if (isset($post['submit'])) {
             if (isset($post['name'])) {
                 foreach ($post['name'] as $id => $v) {
-                    if ($post['name'][$id] != "" && $post['url'][$id] != "") {
+                    if ($post['name'][$id] != "" && $post['url'][$id] != "") {;
                         $rounds->update(
                             $id,
                             name: $post['name'][$id],
                             url: $post['url'][$id],
                             active: $post['active'][$id] == 1,
-                            startDate: intval($post['startDate'][$id])
+                            startDate: trim($post['startDate'][$id]) != '' ? Carbon::createFromDate($post['startDate'][$id])->timestamp : 0,
                         );
                     }
                 }

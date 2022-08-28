@@ -37,7 +37,15 @@ class TwigConfigurationInitializer
         }));
 
         $twig->getEnvironment()->addFilter(new TwigFilter('localDateFormatFromTimestamp', function ($value) use ($timezone) {
+            return Carbon::createFromTimestamp($value)->setTimezone($timezone)->isoFormat('LL');
+        }));
+
+        $twig->getEnvironment()->addFilter(new TwigFilter('localDateTimeFormatFromTimestamp', function ($value) use ($timezone) {
             return Carbon::createFromTimestamp($value)->setTimezone($timezone)->isoFormat('LLL');
+        }));
+
+        $twig->getEnvironment()->addFilter(new TwigFilter('dateFromTimestamp', function ($value) use ($timezone) {
+            return $value > 0 ? Carbon::createFromTimestamp($value)->setTimezone($timezone)->toDateString() : '';
         }));
 
         $twig->getEnvironment()->addFilter(new TwigFilter('monthYear', function ($value) {

@@ -29,12 +29,13 @@
     {{ thread.prefix }}
     <a href="{{ thread.url }}">{{ thread.topic }}</a>
     {% if thread.closed %}
-    &nbsp; <span style="color:#0f0;">Abgeschlossen ({{ thread.last_post_time | localDateFormatFromTimestamp }})</span>
+    &nbsp; <span style="color:#0f0;">Abgeschlossen ({{ thread.last_post_time | localDateTimeFormatFromTimestamp
+        }})</span>
     {% endif %}
-    <br /><span class="subtitle">{{ thread.time | localDateFormatFromTimestamp }} von
+    <br /><span class="subtitle">{{ thread.time | localDateTimeFormatFromTimestamp }} von
         <a href=" {{ thread.autor_url }}">{{ thread.author }}</a>
         {% if thread.updated_at %}
-        (Letzte Änderung: {{ thread.updated_at | localDateFormatFromTimestamp }}
+        (Letzte Änderung: {{ thread.updated_at | localDateTimeFormatFromTimestamp }}
         {% endif %}
     </span>
 </div>

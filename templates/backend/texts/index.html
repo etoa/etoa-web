@@ -15,7 +15,7 @@
         <tr>
             <td><a href="{{ url_for('admin.texts.edit', { 'id': text.id }) }}">{{ text.name }}</a></td>
             <td>{{ text.keyword }}</td>
-            <td>{{ text.lastChanges | localDateFormatFromTimestamp }}</td>
+            <td>{{ text.lastChanges | localDateTimeFormatFromTimestamp }}</td>
         </tr>
         {% endfor %}
     </tbody>

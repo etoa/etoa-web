@@ -23,7 +23,8 @@
                     <input type="url" name="url[{{ round.id }}]" value="{{ round.url }}" size="50" />
                 </td>
                 <td>
-                    <input type="text" name="startDate[{{ round.id }}]" value="{{ round.startDate }}" />
+                    <input type="date" name="startDate[{{ round.id }}]"
+                        value="{{ round.startDate | dateFromTimestamp }}" />
                 </td>
                 <td>
                     <label><input type="radio" name="active[{{ round.id }}]" value="1" {% if round.active==1 %} checked
