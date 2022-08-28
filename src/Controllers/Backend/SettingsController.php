@@ -72,7 +72,7 @@ class SettingsController extends BackendController
             'required' => true,
         ],
         'server_notice' => [
-            'label' => 'Servermeldung',
+            'label' => 'Servermeldung (BBCode)',
             'type' => 'textarea',
             'default' => '',
             'required' => false,

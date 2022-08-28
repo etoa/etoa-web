@@ -48,9 +48,9 @@ class TwigConfigurationInitializer
             return $value > 0 ? Carbon::createFromTimestamp($value)->setTimezone($timezone)->toDateString() : '';
         }));
 
-        $twig->getEnvironment()->addFilter(new TwigFilter('monthYear', function ($value) {
-            return Carbon::createFromTimestampMs($value)->format('F Y');
-        }));
+        $twig->getEnvironment()->addFilter(new TwigFilter('bbcode', function ($value) {
+            return BBCodeConverter::toHtml($value);
+        }, ['is_safe' => ['html']]));
 
         return $twig;
     }
