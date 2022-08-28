@@ -7,8 +7,8 @@
     {% for round in rounds %}
     <li>
         <a href="{{ round.url }}">{{ round.name }}</a>
-        {% if round.startdate %}
-        (online seit {{ round.startdate }})
+        {% if round.startDate %}
+        (online seit {{ round.startDate | localDateFormatFromTimestamp }})
         {% endif %}
     </li>
     {% endfor %}

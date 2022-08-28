@@ -6,6 +6,7 @@ use App\Middleware\HttpsRedirectMiddleware;
 use App\Service\ConfigService;
 use App\Support\Database\DatabaseEntityManagerInitializer;
 use App\Support\TwigConfigurationInitializer;
+use Carbon\Carbon;
 use DI\Bridge\Slim\Bridge;
 use DI\Container;
 use Doctrine\ORM\EntityManager;
@@ -23,6 +24,9 @@ $dotenv->safeLoad();
 // Define environment and debug mode
 $environment = ($_ENV['APP_ENV'] ?? 'production');
 $debug = !in_array($environment, ['prod', 'production']);
+
+// Define locale
+Carbon::setLocale($_ENV['LOCALE'] ?? 'de');
 
 $twig = TwigConfigurationInitializer::create($debug, !$debug);
 

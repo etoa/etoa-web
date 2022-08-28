@@ -26,21 +26,22 @@ class RoundsController extends BackendController
     {
         $post = $request->getParsedBody();
         if (isset($post['submit'])) {
-            if (isset($post['round_name'])) {
-                foreach ($post['round_name'] as $id => $v) {
-                    if ($post['round_name'][$id] != "" && $post['round_url'][$id] != "") {
+            if (isset($post['name'])) {
+                foreach ($post['name'] as $id => $v) {
+                    if ($post['name'][$id] != "" && $post['url'][$id] != "") {
                         $rounds->update(
                             $id,
-                            name: $post['round_name'][$id],
-                            url: $post['round_url'][$id],
-                            active: $post['round_active'][$id] == 1
+                            name: $post['name'][$id],
+                            url: $post['url'][$id],
+                            active: $post['active'][$id] == 1,
+                            startDate: intval($post['startDate'][$id])
                         );
                     }
                 }
             }
             $deleted = 0;
-            if (isset($post['round_del'])) {
-                foreach ($post['round_del'] as $id => $delete) {
+            if (isset($post['delete'])) {
+                foreach ($post['delete'] as $id => $delete) {
                     if ($delete == 1) {
                         $rounds->delete(intval($id));
                         $deleted++;

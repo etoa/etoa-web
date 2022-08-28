@@ -32,7 +32,7 @@ class RequestPasswordController extends FrontendController
         $rounds = array_map(fn (Round $round) => [
             'url' => $rounds->createPageUrl($round, 'pwforgot'),
             'name' => $round->name,
-            'startdate' => $round->startDate > 0 ? StringUtil::dateFormat($round->startDate) : null,
+            'startDate' => $round->startDate,
         ], $rounds->active());
 
         return parent::render($response, 'rounds.html', [

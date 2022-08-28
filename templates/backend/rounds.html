@@ -8,6 +8,7 @@
             <tr>
                 <th>Name</th>
                 <th>URL</th>
+                <th>Startdatum</th>
                 <th>Anzeigen</th>
                 <th>Löschen</th>
             </tr>
@@ -16,19 +17,22 @@
             {% for round in rounds %}
             <tr>
                 <td>
-                    <input type="text" name="round_name[{{ round.id }}]" value="{{ round.name }}" size="20" />
+                    <input type="text" name="name[{{ round.id }}]" value="{{ round.name }}" size="20" />
                 </td>
                 <td>
-                    <input type="text" name="round_url[{{ round.id }}]" value="{{ round.url }}" size="50" />
+                    <input type="url" name="url[{{ round.id }}]" value="{{ round.url }}" size="50" />
                 </td>
                 <td>
-                    <label><input type="radio" name="round_active[{{ round.id }}]" value="1" {% if round.active==1 %}
-                            checked {% endif %} /> Ja</label>
-                    <label><input type="radio" name="round_active[{{ round.id }}]" value="0" {% if round.active==0 %}
-                            checked {% endif %} /> Nein</label>
+                    <input type="text" name="startDate[{{ round.id }}]" value="{{ round.startDate }}" />
                 </td>
                 <td>
-                    <input type="checkbox" name="round_del[{{ round.id }}]" value="1" />
+                    <label><input type="radio" name="active[{{ round.id }}]" value="1" {% if round.active==1 %} checked
+                            {% endif %} /> Ja</label>
+                    <label><input type="radio" name="active[{{ round.id }}]" value="0" {% if round.active==0 %} checked
+                            {% endif %} /> Nein</label>
+                </td>
+                <td>
+                    <input type="checkbox" name="delete[{{ round.id }}]" value="1" />
                 </td>
             </tr>
             {% endfor %}

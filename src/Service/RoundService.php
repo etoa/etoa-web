@@ -53,12 +53,14 @@ final class RoundService
         return $round;
     }
 
-    public function update(int $id, string $name, string $url, bool $active): void
+    public function update(int $id, string $name, string $url, bool $active, int $startDate): void
     {
+        /** @var ?Round $round */
         $round = $this->em->getReference(Round::class, $id);
         $round->name = $name;
         $round->url = $url;
         $round->active = $active;
+        $round->startDate = $startDate;
         $this->em->persist($round);
         $this->em->flush();
     }
