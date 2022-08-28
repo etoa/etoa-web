@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
+use App\Service\ConfigService;
 use App\Service\RoundService;
 use App\Service\TextService;
 use App\Support\StringUtil;
@@ -18,7 +19,8 @@ abstract class FrontendController
     function __construct(
         protected Twig $view,
         private RoundService $rounds,
-        private TextService $texts
+        private TextService $texts,
+        protected ConfigService $config,
     ) {
     }
 
@@ -39,13 +41,13 @@ abstract class FrontendController
                 'title' => $this->getTitle(),
                 'site_title' => $this->getSiteTitle(),
                 'header_img' => $this->getHeaderImage(),
-                'votebanner' => get_config('buttons'),
-                'adds' => get_config('adds'),
-                'footerJs' => get_config('footer_js'),
-                'headerJs' => get_config('indexjscript'),
-                'mainMenu' => (new MainMenu())->render($this->view),
+                'votebanner' => $this->config->get('buttons'),
+                'adds' => $this->config->get('adds'),
+                'footerJs' => $this->config->get('footer_js'),
+                'headerJs' => $this->config->get('indexjscript'),
+                'mainMenu' => (new MainMenu($this->config))->render($this->view),
                 'gameLogin' => (new GameLogin($this->rounds))->render($this->view),
-                'infobox' => (new InfoBox())->render($this->view),
+                'infobox' => (new InfoBox($this->config))->render($this->view),
             ], $args)
         );
     }

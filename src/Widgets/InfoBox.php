@@ -2,6 +2,7 @@
 
 namespace App\Widgets;
 
+use App\Service\ConfigService;
 use App\Support\ForumBridge;
 use App\Support\StringUtil;
 use PDOException;
@@ -10,6 +11,10 @@ use Slim\Views\Twig;
 class InfoBox implements Widget
 {
     const LATEST_POSTS_NUM = 5;
+
+    function __construct(private ConfigService $config)
+    {
+    }
 
     public function render(Twig $view): string
     {
@@ -30,7 +35,7 @@ class InfoBox implements Widget
                 echo "<span style=\"color:#f00;font-size:9pt;\">Status nicht verfügbar</span>";
             }
             try {
-                $board_blacklist = explode(",", get_config('infobox_board_blacklist'));
+                $board_blacklist = explode(",", $this->config->get('infobox_board_blacklist'));
                 $posts = ForumBridge::latestPosts(self::LATEST_POSTS_NUM, $board_blacklist);
                 echo "<div id=\"forum\" style=\"\">
                 <ul id=\"forumthreadlist\">";
@@ -52,12 +57,12 @@ class InfoBox implements Widget
 
     private function serverNotice()
     {
-        $server_notice = get_config('server_notice');
+        $server_notice = $this->config->get('server_notice');
         if ($server_notice != "") {
-            $color = get_config('server_notice_color', "#fff");
+            $color = $this->config->get('server_notice_color', "#fff");
             echo "<br/><br><div style=\"border:1px solid " . $color . ";padding:4px;background:#223;color:" . $color . "\">";
             echo StringUtil::text2html($server_notice);
-            echo "<br/><div style=\"margin-top:5px;font-size:8pt;\">Aktualisiert: " . StringUtil::dateFormat(get_config('server_notice_updated')) . "</div>";
+            echo "<br/><div style=\"margin-top:5px;font-size:8pt;\">Aktualisiert: " . StringUtil::dateFormat($this->config->get('server_notice_updated')) . "</div>";
             echo "</div><br/>";
         }
     }

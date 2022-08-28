@@ -2,13 +2,19 @@
 
 namespace App\Widgets;
 
+use App\Service\ConfigService;
 use App\Support\ForumBridge;
 use Slim\Views\Twig;
 
 class MainMenu implements Widget
 {
+    function __construct(private ConfigService $config)
+    {
+    }
+
     private function items()
     {
+        $tsLink = $this->config->get('ts_link');
         return [
             [
                 'type' => 'route',
@@ -56,9 +62,9 @@ class MainMenu implements Widget
                 "url" => ForumBridge::url(),
                 'label' => "Forum",
             ],
-            !empty(get_config('ts_link')) ? [
+            !empty($tsLink) ? [
                 'type' => 'url',
-                "url" => get_config('ts_link'),
+                "url" => $tsLink,
                 'label' => "Discord"
             ] : null,
             [

@@ -24,8 +24,8 @@ class NewsController extends FrontendController
 
     function __invoke(Request $request, Response $response): Response
     {
-        $news_board_id = intval(get_config('news_board'));
-        $status_board_id = intval(get_config('status_board'));
+        $news_board_id = $this->config->getInt('news_board');
+        $status_board_id = $this->config->getInt('status_board');
         $num_news = 3;
 
         $message = null;

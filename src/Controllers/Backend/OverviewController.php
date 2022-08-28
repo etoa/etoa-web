@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Backend;
 
-use App\Models\Round;
+use App\Service\ConfigService;
 use App\Service\RoundService;
 use App\Support\ForumBridge;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -17,9 +17,9 @@ class OverviewController extends BackendController
         return 'Übersicht';
     }
 
-    function __invoke(Request $request, Response $response, RoundService $rounds): Response
+    function __invoke(Request $request, Response $response, RoundService $rounds, ConfigService $config): Response
     {
-        $admins = ForumBridge::usersOfGroup(intval(get_config('loginadmin_group')));
+        $admins = ForumBridge::usersOfGroup($config->getInt('loginadmin_group'));
 
         return parent::render($response, 'overview.html', [
             'forumAdminUrl' => ForumBridge::url('admin'),

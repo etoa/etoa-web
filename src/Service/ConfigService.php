@@ -26,6 +26,12 @@ final class ConfigService
         return $item->value;
     }
 
+    public function getInt(string $name, int $defaultValue = 0): int
+    {
+        $value = $this->get($name);
+        return  $value !== null ? intval($value) : $defaultValue;
+    }
+
     public function set(string $name, ?string $value): void
     {
         /** @var ?ConfigSetting $item */
