@@ -3,9 +3,12 @@
 declare(strict_types=1);
 
 use App\Middleware\HttpsRedirectMiddleware;
+use App\Service\ConfigService;
+use App\Support\Database\DatabaseEntityManagerInitializer;
 use App\Support\TwigConfigurationInitializer;
 use DI\Bridge\Slim\Bridge;
 use DI\Container;
+use Doctrine\ORM\EntityManager;
 use Dotenv\Dotenv;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
@@ -27,6 +30,11 @@ $twig = TwigConfigurationInitializer::create($debug, !$debug);
 $container = new Container();
 $container->set(Twig::class, fn () => $twig);
 $container->set('session', fn () => new \SlimSession\Helper());
+$container->set(EntityManager::class, DatabaseEntityManagerInitializer::initialize($debug));
+$container->set(ConfigService::class, static function (Container $c) {
+    return new ConfigService($c->get(EntityManager::class));
+});
+
 $app = Bridge::create($container);
 
 // Error handling

@@ -8,5 +8,6 @@
 /vendor/
 .env
 /storage/cache/twig
+/storage/cache/doctrine
 .vscode/settings.json
 storage/maintenance
