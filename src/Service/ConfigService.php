@@ -15,13 +15,19 @@ final class ConfigService
         $this->repo = $em->getRepository(ConfigSetting::class);
     }
 
-    public function get(string $name, ?string $defaultValue = null): ?string
+    public function get(string $name, ?string $defaultValue = null, bool $useCache = true): ?string
     {
+        static $cache = [];
+        if ($useCache && isset($cache[$name])) {
+            return $cache[$name];
+        }
+
         /** @var ?ConfigSetting $item */
         $item = $this->repo->findOneBy(['name' => $name]);
         if ($item === null) {
             return $defaultValue;
         }
+        $cache[$name] = $item->value;
 
         return $item->value;
     }

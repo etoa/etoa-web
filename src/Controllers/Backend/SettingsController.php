@@ -119,7 +119,7 @@ class SettingsController extends BackendController
         return parent::render($response, 'settings.html', [
             'settings' => collect(self::$settings)->map(fn ($def, $key) => [
                 'name' => $key,
-                'value' =>  $config->get($key, $def['default']),
+                'value' =>  $config->get($key, defaultValue: $def['default'], useCache: false),
                 'label' => $def['label'],
                 'type' => $def['type'],
                 'required' => $def['required'],
