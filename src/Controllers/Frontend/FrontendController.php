@@ -7,7 +7,7 @@ namespace App\Controllers\Frontend;
 use App\Service\ConfigService;
 use App\Service\RoundService;
 use App\Service\TextService;
-use App\Support\StringUtil;
+use App\Support\BBCodeConverter;
 use App\Widgets\GameLogin;
 use App\Widgets\InfoBox;
 use App\Widgets\MainMenu;
@@ -57,7 +57,7 @@ abstract class FrontendController
         $text = $this->texts->findByKeyword($keyword);
         if ($text !== null) {
             if ($text->content != "") {
-                return StringUtil::text2html($text->content);
+                return BBCodeConverter::toHtml($text->content);
             }
             return "<p><i><b>Fehler:</b> Texteintrag fehlt!</i></p>";
         } else {

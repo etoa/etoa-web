@@ -3,6 +3,7 @@
 namespace App\Widgets;
 
 use App\Service\ConfigService;
+use App\Support\BBCodeConverter;
 use App\Support\ForumBridge;
 use App\Support\StringUtil;
 use PDOException;
@@ -61,7 +62,7 @@ class InfoBox implements Widget
         if ($server_notice != "") {
             $color = $this->config->get('server_notice_color', "#fff");
             echo "<br/><br><div style=\"border:1px solid " . $color . ";padding:4px;background:#223;color:" . $color . "\">";
-            echo StringUtil::text2html($server_notice);
+            echo BBCodeConverter::toHtml($server_notice);
             echo "<br/><div style=\"margin-top:5px;font-size:8pt;\">Aktualisiert: " . StringUtil::dateFormat($this->config->get('server_notice_updated')) . "</div>";
             echo "</div><br/>";
         }
