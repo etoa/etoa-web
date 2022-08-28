@@ -46,4 +46,9 @@ final class ConfigService
         $this->em->persist($item);
         $this->em->flush();
     }
+
+    public function setInt(string $name, int $value): void
+    {
+        $this->set($name, (string) $value);
+    }
 }

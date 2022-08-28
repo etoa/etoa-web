@@ -55,6 +55,7 @@ class ServerNoticeController extends BackendController
         foreach (self::$settings as $key => $def) {
             $config->set($key, $post[$key]);
         }
+        $config->setInt('server_notice_updated', time());
         $this->setSessionMessage('info', "Einstellungen gespeichert.");
 
         return $this->redirectToNamedRoute($request, $response, 'admin.servernotice');
