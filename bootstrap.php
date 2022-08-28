@@ -26,6 +26,7 @@ $twig = TwigConfigurationInitializer::create($debug, !$debug);
 // Init app
 $container = new Container();
 $container->set(Twig::class, fn () => $twig);
+$container->set('session', fn () => new \SlimSession\Helper());
 $app = Bridge::create($container);
 
 // Error handling
@@ -44,6 +45,9 @@ $app->setBasePath($_ENV['APP_BASEPATH'] ?? getAppBasePath());
 
 // Add Twig-View Middleware
 $app->add(TwigMiddleware::create($app, $twig));
+
+// Add session management
+$app->add(new \Slim\Middleware\Session());
 
 // Routing
 require __DIR__ . '/src/routes.php';

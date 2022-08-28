@@ -23,7 +23,7 @@
                 <div id="menu_center">
                     <b>Navigation</b><br />
                     <a href="{{ url_for('admin') }}">Übersicht</a>
-                    <a href="?page=serverinfo">Servermeldung</a>
+                    <a href="{{ url_for('admin.serverinfo') }}">Servermeldung</a>
                     <a href="?page=rounds">Runden</a>
                     <a href="?page=buttons">Buttons</a>
                     <a href="?page=adds">Werbung</a>
@@ -41,6 +41,11 @@
                     {% if error %}
                     <div class="messagebox">
                         <div class="error">{{ error }}</div>
+                    </div>
+                    {% endif %}
+                    {% if info %}
+                    <div class="messagebox">
+                        <div class="info">{{ info }}</div>
                     </div>
                     {% endif %}
                     {% block content %}{% endblock %}

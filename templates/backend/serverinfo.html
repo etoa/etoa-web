@@ -1,0 +1,9 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+<form action="{{ url_for('admin.serverinfo.store') }}" method="post">
+    <textarea name="server_notice" rows="10" cols="120">{{ server_notice }}</textarea><br />
+    Farbe: <input size="12" name="server_notice_color" value="{{ server_notice_color }}" /><br />
+    <p><input type="submit" name="submit" value="Übernehmen" /></p>
+</form>
+{% endblock %}

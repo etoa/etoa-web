@@ -129,7 +129,6 @@ function get_config($key, $default = null, $useCache = true)
 
 function set_config($key, $value)
 {
-    unset($_SESSION['config'][$key]);
     dbquery("
         REPLACE INTO " . dbtable('config') . "
         (config_name, config_value)

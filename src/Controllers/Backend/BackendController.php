@@ -9,7 +9,7 @@ use Slim\Views\Twig;
 
 abstract class BackendController
 {
-    function __construct(protected Twig $view)
+    function __construct(protected Twig $view, protected \SlimSession\Helper $session)
     {
     }
 
@@ -22,7 +22,26 @@ abstract class BackendController
             'backend/' . $backendTemplate,
             array_merge([
                 'title' => $this->getTitle(),
+                'info' => $this->pullSessionMessage('info'),
+                'error' => $this->pullSessionMessage('error'),
             ], $args)
         );
+    }
+
+    protected function setSessionMessage(string $key, string $value): void
+    {
+        $this->session->set($key, $value);
+    }
+
+    private function pullSessionMessage(string $key): ?string
+    {
+        if (!$this->session->exists($key)) {
+            return null;
+        }
+
+        $value = $this->session->get($key);
+        $this->session->delete($key);
+
+        return $value;
     }
 }
