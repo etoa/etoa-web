@@ -22,6 +22,9 @@ class SettingsController extends BackendController
             'server_notice' => $config->get('server_notice'),
             'server_notice_color' => $config->get('server_notice_color', 'orange'),
             'adds' => $config->get('adds', ''),
+            'indexjscript' => $config->get('indexjscript', ''),
+            'footer_js' => $config->get('footer_js', ''),
+            'buttons' => $config->get('buttons', ''),
         ]);
     }
 
@@ -31,6 +34,9 @@ class SettingsController extends BackendController
         $config->set('server_notice_updated', (string)time());
         $config->set('server_notice_color', $request->getParsedBody()['server_notice_color']);
         $config->set('adds', $request->getParsedBody()['adds']);
+        $config->set('indexjscript', $request->getParsedBody()['indexjscript']);
+        $config->set('footer_js', $request->getParsedBody()['footer_js']);
+        $config->set('buttons', $request->getParsedBody()['buttons']);
 
         $this->setSessionMessage('info', "Gespeichert!");
 
