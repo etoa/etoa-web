@@ -37,7 +37,6 @@ class RoundsController extends BackendController
                         );
                     }
                 }
-                echo message("info", "Änderungen gespeichert!");
             }
             $deleted = 0;
             if (isset($post['round_del'])) {

@@ -127,20 +127,6 @@ function get_config($key, $default = null, $useCache = true)
     return $default ?? null;
 }
 
-function set_config($key, $value)
-{
-    dbquery("
-        REPLACE INTO " . dbtable('config') . "
-        (config_name, config_value)
-        VALUES ('" . $key . "', '" . addslashes(trim($value)) . "')
-    ;");
-}
-
-function message($type, $msg)
-{
-    return "<div class=\"messagebox\"><div class=\"" . $type . "\">" . $msg . "</div></div>";
-}
-
 function baseUrl($path = null): string
 {
     $str = substr(realpath(__DIR__ . '/../'), strlen(realpath($_SERVER['DOCUMENT_ROOT'])));
