@@ -25,7 +25,8 @@
         "bryanjhv/slim-session": "~4.0",
         "doctrine/orm": "^2.13",
         "symfony/cache": "^6.0",
-        "doctrine/annotations": "^1.13"
+        "doctrine/annotations": "^1.13",
+        "illuminate/collections": "^9.26"
     },
     "autoload": {
         "psr-4": {

@@ -26,11 +26,11 @@ final class ConfigService
         return $item->value;
     }
 
-    public function set(string $name, string $value): void
+    public function set(string $name, ?string $value): void
     {
         /** @var ?ConfigSetting $item */
         $item =  $this->repo->findOneBy(['name' => $name]) ?? new ConfigSetting($name);
-        $item->value = $value;
+        $item->value = $value !== null ? trim($value) : null;
         $this->em->persist($item);
         $this->em->flush();
     }
