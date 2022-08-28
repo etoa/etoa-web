@@ -11,8 +11,6 @@
     ],
     "require": {
         "php": "^8.0.0",
-        "michelf/php-markdown": "^1.9",
-        "qazd/text-diff": "^0.1.1",
         "adbario/php-dot-notation": "^3.1",
         "php-di/slim-bridge": "^3.2",
         "slim/slim": "4.*",
@@ -24,7 +22,6 @@
         "bryanjhv/slim-session": "~4.0",
         "doctrine/orm": "^2.13",
         "symfony/cache": "^6.0",
-        "doctrine/annotations": "^1.13",
         "illuminate/collections": "^9.26"
     },
     "autoload": {
