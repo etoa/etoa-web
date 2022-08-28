@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
-use App\Support\TextUtil;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -28,7 +27,7 @@ class DonateController extends FrontendController
     function __invoke(Request $request, Response $response): Response
     {
         return parent::render($response, 'donate.html', [
-            'text' => TextUtil::get("spenden"),
+            'text' => $this->getTextContent("spenden"),
         ]);
     }
 }

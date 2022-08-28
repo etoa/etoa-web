@@ -5,23 +5,18 @@ declare(strict_types=1);
 namespace App\Controllers\Frontend;
 
 use App\Support\ForumBridge;
-use Slim\Views\Twig;
 
 class RulesController extends TextPageController
 {
-    private array $thread;
-
-    public function __construct(protected Twig $view)
+    private function getThread(): array
     {
-        parent::__construct($view);
-
         $thread_id = get_config('rules_thread', 0);
-        $this->thread = ForumBridge::thread($thread_id) ?? [];
+        return ForumBridge::thread($thread_id) ?? [];
     }
 
     public function getTitle(): string
     {
-        return $this->thread['subject'] ?? 'Es trat ein Fehler auf!';
+        return $this->getThread()['subject'] ?? 'Es trat ein Fehler auf!';
     }
 
     public function getSiteTitle(): ?string
@@ -31,7 +26,7 @@ class RulesController extends TextPageController
 
     public function getText(): string
     {
-        return $this->thread["message"] ?? 'Regeln nicht vorhanden!';
+        return $this->getThread()["message"] ?? 'Regeln nicht vorhanden!';
     }
 
     public function getTextKey(): string

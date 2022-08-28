@@ -6,7 +6,6 @@ namespace App\Controllers\Frontend;
 
 use App\Support\ForumBridge;
 use App\Support\StringUtil;
-use App\Support\TextUtil;
 use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -53,7 +52,7 @@ class NewsController extends FrontendController
         }
 
         return parent::render($response, 'news.html', [
-            'text' => TextUtil::get("home"),
+            'text' => $this->getTextContent("home"),
             'news' => $news,
             'board_url' => ForumBridge::url('board', $news_board_id),
             'message' => $message,

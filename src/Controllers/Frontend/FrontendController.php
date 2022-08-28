@@ -5,17 +5,21 @@ declare(strict_types=1);
 namespace App\Controllers\Frontend;
 
 use App\Service\RoundService;
+use App\Service\TextService;
+use App\Support\StringUtil;
 use App\Widgets\GameLogin;
 use App\Widgets\InfoBox;
 use App\Widgets\MainMenu;
-use DI\Container;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 
 abstract class FrontendController
 {
-    function __construct(protected Twig $view, protected RoundService $rounds)
-    {
+    function __construct(
+        protected Twig $view,
+        private RoundService $rounds,
+        private TextService $texts
+    ) {
     }
 
     protected abstract function getTitle(): string;
@@ -44,5 +48,18 @@ abstract class FrontendController
                 'infobox' => (new InfoBox())->render($this->view),
             ], $args)
         );
+    }
+
+    protected function getTextContent(string $keyword): string
+    {
+        $text = $this->texts->findByKeyword($keyword);
+        if ($text !== null) {
+            if ($text->content != "") {
+                return StringUtil::text2html($text->content);
+            }
+            return "<p><i><b>Fehler:</b> Texteintrag fehlt!</i></p>";
+        } else {
+            return "<p><i><b>Fehler:</b> Datensatz fehlt!</i></p>";
+        }
     }
 }

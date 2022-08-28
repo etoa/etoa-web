@@ -5,6 +5,7 @@ namespace App\Routing;
 use App\Controllers\Backend\OverviewController;
 use App\Controllers\Backend\RoundsController;
 use App\Controllers\Backend\SettingsController;
+use App\Controllers\Backend\TextController;
 use Slim\Routing\RouteCollectorProxy;
 
 class BackendRoutes
@@ -23,5 +24,12 @@ class BackendRoutes
             ->setName('admin.rounds');
         $group->post('/rounds', [RoundsController::class, 'store'])
             ->setName('admin.rounds.store');
+
+        $group->get('/texts', [TextController::class, 'index'])
+            ->setName('admin.texts');
+        $group->get('/texts/{id:[0-9]+}', [TextController::class, 'edit'])
+            ->setName('admin.texts.edit');
+        $group->post('/texts/{id:[0-9]+}', [TextController::class, 'update'])
+            ->setName('admin.texts.update');
     }
 }
