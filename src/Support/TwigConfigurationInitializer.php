@@ -13,6 +13,7 @@ class TwigConfigurationInitializer
     public static function create(bool $debug = false, bool $caching = false): Twig
     {
         $timezone = $_ENV['TIMEZONE'] ?? 'UTC';
+        Carbon::setLocale($_ENV['LOCALE'] ?? 'de');
 
         $twig = Twig::create(__DIR__ . '/../../templates', ['cache' => $caching ? __DIR__ . '/../../storage/cache/twig' : false, 'debug' => $debug]);
 

@@ -19,8 +19,8 @@ class ForumBridge
             WHERE
                 username = :username
             ;", [
-                'username' => $username,
-            ]);
+            'username' => $username,
+        ]);
         if ($arr = $res->fetch()) {
             return [
                 'id' => $arr['userID'],
@@ -48,8 +48,8 @@ class ForumBridge
             WHERE
                 userID=:userId
             ;", [
-                'userId' => $userId,
-            ]);
+            'userId' => $userId,
+        ]);
         $data = [];
         while ($arr = $res->fetch()) {
             $data[] = $arr['groupID'];
@@ -70,8 +70,8 @@ class ForumBridge
                 ON t.userID = u.userID
                 AND t.groupID = :groupId
             ;", [
-                'groupId' => $groupId,
-            ]);
+            'groupId' => $groupId,
+        ]);
         $data = [];
         while ($arr = $res->fetch()) {
             $data[] = [
@@ -101,8 +101,8 @@ class ForumBridge
                         userAgent
                 ) as q
             ;", [
-                'time' => time() - $threshold,
-            ]);
+            'time' => time() - $threshold,
+        ]);
         $arr = $res->fetch();
         return $arr['cnt'];
     }
@@ -137,8 +137,8 @@ class ForumBridge
             ORDER BY p.time DESC
             LIMIT :limit
             ;", [
-                'limit' => $limit
-            ]);
+            'limit' => $limit
+        ]);
         $items = [];
         while ($arr = $res->fetch()) {
             $items[] = [
@@ -202,10 +202,10 @@ class ForumBridge
                 t.time DESC
             LIMIT :limit
             ;", [
-                'limit' => $limit,
-                'news_board' => $news_board_id,
-                'status_board' => $status_board_id,
-            ]);
+            'limit' => $limit,
+            'news_board' => $news_board_id,
+            'status_board' => $status_board_id,
+        ]);
         $items = [];
         while ($arr = $res->fetch()) {
             $items[] = [
@@ -218,6 +218,7 @@ class ForumBridge
                 'updated_at' => $arr['lastEditTime'],
                 'message' => $arr['message'],
                 'post_count' => $arr['post_count'],
+                'last_post_time' => $arr['lastPostTime'],
             ];
         }
         return $items;
@@ -232,8 +233,8 @@ class ForumBridge
             ORDER BY time ASC
             LIMIT 1
             ;", [
-                'threadId' => $threadId,
-            ]);
+            'threadId' => $threadId,
+        ]);
         if ($arr = $res->fetch()) {
             return [
                 'subject' => $arr['subject'],
@@ -253,7 +254,7 @@ class ForumBridge
             return $baseUrl . '/forum/thread/' . $value;
         }
         if ($type == 'post') {
-            return $baseUrl . '/forum/thread/'.$value2.'?postID=' . $value . '#post' . $value;
+            return $baseUrl . '/forum/thread/' . $value2 . '?postID=' . $value . '#post' . $value;
         }
         if ($type == 'user') {
             return $baseUrl . '/user/' . $value;

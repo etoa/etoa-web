@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controllers\Frontend;
 
 use App\Support\ForumBridge;
-use App\Support\StringUtil;
 use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -37,13 +36,14 @@ class NewsController extends FrontendController
                     'prefix' => $thread['board_id'] == $status_board_id ? "SERVERSTATUS " : "",
                     'url' => ForumBridge::url('thread', $thread['id']),
                     'topic' => $thread['topic'],
-                    'sufix' => $thread['board_id'] == $status_board_id && $thread['closed'] == 1 ? "Abgeschlossen (" . StringUtil::dateFormat($thread['lastposttime']) . ")" : '',
-                    'date' => StringUtil::dateFormat($thread['time']),
+                    'closed' => $thread['board_id'] == $status_board_id && $thread['closed'] == 1,
+                    'last_post_time' => $thread['last_post_time'],
+                    'time' => $thread['time'],
+                    'updated_at' => $thread['updated_at'],
                     'author_url' => ForumBridge::url('user', $thread['user_id']),
                     'author' => $thread['user_name'],
-                    'author_suffix' => $thread['updated_at'] > 0 ? " (Letzte Änderung: " . StringUtil::dateFormat($thread['updated_at']) . ")" : '',
                     'message' =>  $thread["message"],
-                    'replies' => $thread['post_count'] > 1 ? (($thread['post_count'] - 1) . ' Kommentare vorhanden') : 'Kommentiere diese Nachricht',
+                    'replies' => $thread['post_count'] - 1,
                 ], $threads);
                 apcu_add('etoa-news-section', $news, config('caching.apcu_timeout'));
             } catch (PDOException $ignored) {
