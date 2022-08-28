@@ -71,18 +71,6 @@ class SettingsController extends BackendController
             'default' => '',
             'required' => true,
         ],
-        'server_notice' => [
-            'label' => 'Servermeldung (BBCode)',
-            'type' => 'textarea',
-            'default' => '',
-            'required' => false,
-        ],
-        'server_notice_color' => [
-            'label' => 'Farbe der Servermeldung',
-            'type' => 'text',
-            'default' => 'orange',
-            'required' => true,
-        ],
         'adds' => [
             'label' => 'HTML Code für reches Vertikalbanner',
             'type' => 'textarea',
