@@ -1,0 +1,23 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+<form action="{{ url_for('admin.settings.store') }}" method="post">
+    <fieldset>
+        <legend>Servermeldung</legend>
+        <div>
+            <label for="server_notice">Nachricht</label><br>
+            <textarea name="server_notice" id="server_notice" rows="10" cols="120">{{ server_notice }}</textarea><br />
+        </div>
+        <div>
+            <label for="server_notice_color">Farbe</label><br>
+            <input size="12" name="server_notice_color" value="{{ server_notice_color }}" />
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Werbung</legend>
+        <label for="adds">Reches Vertikalbanner:</label><br />
+        <textarea name="adds" id="adds" rows="10" cols="120">{{ adds }}</textarea>
+    </fieldset>
+    <p><input type="submit" name="submit" value="Übernehmen" /></p>
+</form>
+{% endblock %}

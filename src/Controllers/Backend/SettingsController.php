@@ -9,18 +9,19 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Routing\RouteContext;
 
-class ServerInfoController extends BackendController
+class SettingsController extends BackendController
 {
     protected function getTitle(): string
     {
-        return 'Servermeldung';
+        return 'Einstellungen';
     }
 
     function show(Request $request, Response $response, ConfigService $config): Response
     {
-        return parent::render($response, 'serverinfo.html', [
+        return parent::render($response, 'settings.html', [
             'server_notice' => $config->get('server_notice'),
             'server_notice_color' => $config->get('server_notice_color', 'orange'),
+            'adds' => $config->get('adds', ''),
         ]);
     }
 
@@ -29,11 +30,12 @@ class ServerInfoController extends BackendController
         $config->set('server_notice', $request->getParsedBody()['server_notice']);
         $config->set('server_notice_updated', (string)time());
         $config->set('server_notice_color', $request->getParsedBody()['server_notice_color']);
+        $config->set('adds', $request->getParsedBody()['adds']);
 
         $this->setSessionMessage('info', "Gespeichert!");
 
         return $response
-            ->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin.serverinfo'))
+            ->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin.settings'))
             ->withStatus(302);
     }
 }
