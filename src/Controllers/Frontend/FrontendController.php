@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
+use App\Controllers\Frontend\Widgets\GameLogin;
+use App\Controllers\Frontend\Widgets\InfoBox;
+use App\Controllers\Frontend\Widgets\MainMenu;
 use App\Service\ConfigService;
 use App\Service\RoundService;
 use App\Service\TextService;
 use App\Support\BBCodeConverter;
-use App\Widgets\GameLogin;
-use App\Widgets\InfoBox;
-use App\Widgets\MainMenu;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 

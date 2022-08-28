@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Widgets;
+declare(strict_types=1);
+
+namespace App\Controllers\Frontend\Widgets;
 
 use App\Service\ConfigService;
 use App\Support\ForumBridge;

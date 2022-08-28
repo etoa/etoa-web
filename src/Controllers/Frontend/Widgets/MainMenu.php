@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Widgets;
+declare(strict_types=1);
+
+namespace App\Controllers\Frontend\Widgets;
 
 use App\Service\ConfigService;
 use App\Support\ForumBridge;
@@ -110,7 +112,7 @@ class MainMenu implements Widget
 
     public function render(Twig $view): string
     {
-        return $view->fetch('widgets/main-menu.html', [
+        return $view->fetch('frontend/widgets/main-menu.html', [
             'nav' => array_filter($this->items(), fn ($i) => $i !== null),
         ]);
     }
