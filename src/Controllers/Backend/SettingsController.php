@@ -71,6 +71,42 @@ class SettingsController extends BackendController
             'default' => '',
             'required' => true,
         ],
+        'server_notice' => [
+            'label' => 'Servermeldung',
+            'type' => 'textarea',
+            'default' => '',
+            'required' => false,
+        ],
+        'server_notice_color' => [
+            'label' => 'Farbe der Servermeldung',
+            'type' => 'text',
+            'default' => 'orange',
+            'required' => true,
+        ],
+        'adds' => [
+            'label' => 'HTML Code für reches Vertikalbanner',
+            'type' => 'textarea',
+            'default' => '',
+            'required' => false,
+        ],
+        'indexjscript' => [
+            'label' => 'HTML Code für Header',
+            'type' => 'textarea',
+            'default' => '',
+            'required' => false,
+        ],
+        'footer_js' => [
+            'label' => 'HTML Code für Footer',
+            'type' => 'textarea',
+            'default' => '',
+            'required' => false,
+        ],
+        'buttons' => [
+            'label' => 'HTML Code für Buttons',
+            'type' => 'textarea',
+            'default' => '',
+            'required' => false,
+        ],
     ];
 
     protected function getTitle(): string
@@ -80,14 +116,7 @@ class SettingsController extends BackendController
 
     function show(Request $request, Response $response, ConfigService $config): Response
     {
-
         return parent::render($response, 'settings.html', [
-            'server_notice' => $config->get('server_notice'),
-            'server_notice_color' => $config->get('server_notice_color', 'orange'),
-            'adds' => $config->get('adds', ''),
-            'indexjscript' => $config->get('indexjscript', ''),
-            'footer_js' => $config->get('footer_js', ''),
-            'buttons' => $config->get('buttons', ''),
             'settings' => collect(self::$settings)->map(fn ($def, $key) => [
                 'name' => $key,
                 'value' =>  $config->get($key, $def['default']),
@@ -110,16 +139,6 @@ class SettingsController extends BackendController
         foreach (self::$settings as $key => $def) {
             $config->set($key, $post[$key]);
         }
-
-        $config->set('server_notice', $post['server_notice']);
-        $config->set('server_notice_updated', (string)time());
-        $config->set('server_notice_color', $post['server_notice_color']);
-        $config->set('adds', $post['adds']);
-        $config->set('indexjscript', $post['indexjscript']);
-        $config->set('footer_js', $post['footer_js']);
-        $config->set('buttons', $post['buttons']);
-
-
         $this->setSessionMessage('info', "Einstellungen gespeichert.");
 
         return $this->redirectToNamedRoute($request, $response, 'admin.settings');

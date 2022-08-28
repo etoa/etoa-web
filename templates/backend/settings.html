@@ -3,55 +3,18 @@
 {% block content %}
 
 <form action="{{ url_for('admin.settings.store') }}" method="post">
-    <fieldset>
-        <legend>Allgemeine Einstellungen</legend>
-        {% for setting in settings %}
-        <div>
-            <label for="{{ setting.name }}">{{ setting.label }}</label><br>
-            {% if setting.type == 'textarea' %}
-            <textarea name="{{ setting.name }}" id="{{ setting.name }}" rows="10" cols="120" {% if setting.required %}
-                required {% endif %}>{{ setting.value }}</textarea>
-            {% else %}
-            <input type="{{ setting.type }}" name="{{ setting.name }}" id="{{ setting.name }}"
-                value="{{ setting.value }}" size="30" {% if setting.required %} required {% endif %} />
-            {% endif %}
-        </div>
-        {% endfor %}
-    </fieldset>
-    <fieldset>
-        <legend>Servermeldung</legend>
-        <div>
-            <label for="server_notice">Nachricht</label><br>
-            <textarea name="server_notice" id="server_notice" rows="10" cols="120">{{ server_notice }}</textarea>
-        </div>
-        <div>
-            <label for="server_notice_color">Farbe</label><br>
-            <input size="12" name="server_notice_color" value="{{ server_notice_color }}" />
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Werbung</legend>
-        <label for="adds">HTML Code für reches Vertikalbanner</label><br />
-        <textarea name="adds" id="adds" rows="10" cols="120">{{ adds }}</textarea>
-    </fieldset>
-    <fieldset>
-        <legend>Java-Script Code</legend>
-        <div>
-            <label for="indexjscript">HTML Code für Header</label><br />
-            <textarea name="indexjscript" id="indexjscript" rows="10" cols="120">{{ indexjscript }}</textarea>
-        </div>
-        <div>
-            <label for="footer_js">HTML Code für Footer</label><br />
-            <textarea name="footer_js" id="footer_js" rows="10" cols="120">{{ footer_js }}</textarea>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Buttons</legend>
-        <div>
-            <label for="buttons">HTML Code für Buttons</label><br />
-            <textarea name="buttons" id="buttons" rows="10" cols="120">{{ buttons }}</textarea>
-        </div>
-    </fieldset>
+    {% for setting in settings %}
+    <div>
+        <label for="{{ setting.name }}">{{ setting.label }}</label><br>
+        {% if setting.type == 'textarea' %}
+        <textarea name="{{ setting.name }}" id="{{ setting.name }}" rows="10" cols="120" {% if setting.required %}
+            required {% endif %}>{{ setting.value }}</textarea>
+        {% else %}
+        <input type="{{ setting.type }}" name="{{ setting.name }}" id="{{ setting.name }}" value="{{ setting.value }}"
+            size="30" {% if setting.required %} required {% endif %} />
+        {% endif %}
+    </div>
+    {% endfor %}
     <p><input type="submit" name="submit" value="Übernehmen" /></p>
 </form>
 {% endblock %}
