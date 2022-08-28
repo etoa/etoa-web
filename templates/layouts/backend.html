@@ -24,7 +24,7 @@
                     <b>Navigation</b><br />
                     <a href="{{ url_for('admin') }}">Übersicht</a>
                     <a href="{{ url_for('admin.settings') }}">Einstellungen</a>
-                    <a href="?page=rounds">Runden</a>
+                    <a href="{{ url_for('admin.rounds') }}">Runden</a>
                     <a href="?page=texts">Texte</a>
                     <a href="?page=settings">Einstellungen</a>
                 </div>
@@ -37,12 +37,12 @@
                     {% endif %}
                     {% if error %}
                     <div class="messagebox">
-                        <div class="error">{{ error }}</div>
+                        <div class="error">{{ error | nl2br }}</div>
                     </div>
                     {% endif %}
                     {% if info %}
                     <div class="messagebox">
-                        <div class="info">{{ info }}</div>
+                        <div class="info">{{ info | nl2br }}</div>
                     </div>
                     {% endif %}
                     {% block content %}{% endblock %}

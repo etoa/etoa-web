@@ -1,0 +1,43 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+<form action="{{ url_for('admin.rounds.store') }}" method="post">
+    {% if rounds %}
+    <table class="tbl" style="width:750px;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Anzeigen</th>
+                <th>Löschen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for round in rounds %}
+            <tr>
+                <td>
+                    <input type="text" name="round_name[{{ round.id }}]" value="{{ round.name }}" size="20" />
+                </td>
+                <td>
+                    <input type="text" name="round_url[{{ round.id }}]" value="{{ round.url }}" size="50" />
+                </td>
+                <td>
+                    <label><input type="radio" name="round_active[{{ round.id }}]" value="1" {% if round.active==1 %}
+                            checked {% endif %} /> Ja</label>
+                    <label><input type="radio" name="round_active[{{ round.id }}]" value="0" {% if round.active==0 %}
+                            checked {% endif %} /> Nein</label>
+                </td>
+                <td>
+                    <input type="checkbox" name="round_del[{{ round.id }}]" value="1" />
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br />
+    <input type="submit" name="submit" value="Übernehmen" />
+    {% else %}
+    <i>Keine Runden vorhanden!</i><br /><br />
+    {% endif %}
+    <input type="submit" name="submit_new" value="Neue Runde" />
+</form>
+{% endblock %}

@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
+use App\Service\RoundService;
 use App\Widgets\GameLogin;
 use App\Widgets\InfoBox;
 use App\Widgets\MainMenu;
+use DI\Container;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 
 abstract class FrontendController
 {
-    function __construct(protected Twig $view)
+    function __construct(protected Twig $view, protected RoundService $rounds)
     {
     }
 
@@ -38,7 +40,7 @@ abstract class FrontendController
                 'footerJs' => get_config('footer_js'),
                 'headerJs' => get_config('indexjscript'),
                 'mainMenu' => (new MainMenu())->render($this->view),
-                'gameLogin' => (new GameLogin())->render($this->view),
+                'gameLogin' => (new GameLogin($this->rounds))->render($this->view),
                 'infobox' => (new InfoBox())->render($this->view),
             ], $args)
         );

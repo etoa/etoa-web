@@ -148,11 +148,6 @@ function baseUrl($path = null): string
     return $url . ($path ?? '');
 }
 
-function loginRoundUrl(Round $round, string $page)
-{
-    return $round->url . '/show.php?index=' . $page;
-}
-
 function getAppBasePath(): string
 {
     $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));

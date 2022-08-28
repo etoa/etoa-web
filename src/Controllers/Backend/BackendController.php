@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controllers\Backend;
 
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 
 abstract class BackendController
@@ -26,6 +28,13 @@ abstract class BackendController
                 'error' => $this->pullSessionMessage('error'),
             ], $args)
         );
+    }
+
+    protected function redirectToNamedRoute(Request $request, Response $response, string $routeName): Response
+    {
+        return $response
+            ->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor($routeName))
+            ->withStatus(302);
     }
 
     protected function setSessionMessage(string $key, string $value): void

@@ -7,7 +7,6 @@ namespace App\Controllers\Backend;
 use App\Service\ConfigService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Routing\RouteContext;
 
 class SettingsController extends BackendController
 {
@@ -28,7 +27,7 @@ class SettingsController extends BackendController
         ]);
     }
 
-    function store(Request $request, Response $response, ConfigService $config)
+    function store(Request $request, Response $response, ConfigService $config): Response
     {
         $config->set('server_notice', $request->getParsedBody()['server_notice']);
         $config->set('server_notice_updated', (string)time());
@@ -38,10 +37,8 @@ class SettingsController extends BackendController
         $config->set('footer_js', $request->getParsedBody()['footer_js']);
         $config->set('buttons', $request->getParsedBody()['buttons']);
 
-        $this->setSessionMessage('info', "Gespeichert!");
+        $this->setSessionMessage('info', "Einstellungen gespeichert.");
 
-        return $response
-            ->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor('admin.settings'))
-            ->withStatus(302);
+        return $this->redirectToNamedRoute($request, $response, 'admin.settings');
     }
 }

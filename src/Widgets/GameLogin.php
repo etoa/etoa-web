@@ -2,11 +2,15 @@
 
 namespace App\Widgets;
 
-use App\Models\Round;
+use App\Service\RoundService;
 use Slim\Views\Twig;
 
 class GameLogin implements Widget
 {
+    function __construct(private RoundService $rounds)
+    {
+    }
+
     public function render(Twig $view): string
     {
         $t = time();
@@ -18,7 +22,7 @@ class GameLogin implements Widget
                 'passwordField' => sha1("password" . $logintoken . $t),
                 'rnd' => mt_rand(10000, 99999)
             ],
-            'rounds' => Round::active(),
+            'rounds' => $this->rounds->active(),
             'selectedRound' => isset($_COOKIE['round']) ? $_COOKIE['round'] : '',
         ]);
     }
