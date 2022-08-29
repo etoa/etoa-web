@@ -13,13 +13,10 @@ class PageNotFoundController
 {
     public function __invoke(Request $request, Response $response, Twig $view): Response
     {
-        $title = "Diese Seite wurde leider von einem Schwarzen Loch verschluckt! (Fehler 404)";
-        $description = "Das tut uns leid! Zum Glück gibt es in unserem Universum noch genügend andere Seiten welche weit genug von Schwarzen Löchern entfernt sind.";
-
         return $view->render($response, 'error.html', [
             'code' => 404,
-            'title' => $title,
-            'description' => $description,
+            'title' => "Diese Seite wurde leider von einem Schwarzen Loch verschluckt! (Fehler 404)",
+            'description' => "Das tut uns leid! Zum Glück gibt es in unserem Universum noch genügend andere Seiten welche weit genug von Schwarzen Löchern entfernt sind.",
             'forumUrl' => ForumBridge::url(),
         ])->withStatus(404);
     }
