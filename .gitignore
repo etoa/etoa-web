@@ -4,6 +4,7 @@
 /vendor/
 /storage/cache/twig
 /storage/cache/doctrine
+/storage/cache/routes
 /storage/maintenance
 .ftpquota
 .env

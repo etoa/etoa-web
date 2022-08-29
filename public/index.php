@@ -42,7 +42,11 @@ $container->set(EntityManager::class, DatabaseEntityManagerInitializer::initiali
 $app = Bridge::create($container);
 
 // Error handling
-$app->addErrorMiddleware($debug, true, true);
+$app->addErrorMiddleware(
+    displayErrorDetails: $debug,
+    logErrors: true,
+    logErrorDetails: true
+);
 if (!$debug) {
     ini_set('display_errors', '0');
 }
@@ -62,7 +66,7 @@ $app->add(TwigMiddleware::create($app, $twig));
 $app->add(Session::class);
 
 // Routing
-$app->group('', AppRouteProvider::class);
+$app->group('', new AppRouteProvider($debug));
 
 // Run app
 $app->run();

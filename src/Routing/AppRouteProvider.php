@@ -11,6 +11,12 @@ use Tuupola\Middleware\HttpBasicAuthentication;
 
 class AppRouteProvider
 {
+    const CACHE_FILE = APP_DIR . '/storage/cache/routes';
+
+    public function __construct(private bool $debug = false)
+    {
+    }
+
     public function __invoke(RouteCollectorProxy $group)
     {
         if (file_exists(APP_DIR . '/storage/maintenance')) {
@@ -20,6 +26,11 @@ class AppRouteProvider
             $group->group('/admin', BackendRoutes::class)
                 ->add($this->getBasicAuth());
             $group->any('/{path:.*}', PageNotFoundController::class);
+
+            if (!$this->debug) {
+                $routeCollector = $group->getRouteCollector();
+                $routeCollector->setCacheFile(self::CACHE_FILE);
+            }
         }
     }
 
