@@ -20,7 +20,7 @@ class SettingsController extends BackendController
         'news_posts_num' => [
             'label' => 'Anzahl News Posts auf der Startseite',
             'type' => 'number',
-            'default' => '3',
+            'default' => 3,
             'required' => true,
         ],
         'rules_board' => [
@@ -56,7 +56,7 @@ class SettingsController extends BackendController
         'latest_posts_num' => [
             'label' => 'Anzahl der neusten Posts in der Infobox',
             'type' => 'number',
-            'default' => '5',
+            'default' => 5,
             'required' => true,
         ],
         'status_board' => [
@@ -119,7 +119,8 @@ class SettingsController extends BackendController
         return parent::render($response, 'settings.html', [
             'settings' => collect(self::$settings)->map(fn ($def, $key) => [
                 'name' => $key,
-                'value' =>  $config->get($key, defaultValue: $def['default'], useCache: false),
+                'value' =>  $config->get($key, defaultValue: (string)$def['default'], useCache: false),
+                'placeholder' => (string)$def['default'],
                 'label' => $def['label'],
                 'type' => $def['type'],
                 'required' => $def['required'],
