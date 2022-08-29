@@ -13,6 +13,7 @@ use DI\Bridge\Slim\Bridge;
 use DI\Container;
 use Doctrine\ORM\EntityManager;
 use Dotenv\Dotenv;
+use Slim\Middleware\Session;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
@@ -37,7 +38,6 @@ $twig = TwigConfigurationInitializer::create($debug, !$debug);
 // Init app
 $container = new Container();
 $container->set(Twig::class, fn () => $twig);
-$container->set('session', fn () => new \SlimSession\Helper());
 $container->set(EntityManager::class, DatabaseEntityManagerInitializer::initialize($debug));
 $container->set(ConfigService::class, static function (Container $c) {
     return new ConfigService($c->get(EntityManager::class));
@@ -63,14 +63,10 @@ $app->setBasePath($_ENV['APP_BASEPATH'] ?? getAppBasePath());
 $app->add(TwigMiddleware::create($app, $twig));
 
 // Add session management
-$app->add(new \Slim\Middleware\Session());
+$app->add(Session::class);
 
 // Routing
-if (file_exists(APP_DIR . '/storage/maintenance')) {
-    $app->any('/{path:.*}', MaintenancePageController::class);
-} else {
-    $app->group('', AppRouteProvider::class);
-}
+$app->group('', AppRouteProvider::class);
 
 // Run app
 $app->run();
