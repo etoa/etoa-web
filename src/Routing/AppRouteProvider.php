@@ -7,6 +7,7 @@ namespace App\Routing;
 use App\Authentication\ForumAuthenticator;
 use App\Controllers\MaintenancePageController;
 use App\Controllers\PageNotFoundController;
+use DI\Container;
 use Psr\Http\Server\MiddlewareInterface;
 use Slim\Routing\RouteCollectorProxy;
 use Tuupola\Middleware\HttpBasicAuthentication;
@@ -15,7 +16,7 @@ class AppRouteProvider
 {
     public const CACHE_FILE = APP_DIR . '/storage/cache/routes';
 
-    public function __construct(private bool $debug = false)
+    public function __construct(private Container $container, private bool $debug = false)
     {
     }
 
@@ -40,7 +41,7 @@ class AppRouteProvider
     {
         return new HttpBasicAuthentication([
             "realm" => "EtoA Login Administration",
-            "authenticator" => new ForumAuthenticator(),
+            "authenticator" => $this->container->get(ForumAuthenticator::class),
             'secure' => true,
         ]);
     }

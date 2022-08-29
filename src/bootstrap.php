@@ -65,7 +65,7 @@ $app->add(TwigMiddleware::create($app, $twig));
 $app->add(Session::class);
 
 // Routing
-$app->group('', new AppRouteProvider($debug));
+$app->group('', new AppRouteProvider($container, $debug));
 
 // Run app
 $app->run();

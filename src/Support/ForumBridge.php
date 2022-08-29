@@ -14,9 +14,9 @@ class ForumBridge
     {
     }
 
-    public static function userByName(string $username): ?array
+    public function userByName(string $username): ?User
     {
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 userID,
                 username,
@@ -29,26 +29,27 @@ class ForumBridge
             ;", [
             'username' => $username,
         ]);
-        if ($arr = $res->fetch()) {
-            return [
-                'id' => $arr['userID'],
-                'username' => $arr['username'],
-                'password' => $arr['password'],
-                'email' => $arr['email'],
-            ];
+        if ($arr = $res->fetchAssociative()) {
+            return new User(
+                id: $arr['userID'],
+                username: $arr['username'],
+                password: $arr['password'],
+                email: $arr['email'],
+            );
         }
+
         return null;
     }
 
-    public static function authenticateUser(array $user, string $password): bool
+    public static function authenticateUser(User $user, string $password): bool
     {
-        $hash = str_starts_with($user['password'], 'Bcrypt:') ? substr($user['password'], strlen('Bcrypt:')) : $user['password'];
+        $hash = str_starts_with($user->password, 'Bcrypt:') ? substr($user->password, strlen('Bcrypt:')) : $user->password;
         return password_verify($password, $hash);
     }
 
-    public static function groupIdsOfUser(int $userId): array
+    public function groupIdsOfUser(int $userId): array
     {
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 groupID
             FROM
@@ -58,11 +59,8 @@ class ForumBridge
             ;", [
             'userId' => $userId,
         ]);
-        $data = [];
-        while ($arr = $res->fetch()) {
-            $data[] = $arr['groupID'];
-        }
-        return $data;
+
+        return (array) $res->fetchFirstColumn();
     }
 
     public function usersOfGroup(int $groupId): array
@@ -80,11 +78,11 @@ class ForumBridge
             ;", [
             'groupId' => $groupId,
         ]);
-        return collect($res->fetchAllAssociative())
-            ->map(fn ($arr) => new User(
-                id: $arr['userID'],
-                username: $arr['username'],
-            ))->toArray();
+
+        return array_map(fn ($arr) => new User(
+            id: $arr['userID'],
+            username: $arr['username'],
+        ), (array) $res->fetchAllAssociative());
     }
 
     public static function usersOnline(int $threshold = 300): int
