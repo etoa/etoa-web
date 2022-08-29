@@ -142,11 +142,6 @@ abstract class FrontendController
                 'label' => "Downloads"
             ],
             [
-                'type' => 'url',
-                "url" => "https://github.com/etoa/etoa",
-                'label' => "Entwicklung"
-            ],
-            [
                 'type' => 'divider',
             ],
             [

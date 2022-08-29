@@ -15,11 +15,10 @@
             <img src="{{ base_path() }}/images/maintenance.jpg" style="width: 700px" alt="Maintenance" />
         </p>
         <h2>Die Etoa-Loginseite ist momentan im Wartungsmodus!</h2>
-        <p>Bitte schau später vorbei oder besuche eine der folgenden Seiten:</p>
-        <p>
-            <a href="{{ forumUrl }}">EtoA Forum</a> |
-            <a href="hhttps://github.com/etoa/etoa">Entwickler-Portal</a>
-        </p>
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+        <p>Bitte schau später vorbei oder besuche unser <a href="{{ forumUrl }}">Forum</a>.</p>
     </main>
 </body>
 

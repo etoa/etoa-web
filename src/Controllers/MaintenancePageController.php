@@ -14,6 +14,7 @@ class MaintenancePageController
     {
         return $view->render($response, 'maintenance.html', [
             'forumUrl' => config('forum.url'),
+            'message' => file_get_contents(APP_DIR . '/storage/maintenance'),
         ]);
     }
 }
