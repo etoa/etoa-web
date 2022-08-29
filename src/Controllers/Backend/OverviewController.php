@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controllers\Backend;
 
-use App\Service\ConfigService;
-use App\Service\RoundService;
+use App\Repository\ConfigSettingRepository;
+use App\Repository\RoundRepository;
 use App\Support\ForumBridge;
 use DI\Container;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -18,7 +18,7 @@ class OverviewController extends BackendController
         return 'Übersicht';
     }
 
-    function __invoke(Request $request, Response $response, RoundService $rounds, ConfigService $config, Container $container): Response
+    function __invoke(Request $request, Response $response, RoundRepository $rounds, ConfigSettingRepository $config, Container $container): Response
     {
         // print_r($container->get('settings'));
 

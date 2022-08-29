@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Backend;
 
-use App\Service\ConfigService;
+use App\Repository\ConfigSettingRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -30,7 +30,7 @@ class ServerNoticeController extends BackendController
         return 'Servermeldung';
     }
 
-    function show(Request $request, Response $response, ConfigService $config): Response
+    function show(Request $request, Response $response, ConfigSettingRepository $config): Response
     {
         return parent::render($response, 'servernotice.html', [
             'settings' => collect(self::$settings)->map(fn ($def, $key) => [
@@ -43,7 +43,7 @@ class ServerNoticeController extends BackendController
         ]);
     }
 
-    function store(Request $request, Response $response, ConfigService $config): Response
+    function store(Request $request, Response $response, ConfigSettingRepository $config): Response
     {
         $post = $request->getParsedBody();
         foreach (self::$settings as $key => $def) {

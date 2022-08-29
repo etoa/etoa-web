@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Backend;
 
-use App\Service\RoundService;
+use App\Repository\RoundRepository;
 use Carbon\Carbon;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -16,14 +16,14 @@ class RoundsController extends BackendController
         return 'Runden';
     }
 
-    function show(Request $request, Response $response, RoundService $rounds): Response
+    function show(Request $request, Response $response, RoundRepository $rounds): Response
     {
         return parent::render($response, 'rounds.html', [
             'rounds' => $rounds->all(),
         ]);
     }
 
-    function store(Request $request, Response $response, RoundService $rounds): Response
+    function store(Request $request, Response $response, RoundRepository $rounds): Response
     {
         $post = $request->getParsedBody();
         if (isset($post['submit'])) {

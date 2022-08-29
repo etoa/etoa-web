@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Backend;
 
-use App\Service\TextService;
+use App\Repository\TextRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -15,21 +15,21 @@ class TextController extends BackendController
         return 'Text bearbeiten';
     }
 
-    function index(Request $request, Response $response, TextService $texts): Response
+    function index(Request $request, Response $response, TextRepository $texts): Response
     {
         return parent::render($response, 'texts/index.html', [
             'texts' => $texts->all(),
         ]);
     }
 
-    function edit(Request $request, Response $response, TextService $texts, int $id): Response
+    function edit(Request $request, Response $response, TextRepository $texts, int $id): Response
     {
         return parent::render($response, 'texts/edit.html', [
             'text' => $texts->get($id),
         ]);
     }
 
-    function update(Request $request, Response $response, TextService $texts, int $id): Response
+    function update(Request $request, Response $response, TextRepository $texts, int $id): Response
     {
         $post = $request->getParsedBody();
 

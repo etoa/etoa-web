@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Service;
+namespace App\Repository;
 
 use App\Models\ConfigSetting;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-final class ConfigService
+final class ConfigSettingRepository
 {
     private EntityRepository $repo;
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 
 use App\Middleware\HttpsRedirectMiddleware;
 use App\Routing\AppRouteProvider;
-use App\Service\ConfigService;
 use App\Support\Database\DatabaseEntityManagerInitializer;
 use App\Support\TwigConfigurationInitializer;
 use Carbon\Carbon;
@@ -39,9 +38,6 @@ $twig = TwigConfigurationInitializer::create($debug, !$debug);
 $container = new Container();
 $container->set(Twig::class, fn () => $twig);
 $container->set(EntityManager::class, DatabaseEntityManagerInitializer::initialize($debug));
-$container->set(ConfigService::class, static function (Container $c) {
-    return new ConfigService($c->get(EntityManager::class));
-});
 
 $app = Bridge::create($container);
 

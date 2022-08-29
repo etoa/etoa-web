@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend\Widgets;
 
-use App\Service\RoundService;
+use App\Repository\RoundRepository;
 use Slim\Views\Twig;
 
 class GameLogin implements Widget
 {
-    function __construct(private RoundService $rounds)
+    function __construct(private RoundRepository $rounds)
     {
     }
 

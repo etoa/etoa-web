@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Service;
+namespace App\Repository;
 
 use App\Models\Text;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-final class TextService
+final class TextRepository
 {
     private EntityRepository $repo;
 

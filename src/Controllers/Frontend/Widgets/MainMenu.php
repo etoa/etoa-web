@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend\Widgets;
 
-use App\Service\ConfigService;
+use App\Repository\ConfigSettingRepository;
 use App\Support\ForumBridge;
 use Slim\Views\Twig;
 
 class MainMenu implements Widget
 {
-    function __construct(private ConfigService $config)
+    function __construct(private ConfigSettingRepository $config)
     {
     }
 

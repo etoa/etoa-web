@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend\Widgets;
 
-use App\Service\ConfigService;
+use App\Repository\ConfigSettingRepository;
 use App\Support\ForumBridge;
 use PDOException;
 use Slim\Views\Twig;
@@ -13,7 +13,7 @@ class InfoBox implements Widget
 {
     const LATEST_POSTS_NUM = 5;
 
-    function __construct(private ConfigService $config)
+    function __construct(private ConfigSettingRepository $config)
     {
     }
 

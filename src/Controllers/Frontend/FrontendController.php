@@ -7,9 +7,9 @@ namespace App\Controllers\Frontend;
 use App\Controllers\Frontend\Widgets\GameLogin;
 use App\Controllers\Frontend\Widgets\InfoBox;
 use App\Controllers\Frontend\Widgets\MainMenu;
-use App\Service\ConfigService;
-use App\Service\RoundService;
-use App\Service\TextService;
+use App\Repository\ConfigSettingRepository;
+use App\Repository\RoundRepository;
+use App\Repository\TextRepository;
 use App\Support\BBCodeConverter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
@@ -18,9 +18,9 @@ abstract class FrontendController
 {
     function __construct(
         protected Twig $view,
-        private RoundService $rounds,
-        private TextService $texts,
-        protected ConfigService $config,
+        private RoundRepository $rounds,
+        private TextRepository $texts,
+        protected ConfigSettingRepository $config,
     ) {
     }
 

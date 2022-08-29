@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Service;
+namespace App\Repository;
 
 use App\Models\Round;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-final class RoundService
+final class RoundRepository
 {
     private EntityRepository $repo;
 
