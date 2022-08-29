@@ -19,4 +19,9 @@ return [
     'caching' => [
         'apcu_timeout' => 300,
     ],
+    'app' => [
+        'locale' => 'de',
+        'timezone' => 'Europe/Zurich',
+        'debug' => false,
+    ],
 ];

@@ -14,7 +14,7 @@ class TwigConfigurationInitializer
 {
     public static function create(bool $debug = false, bool $caching = false): Twig
     {
-        $timezone = $_ENV['TIMEZONE'] ?? 'UTC';
+        $timezone = config('app.timezone', 'UTC');
 
         $twig = Twig::create(APP_DIR . '/templates', [
             'cache' => $caching ? APP_DIR . '/storage/cache/twig' : false,

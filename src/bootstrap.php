@@ -10,7 +10,6 @@ use Carbon\Carbon;
 use DI\Bridge\Slim\Bridge;
 use DI\Container;
 use Doctrine\ORM\EntityManager;
-use Dotenv\Dotenv;
 use Slim\Middleware\Session;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
@@ -20,18 +19,16 @@ define('APP_DIR', __DIR__ . '/../');
 // Load libraries
 require APP_DIR . '/vendor/autoload.php';
 
-// Load environment variables
-$dotenv = Dotenv::createImmutable(APP_DIR);
-$dotenv->safeLoad();
-
-// Define environment and debug mode
-$environment = ($_ENV['APP_ENV'] ?? 'production');
-$debug = !in_array($environment, ['prod', 'production']);
+// Define debug mode
+$debug = config('app.debug', false);
 
 // Define locale
-Carbon::setLocale($_ENV['LOCALE'] ?? 'de');
+Carbon::setLocale(config('app.locale', 'de'));
 
-$twig = TwigConfigurationInitializer::create($debug, !$debug);
+$twig = TwigConfigurationInitializer::create(
+    debug: $debug,
+    caching: !$debug
+);
 
 // Init app
 $container = new Container();
@@ -56,7 +53,7 @@ if (!$debug) {
 }
 
 // Base path
-$app->setBasePath($_ENV['APP_BASEPATH'] ?? getAppBasePath());
+$app->setBasePath(getAppBasePath());
 
 // Add Twig-View Middleware
 $app->add(TwigMiddleware::create($app, $twig));
