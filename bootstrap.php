@@ -14,11 +14,13 @@ use Dotenv\Dotenv;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
+define('APP_DIR', __DIR__);
+
 // Load libraries
-require __DIR__ . '/vendor/autoload.php';
+require APP_DIR . '/vendor/autoload.php';
 
 // Load environment variables
-$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(APP_DIR);
 $dotenv->safeLoad();
 
 // Define environment and debug mode
@@ -62,7 +64,7 @@ $app->add(TwigMiddleware::create($app, $twig));
 $app->add(new \Slim\Middleware\Session());
 
 // Routing
-require __DIR__ . '/src/routes.php';
+require APP_DIR . '/src/routes.php';
 
 // Run app
 $app->run();

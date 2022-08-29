@@ -14,9 +14,9 @@ require_once 'mysql_polyfill.php';
  */
 function config(string $key, $default = null)
 {
-    $file = __DIR__ . "/../config/app.php";
+    $file = APP_DIR . "/config/app.php";
     if (!is_file($file)) {
-        abort('Konfigurationsdatei <strong>' . $file . '</strong> existiert nicht.');
+        copy(APP_DIR . "/config/app.dist.php", $file);
     }
     $config = require $file;
     $dot = new Dot($config);
@@ -125,13 +125,6 @@ function get_config($key, $default = null, $useCache = true)
         return $value;
     }
     return $default ?? null;
-}
-
-function baseUrl($path = null): string
-{
-    $str = substr(realpath(__DIR__ . '/../'), strlen(realpath($_SERVER['DOCUMENT_ROOT'])));
-    $url = str_replace(DIRECTORY_SEPARATOR, '/', $str) . '/';
-    return $url . ($path ?? '');
 }
 
 function getAppBasePath(): string

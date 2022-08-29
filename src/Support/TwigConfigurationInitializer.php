@@ -14,7 +14,10 @@ class TwigConfigurationInitializer
     {
         $timezone = $_ENV['TIMEZONE'] ?? 'UTC';
 
-        $twig = Twig::create(__DIR__ . '/../../templates', ['cache' => $caching ? __DIR__ . '/../../storage/cache/twig' : false, 'debug' => $debug]);
+        $twig = Twig::create(APP_DIR . '/templates', [
+            'cache' => $caching ? APP_DIR . '/storage/cache/twig' : false,
+            'debug' => $debug,
+        ]);
 
         if ($debug) {
             $twig->addExtension(new DebugExtension());

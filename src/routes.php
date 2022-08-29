@@ -11,7 +11,7 @@ use Tuupola\Middleware\HttpBasicAuthentication;
 
 /** @var \Slim\App $app */
 
-if (file_exists(__DIR__ . '/../storage/maintenance')) {
+if (file_exists(APP_DIR . '/storage/maintenance')) {
     $app->any('/{path:.*}', MaintenancePageController::class);
 } else {
     $app->group('', FrontendRoutes::class);
