@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
-use App\Controllers\Frontend\Widgets\MainMenu;
 use App\Repository\ConfigSettingRepository;
 use App\Repository\RoundRepository;
 use App\Repository\TextRepository;
@@ -16,8 +15,6 @@ use Slim\Views\Twig;
 
 abstract class FrontendController
 {
-    public const LATEST_POSTS_NUM = 5;
-
     public function __construct(
         protected Twig $view,
         private RoundRepository $rounds,
@@ -187,6 +184,7 @@ abstract class FrontendController
     private function getForumStatus(): string
     {
         if (!$data = apcu_fetch('etoa-infobox-forum-news')) {
+            $num_posts = $this->config->getInt('latest_posts_num', 5);
             $data = [];
             try {
                 $data['users_online'] = ForumBridge::usersOnline();
@@ -194,7 +192,7 @@ abstract class FrontendController
             }
             try {
                 $board_blacklist = explode(",", $this->config->get('infobox_board_blacklist'));
-                $posts = ForumBridge::latestPosts(self::LATEST_POSTS_NUM, $board_blacklist);
+                $posts = ForumBridge::latestPosts($num_posts, $board_blacklist);
                 $data['posts'] = array_map(
                     fn (array $post) => array_merge($post, [
                         'url' => ForumBridge::url('post', $post['id'], $post['thead_id']),

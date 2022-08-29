@@ -23,13 +23,12 @@ class NewsController extends FrontendController
 
     public function __invoke(Request $request, Response $response): Response
     {
-        $news_board_id = $this->config->getInt('news_board');
-        $status_board_id = $this->config->getInt('status_board');
-        $num_news = 3;
-
         $message = null;
         $news = [];
         if (!$news = apcu_fetch('etoa-news-section')) {
+            $news_board_id = $this->config->getInt('news_board');
+            $status_board_id = $this->config->getInt('status_board');
+            $num_news = $this->config->getInt('news_posts_num', 3);
             try {
                 $threads = ForumBridge::newsPosts($num_news, $news_board_id, $status_board_id);
                 $news = array_map(fn (array $thread) => [

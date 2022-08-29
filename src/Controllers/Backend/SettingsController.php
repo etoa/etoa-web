@@ -17,6 +17,12 @@ class SettingsController extends BackendController
             'default' => '',
             'required' => true,
         ],
+        'news_posts_num' => [
+            'label' => 'Anzahl News Posts auf der Startseite',
+            'type' => 'number',
+            'default' => '3',
+            'required' => true,
+        ],
         'rules_board' => [
             'label' => 'ID des Regeln Forums',
             'type' => 'number',
@@ -46,6 +52,12 @@ class SettingsController extends BackendController
             'type' => 'text',
             'default' => '',
             'required' => false,
+        ],
+        'latest_posts_num' => [
+            'label' => 'Anzahl der neusten Posts in der Infobox',
+            'type' => 'number',
+            'default' => '5',
+            'required' => true,
         ],
         'status_board' => [
             'label' => 'ID des Status Forums',
