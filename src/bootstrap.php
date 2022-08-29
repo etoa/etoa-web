@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 use App\Middleware\HttpsRedirectMiddleware;
 use App\Routing\AppRouteProvider;
+use App\Support\Database\DatabaseConnectionInitializer;
 use App\Support\Database\DatabaseEntityManagerInitializer;
+use App\Support\Database\ForumDatabaseConnection;
 use App\Support\TwigConfigurationInitializer;
 use Carbon\Carbon;
 use DI\Bridge\Slim\Bridge;
@@ -34,6 +36,7 @@ $twig = TwigConfigurationInitializer::create(
 $container = new Container();
 $container->set(Twig::class, fn () => $twig);
 $container->set(EntityManager::class, DatabaseEntityManagerInitializer::initialize($debug));
+$container->set(ForumDatabaseConnection::class, DatabaseConnectionInitializer::initialize('forum', ForumDatabaseConnection::class));
 
 $app = Bridge::create($container);
 
