@@ -50,7 +50,6 @@ class ErrorController extends FrontendController
         return parent::render($response, 'error.html', [
             'message' => self::$messages[$code] ?? self::$messages['unknown'],
             'support_url' => ForumBridge::url('board', $this->config->getInt('support_board')),
-            'developer_url' => 'https://github.com/etoa/etoa',
         ]);
     }
 }
