@@ -41,12 +41,6 @@ class SettingsController extends BackendController
             'default' => '',
             'required' => false,
         ],
-        'loginadmin_group' => [
-            'label' => 'Usergruppe für Login Administration',
-            'type' => 'number',
-            'default' => '',
-            'required' => true,
-        ],
         'infobox_board_blacklist' => [
             'label' => 'Forum IDs welche nicht in der Infobox erscheinen sollen',
             'type' => 'text',

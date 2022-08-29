@@ -39,7 +39,6 @@ CREATE TABLE `config` (
 INSERT INTO `config` (`config_id`, `config_name`, `config_value`) VALUES
 (226, 'infobox_board_blacklist', '11,57,58,59,4,2,3,82,42,99,8,20,114,116,117,138,139,151,159,152,153,154,155,171,182,183,202,212,213,214,215,217,218,219,220,221,222,223,235,236,237,238,239,250,260,271,272,273,274,286,287,303,313,331'),
 (55, 'server_notice', ''),
-(225, 'loginadmin_group', '22'),
 (130, 'buttons', ''),
 (59, 'indexjscript', '<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-4499873-4\"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag(\'js\', new Date());\r\n\r\n  gtag(\'config\', \'UA-4499873-4\');\r\n</script>\r\n'),
 (188, 'adds', ''),

@@ -24,4 +24,9 @@ return [
         'timezone' => 'Europe/Zurich',
         'debug' => false,
     ],
+    'auth' => [
+        'admin' => [
+            'usergroup' => 20,
+        ]
+    ],
 ];

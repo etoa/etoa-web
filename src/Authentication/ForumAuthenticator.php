@@ -18,7 +18,7 @@ class ForumAuthenticator
         }
 
         $userGroupIds = ForumBridge::groupIdsOfUser($user['id']);
-        $allowedGroup = get_config('loginadmin_group', 4);
+        $allowedGroup = config('auth.admin.usergroup');
         return in_array($allowedGroup, $userGroupIds);
     }
 }

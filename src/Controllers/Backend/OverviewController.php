@@ -20,7 +20,7 @@ class OverviewController extends BackendController
 
     public function __invoke(Request $request, Response $response, RoundRepository $rounds, ConfigSettingRepository $config, Container $container): Response
     {
-        $admins = ForumBridge::usersOfGroup($config->getInt('loginadmin_group'));
+        $admins = ForumBridge::usersOfGroup(config('auth.admin.usergroup'));
 
         return parent::render($response, 'overview.html', [
             'forumAdminUrl' => ForumBridge::url('admin'),
