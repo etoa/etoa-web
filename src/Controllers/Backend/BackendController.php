@@ -11,11 +11,11 @@ use Slim\Views\Twig;
 
 abstract class BackendController
 {
-    function __construct(protected Twig $view, protected \SlimSession\Helper $session)
+    public function __construct(protected Twig $view, protected \SlimSession\Helper $session)
     {
     }
 
-    protected abstract function getTitle(): string;
+    abstract protected function getTitle(): string;
 
     protected function render(Response $response, string $backendTemplate, array $args): Response
     {

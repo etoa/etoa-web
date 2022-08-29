@@ -21,6 +21,14 @@ Run:
 
 Copy `config/app.dist.php` to `config/app.php` and configure the database connection parameters.
 
+## Development
+
+### Code fixer
+
+Run:
+
+    ./vendor/bin/php-cs-fixer fix src
+
 ## Use docker images
 
 Build and start application:

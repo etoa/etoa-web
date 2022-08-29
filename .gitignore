@@ -9,3 +9,4 @@
 .ftpquota
 .env
 .vscode/settings.json
+.php-cs-fixer.cache

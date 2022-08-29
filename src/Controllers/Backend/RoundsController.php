@@ -16,20 +16,20 @@ class RoundsController extends BackendController
         return 'Runden';
     }
 
-    function show(Request $request, Response $response, RoundRepository $rounds): Response
+    public function show(Request $request, Response $response, RoundRepository $rounds): Response
     {
         return parent::render($response, 'rounds.html', [
             'rounds' => $rounds->all(),
         ]);
     }
 
-    function store(Request $request, Response $response, RoundRepository $rounds): Response
+    public function store(Request $request, Response $response, RoundRepository $rounds): Response
     {
         $post = $request->getParsedBody();
         if (isset($post['submit'])) {
             if (isset($post['name'])) {
                 foreach ($post['name'] as $id => $v) {
-                    if ($post['name'][$id] != "" && $post['url'][$id] != "") {;
+                    if ($post['name'][$id] != "" && $post['url'][$id] != "") {
                         $rounds->update(
                             $id,
                             name: $post['name'][$id],

@@ -15,21 +15,21 @@ class TextController extends BackendController
         return 'Text bearbeiten';
     }
 
-    function index(Request $request, Response $response, TextRepository $texts): Response
+    public function index(Request $request, Response $response, TextRepository $texts): Response
     {
         return parent::render($response, 'texts/index.html', [
             'texts' => $texts->all(),
         ]);
     }
 
-    function edit(Request $request, Response $response, TextRepository $texts, int $id): Response
+    public function edit(Request $request, Response $response, TextRepository $texts, int $id): Response
     {
         return parent::render($response, 'texts/edit.html', [
             'text' => $texts->get($id),
         ]);
     }
 
-    function update(Request $request, Response $response, TextRepository $texts, int $id): Response
+    public function update(Request $request, Response $response, TextRepository $texts, int $id): Response
     {
         $post = $request->getParsedBody();
 

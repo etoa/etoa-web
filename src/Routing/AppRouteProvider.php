@@ -13,7 +13,7 @@ use Tuupola\Middleware\HttpBasicAuthentication;
 
 class AppRouteProvider
 {
-    const CACHE_FILE = APP_DIR . '/storage/cache/routes';
+    public const CACHE_FILE = APP_DIR . '/storage/cache/routes';
 
     public function __construct(private bool $debug = false)
     {
@@ -40,7 +40,7 @@ class AppRouteProvider
     {
         return new HttpBasicAuthentication([
             "realm" => "EtoA Login Administration",
-            "authenticator" => new ForumAuthenticator,
+            "authenticator" => new ForumAuthenticator(),
             'secure' => true,
         ]);
     }

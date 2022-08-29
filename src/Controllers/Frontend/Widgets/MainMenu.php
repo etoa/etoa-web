@@ -10,7 +10,7 @@ use Slim\Views\Twig;
 
 class MainMenu implements Widget
 {
-    function __construct(private ConfigSettingRepository $config)
+    public function __construct(private ConfigSettingRepository $config)
     {
     }
 

@@ -11,9 +11,9 @@ use Slim\Views\Twig;
 
 class InfoBox implements Widget
 {
-    const LATEST_POSTS_NUM = 5;
+    public const LATEST_POSTS_NUM = 5;
 
-    function __construct(private ConfigSettingRepository $config)
+    public function __construct(private ConfigSettingRepository $config)
     {
     }
 

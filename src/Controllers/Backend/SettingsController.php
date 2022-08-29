@@ -102,7 +102,7 @@ class SettingsController extends BackendController
         return 'Einstellungen';
     }
 
-    function show(Request $request, Response $response, ConfigSettingRepository $config): Response
+    public function show(Request $request, Response $response, ConfigSettingRepository $config): Response
     {
         return parent::render($response, 'settings.html', [
             'settings' => collect(self::$settings)->map(fn ($def, $key) => [
@@ -115,7 +115,7 @@ class SettingsController extends BackendController
         ]);
     }
 
-    function store(Request $request, Response $response, ConfigSettingRepository $config): Response
+    public function store(Request $request, Response $response, ConfigSettingRepository $config): Response
     {
         $post = $request->getParsedBody();
         foreach (self::$settings as $key => $def) {

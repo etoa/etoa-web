@@ -9,14 +9,14 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 abstract class TextPageController extends FrontendController
 {
-    protected abstract function getTextKey(): string;
+    abstract protected function getTextKey(): string;
 
     protected function getText(): ?string
     {
         return $this->getTextContent($this->getTextKey());
     }
 
-    function __invoke(Request $request, Response $response): Response
+    public function __invoke(Request $request, Response $response): Response
     {
         return parent::render($response, 'text-page.html', [
             'text' => $this->getText(),

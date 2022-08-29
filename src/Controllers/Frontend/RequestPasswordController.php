@@ -26,7 +26,7 @@ class RequestPasswordController extends FrontendController
         return 'Passwort anfordern';
     }
 
-    function __invoke(Request $request, Response $response, RoundRepository $rounds): Response
+    public function __invoke(Request $request, Response $response, RoundRepository $rounds): Response
     {
         $rounds = array_map(fn (Round $round) => [
             'url' => $rounds->createPageUrl($round, 'pwforgot'),

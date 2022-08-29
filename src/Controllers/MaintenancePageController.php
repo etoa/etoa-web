@@ -10,7 +10,7 @@ use Slim\Views\Twig;
 
 class MaintenancePageController
 {
-    function __invoke(Request $request, Response $response, Twig $view): Response
+    public function __invoke(Request $request, Response $response, Twig $view): Response
     {
         return $view->render($response, 'maintenance.html');
     }

@@ -12,7 +12,7 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class DatabaseEntityManagerInitializer
 {
-    static function initialize(bool $debug): EntityManager
+    public static function initialize(bool $debug): EntityManager
     {
         $cache =  $debug ?
             DoctrineProvider::wrap(new ArrayAdapter()) :

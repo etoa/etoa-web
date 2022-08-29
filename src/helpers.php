@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 use Adbar\Dot;
 use App\Models\Round;

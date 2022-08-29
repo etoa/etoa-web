@@ -30,7 +30,7 @@ class ServerNoticeController extends BackendController
         return 'Servermeldung';
     }
 
-    function show(Request $request, Response $response, ConfigSettingRepository $config): Response
+    public function show(Request $request, Response $response, ConfigSettingRepository $config): Response
     {
         return parent::render($response, 'servernotice.html', [
             'settings' => collect(self::$settings)->map(fn ($def, $key) => [
@@ -43,7 +43,7 @@ class ServerNoticeController extends BackendController
         ]);
     }
 
-    function store(Request $request, Response $response, ConfigSettingRepository $config): Response
+    public function store(Request $request, Response $response, ConfigSettingRepository $config): Response
     {
         $post = $request->getParsedBody();
         foreach (self::$settings as $key => $def) {

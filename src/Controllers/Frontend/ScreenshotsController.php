@@ -37,7 +37,7 @@ class ScreenshotsController extends FrontendController
         return 'screenshots.png';
     }
 
-    function __invoke(Request $request, Response $response): Response
+    public function __invoke(Request $request, Response $response): Response
     {
         $items = array_map(fn (String $f) => [
             'name' => ucfirst($f),

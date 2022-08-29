@@ -21,7 +21,7 @@ class NewsController extends FrontendController
         return 'news.png';
     }
 
-    function __invoke(Request $request, Response $response): Response
+    public function __invoke(Request $request, Response $response): Response
     {
         $news_board_id = $this->config->getInt('news_board');
         $status_board_id = $this->config->getInt('status_board');

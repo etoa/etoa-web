@@ -43,7 +43,7 @@ class ErrorController extends FrontendController
         return 'Fehler';
     }
 
-    function __invoke(Request $request, Response $response): Response
+    public function __invoke(Request $request, Response $response): Response
     {
         $code = $request->getQueryParams()['err'] ?? 'unknown';
 

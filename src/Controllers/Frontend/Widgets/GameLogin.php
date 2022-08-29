@@ -9,7 +9,7 @@ use Slim\Views\Twig;
 
 class GameLogin implements Widget
 {
-    function __construct(private RoundRepository $rounds)
+    public function __construct(private RoundRepository $rounds)
     {
     }
 

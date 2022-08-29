@@ -8,5 +8,5 @@ use Slim\Views\Twig;
 
 interface Widget
 {
-    function render(Twig $tpl): string;
+    public function render(Twig $tpl): string;
 }

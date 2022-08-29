@@ -16,7 +16,7 @@ use Slim\Views\Twig;
 
 abstract class FrontendController
 {
-    function __construct(
+    public function __construct(
         protected Twig $view,
         private RoundRepository $rounds,
         private TextRepository $texts,
@@ -24,8 +24,8 @@ abstract class FrontendController
     ) {
     }
 
-    protected abstract function getTitle(): string;
-    protected abstract function getHeaderImage(): string;
+    abstract protected function getTitle(): string;
+    abstract protected function getHeaderImage(): string;
 
     protected function getSiteTitle(): ?string
     {

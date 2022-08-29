@@ -18,10 +18,8 @@ class OverviewController extends BackendController
         return 'Übersicht';
     }
 
-    function __invoke(Request $request, Response $response, RoundRepository $rounds, ConfigSettingRepository $config, Container $container): Response
+    public function __invoke(Request $request, Response $response, RoundRepository $rounds, ConfigSettingRepository $config, Container $container): Response
     {
-        // print_r($container->get('settings'));
-
         $admins = ForumBridge::usersOfGroup($config->getInt('loginadmin_group'));
 
         return parent::render($response, 'overview.html', [
