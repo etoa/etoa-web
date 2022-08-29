@@ -17,9 +17,7 @@
 <br />
 
 <h1>News</h1>
-{% if message %}
-<p class="loginmsg"><i>{{ message }}</i></p>
-{% endif %}
+{% if news is not null %}
 {% if news %}
 {% for thread in news %}
 <div class="boxLine"></div>
@@ -55,6 +53,9 @@
 <p>Alle älteren News findest du <a href="{{ board_url }}">hier</a></p>
 {% else %}
 <p class="loginmsg"><i>Keine News vorhanden!</i></p>
+{% endif %}
+{% else %}
+<p class="loginmsg"><i>Der Newsfeed ist momentan nicht verfügbar!</i></p>
 {% endif %}
 
 {% endblock %}

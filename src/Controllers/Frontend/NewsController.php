@@ -23,10 +23,18 @@ class NewsController extends FrontendController
 
     public function __invoke(Request $request, Response $response): Response
     {
-        $message = null;
-        $news = [];
+        $news_board_id = $this->config->getInt('news_board');
+
+        return parent::render($response, 'news.html', [
+            'text' => $this->getTextContent("home"),
+            'news' => $this->fetchNews($news_board_id),
+            'board_url' => ForumBridge::url('board', $news_board_id),
+        ]);
+    }
+
+    private function fetchNews(int $news_board_id): ?array
+    {
         if (!$news = apcu_fetch('etoa-news-section')) {
-            $news_board_id = $this->config->getInt('news_board');
             $status_board_id = $this->config->getInt('status_board');
             $num_news = $this->config->getInt('news_posts_num', 3);
             try {
@@ -46,15 +54,9 @@ class NewsController extends FrontendController
                 ], $threads);
                 apcu_add('etoa-news-section', $news, config('caching.apcu_timeout'));
             } catch (PDOException $ignored) {
-                $message = 'Der Newsfeed ist momentan nicht verfügbar!';
+                return null;
             }
         }
-
-        return parent::render($response, 'news.html', [
-            'text' => $this->getTextContent("home"),
-            'news' => $news,
-            'board_url' => ForumBridge::url('board', $news_board_id),
-            'message' => $message,
-        ]);
+        return $news;
     }
 }
