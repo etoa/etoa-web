@@ -48,9 +48,7 @@ INSERT INTO `config` (`config_id`, `config_name`, `config_value`) VALUES
 (227, 'status_board', '103'),
 (64, 'footer_js', ''),
 (221, 'rules_board', '10'),
-(228, 'support_board', '21'),
-(229, 'forum_mail', 'forum@etoa.ch'),
-(230, 'forum_url', 'http://forum.etoa.ch');
+(228, 'support_board', '21');
 
 -- --------------------------------------------------------
 

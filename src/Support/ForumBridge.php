@@ -248,35 +248,30 @@ class ForumBridge
 
     public static function url(?string $type = null, $value = null, $value2 = null): string
     {
-        $baseUrl = get_config('forum_url', 'https://forum.etoa.ch/');
+        $baseUrl = config('forum.url');
         if ($type == 'board') {
-            return $baseUrl . '/forum/board/' . $value;
+            return $baseUrl . 'forum/board/' . $value;
         }
         if ($type == 'thread') {
-            return $baseUrl . '/forum/thread/' . $value;
+            return $baseUrl . 'forum/thread/' . $value;
         }
         if ($type == 'post') {
-            return $baseUrl . '/forum/thread/' . $value2 . '?postID=' . $value . '#post' . $value;
+            return $baseUrl . 'forum/thread/' . $value2 . '?postID=' . $value . '#post' . $value;
         }
         if ($type == 'user') {
-            return $baseUrl . '/user/' . $value;
+            return $baseUrl . 'user/' . $value;
         }
         if ($type == 'admin') {
-            return $baseUrl . '/acp/';
+            return $baseUrl . 'acp/';
         }
         if ($type == 'account') {
-            return $baseUrl . '/account-management/';
+            return $baseUrl . 'account-management/';
         }
         if ($type == 'team') {
-            return $baseUrl . '/team/';
-        }
-        if ($type == 'avatar') {
-            return $baseUrl . '/images/avatars/' . ($value > 0
-                ? 'avatar-' . $value . "." . $value2
-                : 'avatar-default.png');
+            return $baseUrl . 'team/';
         }
         if ($type == 'register') {
-            return $baseUrl . '/register/';
+            return $baseUrl . 'register/';
         }
         return $baseUrl;
     }

@@ -65,18 +65,6 @@ class SettingsController extends BackendController
             'default' => '',
             'required' => true,
         ],
-        'forum_mail' => [
-            'label' => 'Forum E-Mail',
-            'type' => 'email',
-            'default' => '',
-            'required' => false,
-        ],
-        'forum_url' => [
-            'label' => 'Forum URL',
-            'type' => 'url',
-            'default' => '',
-            'required' => true,
-        ],
         'adds' => [
             'label' => 'HTML Code für reches Vertikalbanner',
             'type' => 'textarea',
