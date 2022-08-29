@@ -3,8 +3,8 @@
 
 declare(strict_types=1);
 
-use App\Authentication\ForumAuthenticator;
 use App\Middleware\HttpsRedirectMiddleware;
+use App\Routing\AppRouteProvider;
 use App\Service\ConfigService;
 use App\Support\Database\DatabaseEntityManagerInitializer;
 use App\Support\TwigConfigurationInitializer;
@@ -15,7 +15,6 @@ use Doctrine\ORM\EntityManager;
 use Dotenv\Dotenv;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
-use Tuupola\Middleware\HttpBasicAuthentication;
 
 define('APP_DIR', __DIR__ . '/../');
 
@@ -70,20 +69,7 @@ $app->add(new \Slim\Middleware\Session());
 if (file_exists(APP_DIR . '/storage/maintenance')) {
     $app->any('/{path:.*}', MaintenancePageController::class);
 } else {
-    $app->group('', FrontendRoutes::class);
-    $app->group('/admin', BackendRoutes::class)
-        ->add(new HttpBasicAuthentication([
-            "realm" => "EtoA Login Administration",
-            "authenticator" => new ForumAuthenticator,
-            "before" => function (Slim\Psr7\Request $request, array $arguments) {
-                return $request
-                    ->withAttribute("user", $arguments["user"])
-                    ->withAttribute("password", $arguments["password"]);
-            },
-            'secure' => false,
-        ]));
-
-    $app->any('/{path:.*}', PageNotFoundController::class);
+    $app->group('', AppRouteProvider::class);
 }
 
 // Run app
