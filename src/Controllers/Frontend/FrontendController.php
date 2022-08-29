@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
+use App\Models\Forum\LatestPost;
 use App\Repository\ConfigSettingRepository;
 use App\Repository\RoundRepository;
 use App\Repository\TextRepository;
@@ -20,6 +21,7 @@ abstract class FrontendController
         private RoundRepository $rounds,
         private TextRepository $texts,
         protected ConfigSettingRepository $config,
+        protected ForumBridge $forum,
     ) {
     }
 
@@ -182,16 +184,18 @@ abstract class FrontendController
             $num_posts = $this->config->getInt('latest_posts_num', 5);
             $data = [];
             try {
-                $data['users_online'] = ForumBridge::usersOnline();
+                $data['users_online'] = $this->forum->usersOnline();
             } catch (PDOException $ignored) {
             }
             try {
                 $board_blacklist = explode(",", $this->config->get('infobox_board_blacklist'));
-                $posts = ForumBridge::latestPosts($num_posts, $board_blacklist);
+                $posts = $this->forum->latestPosts($num_posts, $board_blacklist);
                 $data['posts'] = array_map(
-                    fn (array $post) => array_merge($post, [
-                        'url' => ForumBridge::url('post', $post['id'], $post['thead_id']),
-                    ]),
+                    fn (LatestPost $post) => [
+                        'topic' => $post->topic,
+                        'time' => $post->time,
+                        'url' => ForumBridge::url('post', $post->id, $post->thread_id),
+                    ],
                     $posts
                 );
             } catch (PDOException $ignored) {

@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Support\Database;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
 use PDO;
 
 class DatabaseConnectionInitializer
 {
-    public static function initialize(string $profile, string $wrapperClass): \Doctrine\DBAL\Connection
+    public static function initialize(string $profile, string $wrapperClass): Connection
     {
-        return \Doctrine\DBAL\DriverManager::getConnection([
+        return DriverManager::getConnection([
             'driver' => 'pdo_mysql',
             'host' => config("database.$profile.host"),
             'port' => config("database.$profile.port", 3306),

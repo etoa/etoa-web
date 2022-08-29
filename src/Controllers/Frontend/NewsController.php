@@ -38,7 +38,7 @@ class NewsController extends FrontendController
             $status_board_id = $this->config->getInt('status_board');
             $num_news = $this->config->getInt('news_posts_num', 3);
             try {
-                $threads = ForumBridge::newsPosts($num_news, $news_board_id, $status_board_id);
+                $threads = $this->forum->newsPosts($num_news, $news_board_id, $status_board_id);
                 $news = array_map(fn (array $thread) => [
                     'prefix' => $thread['board_id'] == $status_board_id ? "SERVERSTATUS " : "",
                     'url' => ForumBridge::url('thread', $thread['id']),

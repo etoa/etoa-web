@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Support;
 
+use App\Models\Forum\LatestPost;
+use App\Models\Forum\Thread;
 use App\Models\Forum\User;
-use App\Support\Database\DB;
 use App\Support\Database\ForumDatabaseConnection;
 
 class ForumBridge
@@ -14,6 +15,9 @@ class ForumBridge
     {
     }
 
+    /**
+     * @return User[]
+     */
     public function userByName(string $username): ?User
     {
         $res = $this->conn->executeQuery("
@@ -41,12 +45,9 @@ class ForumBridge
         return null;
     }
 
-    public static function authenticateUser(User $user, string $password): bool
-    {
-        $hash = str_starts_with($user->password, 'Bcrypt:') ? substr($user->password, strlen('Bcrypt:')) : $user->password;
-        return password_verify($password, $hash);
-    }
-
+    /**
+     * @return int[]
+     */
     public function groupIdsOfUser(int $userId): array
     {
         $res = $this->conn->executeQuery("
@@ -63,6 +64,9 @@ class ForumBridge
         return (array) $res->fetchFirstColumn();
     }
 
+    /**
+     * @return User[]
+     */
     public function usersOfGroup(int $groupId): array
     {
         $res = $this->conn->executeQuery("
@@ -79,15 +83,15 @@ class ForumBridge
             'groupId' => $groupId,
         ]);
 
-        return array_map(fn ($arr) => new User(
+        return array_map(fn (array $arr) => new User(
             id: $arr['userID'],
             username: $arr['username'],
         ), (array) $res->fetchAllAssociative());
     }
 
-    public static function usersOnline(int $threshold = 300): int
+    public function usersOnline(int $threshold = 300): int
     {
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 COUNT(*)  as cnt
             FROM
@@ -106,11 +110,13 @@ class ForumBridge
             ;", [
             'time' => time() - $threshold,
         ]);
-        $arr = $res->fetch();
-        return $arr['cnt'];
+        return $res->fetchOne();
     }
 
-    public static function latestPosts($limit, $blacklist_boards = [])
+    /**
+     * @return LatestPost[]
+     */
+    public function latestPosts(int $limit, array $blacklist_boards = []): array
     {
         $bls = '';
         if (count($blacklist_boards) > 0) {
@@ -118,7 +124,7 @@ class ForumBridge
             $bls .= 't.boardid NOT IN (' . implode(',', $blacklist_boards) . ')';
         }
 
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 t.topic,
                 p.postID,
@@ -142,21 +148,20 @@ class ForumBridge
             ;", [
             'limit' => $limit
         ]);
-        $items = [];
-        while ($arr = $res->fetch()) {
-            $items[] = [
-                'id' => $arr['postID'],
-                'topic' => $arr['topic'],
-                'time' => $arr['time'],
-                'thead_id' => $arr['threadID'],
-            ];
-        }
-        return $items;
+        return array_map(
+            fn (array $arr) => new LatestPost(
+                id: $arr['postID'],
+                topic: $arr['topic'],
+                time: $arr['time'],
+                thread_id: $arr['threadID'],
+            ),
+            (array) $res->fetchAllAssociative()
+        );
     }
 
-    public static function newsPosts(int $limit, int $news_board_id, int $status_board_id)
+    public function newsPosts(int $limit, int $news_board_id, int $status_board_id): array
     {
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 t.topic,
                 t.time,
@@ -209,28 +214,26 @@ class ForumBridge
             'news_board' => $news_board_id,
             'status_board' => $status_board_id,
         ]);
-        $items = [];
-        while ($arr = $res->fetch()) {
-            $items[] = [
-                'id' => $arr['threadID'],
-                'topic' => $arr['topic'],
-                'time' => $arr['time'],
-                'board_id' => $arr['boardID'],
-                'user_id' => $arr['userid'],
-                'user_name' => $arr['username'],
-                'updated_at' => $arr['lastEditTime'],
-                'message' => $arr['message'],
-                'post_count' => $arr['post_count'],
-                'last_post_time' => $arr['lastPostTime'],
-            ];
-        }
-        return $items;
+        return array_map(fn (array $arr) => [
+            'id' => $arr['threadID'],
+            'topic' => $arr['topic'],
+            'time' => $arr['time'],
+            'board_id' => $arr['boardID'],
+            'user_id' => $arr['userid'],
+            'user_name' => $arr['username'],
+            'updated_at' => $arr['lastEditTime'],
+            'message' => $arr['message'],
+            'post_count' => $arr['post_count'],
+            'last_post_time' => $arr['lastPostTime'],
+        ], (array) $res->fetchAllAssociative());
     }
 
-    public static function thread($threadId)
+    public function thread(int $threadId): ?Thread
     {
-        $res = DB::instance('forum')->preparedQuery("
-            SELECT *
+        $res = $this->conn->executeQuery("
+            SELECT
+                subject,
+                message
             FROM " . self::wbbtable('post') . "
             WHERE threadid = :threadId
             ORDER BY time ASC
@@ -238,13 +241,20 @@ class ForumBridge
             ;", [
             'threadId' => $threadId,
         ]);
-        if ($arr = $res->fetch()) {
-            return [
-                'subject' => $arr['subject'],
-                'message' => $arr['message'],
-            ];
+        if ($arr = $res->fetchAssociative()) {
+            return new Thread(
+                id: $threadId,
+                topic: $arr['subject'],
+                message: $arr['message'],
+            );
         }
         return null;
+    }
+
+    public static function authenticateUser(User $user, string $password): bool
+    {
+        $hash = str_starts_with($user->password, 'Bcrypt:') ? substr($user->password, strlen('Bcrypt:')) : $user->password;
+        return password_verify($password, $hash);
     }
 
     public static function url(?string $type = null, $value = null, $value2 = null): string

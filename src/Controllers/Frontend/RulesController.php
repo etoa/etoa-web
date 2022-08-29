@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
-use App\Support\ForumBridge;
+use App\Models\Forum\Thread;
 
 class RulesController extends TextPageController
 {
-    private function getThread(): array
+    private function getThread(): ?Thread
     {
         $thread_id = $this->config->getInt('rules_thread', 0);
-        return ForumBridge::thread($thread_id) ?? [];
+        return $this->forum->thread($thread_id);
     }
 
     public function getTitle(): string
     {
-        return $this->getThread()['subject'] ?? 'Es trat ein Fehler auf!';
+        return $this->getThread()?->topic ?? 'Es trat ein Fehler auf!';
     }
 
     public function getSiteTitle(): ?string
@@ -26,7 +26,7 @@ class RulesController extends TextPageController
 
     public function getText(): string
     {
-        return $this->getThread()["message"] ?? 'Regeln nicht vorhanden!';
+        return $this->getThread()?->message ?? 'Regeln nicht vorhanden!';
     }
 
     public function getTextKey(): string
