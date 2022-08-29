@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
+use App\Models\Forum\Thread;
 use App\Support\ForumBridge;
 use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -39,18 +40,18 @@ class NewsController extends FrontendController
             $num_news = $this->config->getInt('news_posts_num', 3);
             try {
                 $threads = $this->forum->newsPosts($num_news, $news_board_id, $status_board_id);
-                $news = array_map(fn (array $thread) => [
-                    'prefix' => $thread['board_id'] == $status_board_id ? "SERVERSTATUS " : "",
-                    'url' => ForumBridge::url('thread', $thread['id']),
-                    'topic' => $thread['topic'],
-                    'closed' => $thread['board_id'] == $status_board_id && $thread['closed'] == 1,
-                    'last_post_time' => $thread['last_post_time'],
-                    'time' => $thread['time'],
-                    'updated_at' => $thread['updated_at'],
-                    'author_url' => ForumBridge::url('user', $thread['user_id']),
-                    'author' => $thread['user_name'],
-                    'message' =>  $thread["message"],
-                    'replies' => $thread['post_count'] - 1,
+                $news = array_map(fn (Thread $thread) => [
+                    'prefix' => $thread->board_id == $status_board_id ? "SERVERSTATUS " : "",
+                    'url' => ForumBridge::url('thread', $thread->id),
+                    'topic' => $thread->topic,
+                    'closed' => $thread->board_id == $status_board_id && $thread->closed,
+                    'last_post_time' => $thread->last_post_time,
+                    'time' => $thread->time,
+                    'updated_at' => $thread->updated_at,
+                    'author_url' => ForumBridge::url('user', $thread->user_id),
+                    'author' => $thread->user_name,
+                    'message' =>  $thread->message,
+                    'replies' => $thread->post_count - 1,
                 ], $threads);
                 apcu_add('etoa-news-section', $news, config('caching.apcu_timeout'));
             } catch (PDOException $ignored) {

@@ -159,6 +159,9 @@ class ForumBridge
         );
     }
 
+    /**
+     * @return Thread[]
+     */
     public function newsPosts(int $limit, int $news_board_id, int $status_board_id): array
     {
         $res = $this->conn->executeQuery("
@@ -214,18 +217,19 @@ class ForumBridge
             'news_board' => $news_board_id,
             'status_board' => $status_board_id,
         ]);
-        return array_map(fn (array $arr) => [
-            'id' => $arr['threadID'],
-            'topic' => $arr['topic'],
-            'time' => $arr['time'],
-            'board_id' => $arr['boardID'],
-            'user_id' => $arr['userid'],
-            'user_name' => $arr['username'],
-            'updated_at' => $arr['lastEditTime'],
-            'message' => $arr['message'],
-            'post_count' => $arr['post_count'],
-            'last_post_time' => $arr['lastPostTime'],
-        ], (array) $res->fetchAllAssociative());
+        return array_map(fn (array $arr) => new Thread(
+            id: $arr['threadID'],
+            topic: $arr['topic'],
+            time: $arr['time'],
+            board_id: $arr['boardID'],
+            user_id: $arr['userid'],
+            user_name: $arr['username'],
+            updated_at: $arr['lastEditTime'],
+            message: $arr['message'],
+            post_count: $arr['post_count'],
+            last_post_time: $arr['lastPostTime'],
+            closed: $arr['isClosed'] == 1,
+        ), (array) $res->fetchAllAssociative());
     }
 
     public function thread(int $threadId): ?Thread
