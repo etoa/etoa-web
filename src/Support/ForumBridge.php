@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace App\Support;
 
+use App\Models\Forum\User;
 use App\Support\Database\DB;
+use App\Support\Database\ForumDatabaseConnection;
 
 class ForumBridge
 {
+    public function __construct(private ForumDatabaseConnection $conn)
+    {
+    }
+
     public static function userByName(string $username): ?array
     {
         $res = DB::instance('forum')->preparedQuery("
@@ -59,9 +65,9 @@ class ForumBridge
         return $data;
     }
 
-    public static function usersOfGroup(int $groupId): array
+    public function usersOfGroup(int $groupId): array
     {
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 u.userID,
                 u.username
@@ -74,14 +80,11 @@ class ForumBridge
             ;", [
             'groupId' => $groupId,
         ]);
-        $data = [];
-        while ($arr = $res->fetch()) {
-            $data[] = [
-                'id' => $arr['userID'],
-                'username' => $arr['username'],
-            ];
-        }
-        return $data;
+        return collect($res->fetchAllAssociative())
+            ->map(fn ($arr) => new User(
+                id: $arr['userID'],
+                username: $arr['username'],
+            ))->toArray();
     }
 
     public static function usersOnline(int $threshold = 300): int
