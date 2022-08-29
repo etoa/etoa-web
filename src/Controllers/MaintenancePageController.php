@@ -13,7 +13,7 @@ class MaintenancePageController
     public function __invoke(Request $request, Response $response, Twig $view): Response
     {
         return $view->render($response, 'maintenance.html', [
-            'forumUrl' => config('forum.url'),
+            'forumUrl' => config('forum.url', 'https://forum.etoa.ch/'),
             'message' => file_get_contents(APP_DIR . '/storage/maintenance'),
         ]);
     }

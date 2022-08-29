@@ -263,7 +263,7 @@ class ForumBridge
 
     public static function url(?string $type = null, $value = null, $value2 = null): string
     {
-        $baseUrl = config('forum.url');
+        $baseUrl = config('forum.url', 'https://forum.etoa.ch/');
         if ($type == 'board') {
             return $baseUrl . 'forum/board/' . $value;
         }
