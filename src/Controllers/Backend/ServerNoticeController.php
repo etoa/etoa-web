@@ -38,7 +38,8 @@ class ServerNoticeController extends BackendController
         return parent::render($response, 'servernotice.html', [
             'settings' => collect(self::$settings)->map(fn ($def, $key) => [
                 'name' => $key,
-                'value' =>  $config->get($key, defaultValue: $def['default'], useCache: false),
+                'value' =>  $config->get($key, defaultValue: (string)$def['default'], useCache: false),
+                'placeholder' => (string)$def['default'],
                 'label' => $def['label'],
                 'type' => $def['type'],
                 'required' => $def['required'],
