@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>Administration | EtoA | Das Sci-Fi Browsergame</title>
+    <meta name="author" content="EtoA Gaming" />
+    <meta name="description" content="EtoA - Das kostenlose Sci-Fi Browsergame." />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="{{ base_path() }}/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ base_path() }}/css/admin.css">
+</head>
+
+<body>
+    <div id="overall">
+        <div id="header">
+            <div id="logo" onclick="javascript: document.location.href='./';">
+            </div>
+            <div id="bar"></div>
+        </div>
+        <div id="main">
+            <div id="menu">
+                <div id="menu_top"></div>
+                <div id="menu_center">
+                    <b>Navigation</b><br />
+                    <a href="{{ url_for('admin') }}">Übersicht</a>
+                    <a href="{{ url_for('admin.servernotice') }}">Servermeldung</a>
+                    <a href="{{ url_for('admin.rounds') }}">Runden</a>
+                    <a href="{{ url_for('admin.texts') }}">Texte</a>
+                    <a href="{{ url_for('admin.settings') }}">Einstellungen</a>
+                </div>
+                <div id="menu_bottom"></div>
+            </div>
+            <div id="content">
+                <div>
+                    {% if title %}
+                    <h1>{{ title }}</h1>
+                    {% endif %}
+                    {% if error %}
+                    <div class="messagebox">
+                        <div class="error">{{ error | nl2br }}</div>
+                    </div>
+                    {% endif %}
+                    {% if info %}
+                    <div class="messagebox">
+                        <div class="info">{{ info | nl2br }}</div>
+                    </div>
+                    {% endif %}
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <div id="overallend">
+        </div>
+        <div id="footer">
+            <div id="server">&copy; EtoA Gaming</div>
+        </div>
+    </div>
+</body>
+
+</html>

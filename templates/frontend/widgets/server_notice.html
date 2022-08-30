@@ -1,0 +1,10 @@
+{% if message %}
+<br />
+<div style="border: 1px solid {{ color }}; padding: 4px; background: #223; color: {{ color }}">
+    {{ message | bbcode }}
+    <br />
+    <div style="margin-top:5px;font-size:8pt;">
+        Aktualisiert: {{ updated | localDateTimeFormatFromTimestamp }}
+    </div>
+</div>
+{% endif %}

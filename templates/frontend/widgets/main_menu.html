@@ -1,0 +1,14 @@
+<ul id="mainMenu">
+    {% for item in nav %}
+    <li>
+        {% if item.type == 'divider' %}
+        <img src="{{ base_path() }}/images/hline.gif" alt="hline" class="hline" />
+        {% elseif item.type == 'route' %}
+        <a href="{{ url_for(item.route) }}" {% if is_current_url(item.route) %}class="current" {% endif %}>{{ item.label
+            }}</a>
+        {% elseif item.type == 'url' %}
+        <a href="{{ item.url }}">{{ item.label }}</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>

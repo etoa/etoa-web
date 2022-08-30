@@ -1,1 +1,13 @@
-Options -Indexes
+Redirect /forum http://forum.etoa.ch/
+Redirect /faq https://forum.etoa.ch/forum/board/358-fragen-und-antworten/
+Redirect /wiki https://forum.etoa.ch/article-list/
+Redirect /help https://forum.etoa.ch/forum/board/12-etoa-das-spiel/
+Redirect /downloads http://etoa.ch/archiv
+Redirect /zeitung http://etoa.ch/archiv/zeitung
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>

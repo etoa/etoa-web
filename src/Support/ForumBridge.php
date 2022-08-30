@@ -1,14 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Support;
 
-use App\Support\Database\DB;
+use App\Models\Forum\LatestPost;
+use App\Models\Forum\Thread;
+use App\Models\Forum\User;
+use App\Support\Database\ForumDatabaseConnection;
 
 class ForumBridge
 {
-    public static function userByName(string $username): ?array
+    public function __construct(private ForumDatabaseConnection $conn)
     {
-        $res = DB::instance('forum')->preparedQuery("
+    }
+
+    /**
+     * @return User[]
+     */
+    public function userByName(string $username): ?User
+    {
+        $res = $this->conn->executeQuery("
             SELECT
                 userID,
                 username,
@@ -19,28 +31,26 @@ class ForumBridge
             WHERE
                 username = :username
             ;", [
-                'username' => $username,
-            ]);
-        if ($arr = $res->fetch()) {
-            return [
-                'id' => $arr['userID'],
-                'username' => $arr['username'],
-                'password' => $arr['password'],
-                'email' => $arr['email'],
-            ];
+            'username' => $username,
+        ]);
+        if ($arr = $res->fetchAssociative()) {
+            return new User(
+                id: $arr['userID'],
+                username: $arr['username'],
+                password: $arr['password'],
+                email: $arr['email'],
+            );
         }
+
         return null;
     }
 
-    public static function authenticateUser(array $user, string $password): bool
+    /**
+     * @return int[]
+     */
+    public function groupIdsOfUser(int $userId): array
     {
-        $hash = str_starts_with($user['password'], 'Bcrypt:') ? substr($user['password'], strlen('Bcrypt:')) : $user['password'];
-        return password_verify($password, $hash);
-    }
-
-    public static function groupIdsOfUser(int $userId): array
-    {
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 groupID
             FROM
@@ -48,18 +58,18 @@ class ForumBridge
             WHERE
                 userID=:userId
             ;", [
-                'userId' => $userId,
-            ]);
-        $data = [];
-        while ($arr = $res->fetch()) {
-            $data[] = $arr['groupID'];
-        }
-        return $data;
+            'userId' => $userId,
+        ]);
+
+        return (array) $res->fetchFirstColumn();
     }
 
-    public static function usersOfGroup(int $groupId): array
+    /**
+     * @return User[]
+     */
+    public function usersOfGroup(int $groupId): array
     {
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 u.userID,
                 u.username
@@ -70,21 +80,18 @@ class ForumBridge
                 ON t.userID = u.userID
                 AND t.groupID = :groupId
             ;", [
-                'groupId' => $groupId,
-            ]);
-        $data = [];
-        while ($arr = $res->fetch()) {
-            $data[] = [
-                'id' => $arr['userID'],
-                'username' => $arr['username'],
-            ];
-        }
-        return $data;
+            'groupId' => $groupId,
+        ]);
+
+        return array_map(fn (array $arr) => new User(
+            id: $arr['userID'],
+            username: $arr['username'],
+        ), (array) $res->fetchAllAssociative());
     }
 
-    public static function usersOnline(int $threshold = 300): int
+    public function usersOnline(int $threshold = 300): int
     {
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 COUNT(*)  as cnt
             FROM
@@ -101,13 +108,15 @@ class ForumBridge
                         userAgent
                 ) as q
             ;", [
-                'time' => time() - $threshold,
-            ]);
-        $arr = $res->fetch();
-        return $arr['cnt'];
+            'time' => time() - $threshold,
+        ]);
+        return $res->fetchOne();
     }
 
-    public static function latestPosts($limit, $blacklist_boards = [])
+    /**
+     * @return LatestPost[]
+     */
+    public function latestPosts(int $limit, array $blacklist_boards = []): array
     {
         $bls = '';
         if (count($blacklist_boards) > 0) {
@@ -115,7 +124,7 @@ class ForumBridge
             $bls .= 't.boardid NOT IN (' . implode(',', $blacklist_boards) . ')';
         }
 
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 t.topic,
                 p.postID,
@@ -137,23 +146,25 @@ class ForumBridge
             ORDER BY p.time DESC
             LIMIT :limit
             ;", [
-                'limit' => $limit
-            ]);
-        $items = [];
-        while ($arr = $res->fetch()) {
-            $items[] = [
-                'id' => $arr['postID'],
-                'topic' => $arr['topic'],
-                'time' => $arr['time'],
-                'thead_id' => $arr['threadID'],
-            ];
-        }
-        return $items;
+            'limit' => $limit
+        ]);
+        return array_map(
+            fn (array $arr) => new LatestPost(
+                id: $arr['postID'],
+                topic: $arr['topic'],
+                time: $arr['time'],
+                thread_id: $arr['threadID'],
+            ),
+            (array) $res->fetchAllAssociative()
+        );
     }
 
-    public static function newsPosts(int $limit, int $news_board_id, int $status_board_id)
+    /**
+     * @return Thread[]
+     */
+    public function newsPosts(int $limit, int $news_board_id, int $status_board_id): array
     {
-        $res = DB::instance('forum')->preparedQuery("
+        $res = $this->conn->executeQuery("
             SELECT
                 t.topic,
                 t.time,
@@ -202,78 +213,80 @@ class ForumBridge
                 t.time DESC
             LIMIT :limit
             ;", [
-                'limit' => $limit,
-                'news_board' => $news_board_id,
-                'status_board' => $status_board_id,
-            ]);
-        $items = [];
-        while ($arr = $res->fetch()) {
-            $items[] = [
-                'id' => $arr['threadID'],
-                'topic' => $arr['topic'],
-                'time' => $arr['time'],
-                'board_id' => $arr['boardID'],
-                'user_id' => $arr['userid'],
-                'user_name' => $arr['username'],
-                'updated_at' => $arr['lastEditTime'],
-                'message' => $arr['message'],
-                'post_count' => $arr['post_count'],
-            ];
-        }
-        return $items;
+            'limit' => $limit,
+            'news_board' => $news_board_id,
+            'status_board' => $status_board_id,
+        ]);
+        return array_map(fn (array $arr) => new Thread(
+            id: $arr['threadID'],
+            topic: $arr['topic'],
+            time: $arr['time'],
+            board_id: $arr['boardID'],
+            user_id: $arr['userid'],
+            user_name: $arr['username'],
+            updated_at: $arr['lastEditTime'],
+            message: $arr['message'],
+            post_count: $arr['post_count'],
+            last_post_time: $arr['lastPostTime'],
+            closed: $arr['isClosed'] == 1,
+        ), (array) $res->fetchAllAssociative());
     }
 
-    public static function thread($threadId)
+    public function thread(int $threadId): ?Thread
     {
-        $res = DB::instance('forum')->preparedQuery("
-            SELECT *
+        $res = $this->conn->executeQuery("
+            SELECT
+                subject,
+                message
             FROM " . self::wbbtable('post') . "
             WHERE threadid = :threadId
             ORDER BY time ASC
             LIMIT 1
             ;", [
-                'threadId' => $threadId,
-            ]);
-        if ($arr = $res->fetch()) {
-            return [
-                'subject' => $arr['subject'],
-                'message' => $arr['message'],
-            ];
+            'threadId' => $threadId,
+        ]);
+        if ($arr = $res->fetchAssociative()) {
+            return new Thread(
+                id: $threadId,
+                topic: $arr['subject'],
+                message: $arr['message'],
+            );
         }
         return null;
     }
 
+    public static function authenticateUser(User $user, string $password): bool
+    {
+        $hash = str_starts_with($user->password, 'Bcrypt:') ? substr($user->password, strlen('Bcrypt:')) : $user->password;
+        return password_verify($password, $hash);
+    }
+
     public static function url(?string $type = null, $value = null, $value2 = null): string
     {
-        $baseUrl = get_config('forum_url', 'https://forum.etoa.ch/');
+        $baseUrl = config('forum.url', 'https://forum.etoa.ch/');
         if ($type == 'board') {
-            return $baseUrl . '/forum/board/' . $value;
+            return $baseUrl . 'forum/board/' . $value;
         }
         if ($type == 'thread') {
-            return $baseUrl . '/forum/thread/' . $value;
+            return $baseUrl . 'forum/thread/' . $value;
         }
         if ($type == 'post') {
-            return $baseUrl . '/forum/thread/'.$value2.'?postID=' . $value . '#post' . $value;
+            return $baseUrl . 'forum/thread/' . $value2 . '?postID=' . $value . '#post' . $value;
         }
         if ($type == 'user') {
-            return $baseUrl . '/user/' . $value;
+            return $baseUrl . 'user/' . $value;
         }
         if ($type == 'admin') {
-            return $baseUrl . '/acp/';
+            return $baseUrl . 'acp/';
         }
         if ($type == 'account') {
-            return $baseUrl . '/account-management/';
+            return $baseUrl . 'account-management/';
         }
         if ($type == 'team') {
-            return $baseUrl . '/team/';
-        }
-        if ($type == 'avatar') {
-            return $baseUrl . '/images/avatars/' . ($value > 0
-                ? 'avatar-' . $value . "." . $value2
-                : 'avatar-default.png');
+            return $baseUrl . 'team/';
         }
         if ($type == 'register') {
-            return $baseUrl . '/register/';
+            return $baseUrl . 'register/';
         }
         return $baseUrl;
     }

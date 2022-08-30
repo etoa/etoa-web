@@ -1,0 +1,26 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+{% if texts %}
+<table class="tbl">
+    <thead>
+        <tr>
+            <th>Text</th>
+            <th>Schlüsselwort</th>
+            <th>Letzte Änderung</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for text in texts %}
+        <tr>
+            <td><a href="{{ url_for('admin.texts.edit', { 'id': text.id }) }}">{{ text.name }}</a></td>
+            <td>{{ text.keyword }}</td>
+            <td>{{ text.lastChanges | localDateTimeFormatFromTimestamp }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<i>Keine Texte vorhanden!</i><br /><br />
+{% endif %}
+{% endblock %}

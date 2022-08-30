@@ -1,0 +1,21 @@
+<h2>Neues aus dem Forum</h2>
+{% if users_online is defined %}
+<span style="color:#0f0;font-size:9pt;">{{ users_online }} Leute online</span>
+{% else %}
+<span style="color:#f00;font-size:9pt;">Status nicht verfügbar</span>
+{% endif %}
+
+{% if posts is defined %}
+<div id="forum">
+    <ul id="forumthreadlist">
+        {% for post in posts %}
+        <li>
+            <a href="{{ post.url }}">{{ post.topic }}</a>
+            <span style="color:#aaa;font-size:80%">{{ post.time | diffForHumansFromTimestamp }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+<p>Die letzten Beiträge sind zurzeit nicht verfügbar.</p>
+{% endif %}

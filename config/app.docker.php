@@ -19,4 +19,17 @@ return [
     'caching' => [
         'apcu_timeout' => 300,
     ],
+    'app' => [
+        'locale' => 'de',
+        'timezone' => 'Europe/Zurich',
+        'debug' => false,
+    ],
+    'auth' => [
+        'admin' => [
+            'usergroup' => 20,
+        ]
+    ],
+    'forum' => [
+        'url' => 'https://forum.etoa.ch/',
+    ],
 ];

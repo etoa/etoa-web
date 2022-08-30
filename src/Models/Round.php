@@ -2,26 +2,32 @@
 
 namespace App\Models;
 
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
+
+#[Entity, Table(name: 'rounds')]
 class Round
 {
-    public static function active()
+    #[Id, Column(type: 'integer', name: 'round_id'), GeneratedValue(strategy: 'AUTO')]
+    private int $id;
+
+    #[Column(type: 'string', name: 'round_name', unique: true, nullable: false)]
+    public string $name;
+
+    #[Column(type: 'string', name: 'round_url', nullable: false)]
+    public string $url;
+
+    #[Column(type: 'boolean', name: 'round_active', nullable: false)]
+    public bool $active = false;
+
+    #[Column(type: 'integer', name: 'round_startdate', nullable: false)]
+    public int $startDate = 0;
+
+    public function getId(): int
     {
-        $res = dbquery("
-            SELECT *
-            FROM " . dbtable('rounds') . "
-            WHERE round_active = 1
-            ORDER BY round_name
-        ;");
-        $items = [];
-        while ($arr = mysql_fetch_array($res)) {
-            $item = new Round();
-            $item->id = $arr['round_id'];
-            $item->name = $arr['round_name'];
-            $item->url = $arr['round_url'];
-            $item->startdate = $arr['round_startdate'];
-            $item->active = (bool)$arr['round_active'];
-            $items[] = $item;
-        }
-        return $items;
+        return $this->id;
     }
 }
