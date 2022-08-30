@@ -10,8 +10,8 @@ module.exports = {
         ],
     },
     output: {
-        path: __dirname + '/public/js',
-        publicPath: '/',
+        path: __dirname + '/public/assets',
+        publicPath: '/assets/',
         filename: '[name].js'
     },
     module: {
