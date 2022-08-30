@@ -6,6 +6,7 @@
 /storage/cache/doctrine
 /storage/cache/routes
 /storage/maintenance
+/node_modules
 .ftpquota
 .env
 .vscode/settings.json
