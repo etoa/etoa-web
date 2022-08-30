@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 env:
-  PHP_VERSION: '8.0'
+  PHP_VERSION: '8.1'
 
 jobs:
   ci-tests:
