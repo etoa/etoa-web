@@ -23,6 +23,12 @@ Copy `config/app.dist.php` to `config/app.php` and configure the database connec
 
 ## Development
 
+### Code analzsis
+
+Run:
+
+    ./vendor/bin/phpstan analyse
+
 ### Code fixer
 
 Run:

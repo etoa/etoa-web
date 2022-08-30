@@ -10,9 +10,14 @@ use App\Repository\RoundRepository;
 use App\Repository\TextRepository;
 use App\Support\BBCodeConverter;
 use App\Support\ForumBridge;
+use Doctrine\DBAL\Exception;
 use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
+use RuntimeException;
 use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\SyntaxError;
+use Twig\Error\RuntimeError;
 
 abstract class FrontendController
 {
@@ -33,6 +38,9 @@ abstract class FrontendController
         return null;
     }
 
+    /**
+     * @param array<string,mixed> $args
+     */
     protected function render(Response $response, string $frontendTemplate, array $args): Response
     {
         return $this->view->render(
@@ -188,7 +196,7 @@ abstract class FrontendController
             } catch (PDOException $ignored) {
             }
             try {
-                $board_blacklist = explode(",", $this->config->get('infobox_board_blacklist'));
+                $board_blacklist = array_map(fn ($e) => (int) $e, explode(",", $this->config->get('infobox_board_blacklist')));
                 $posts = $this->forum->latestPosts($num_posts, $board_blacklist);
                 $data['posts'] = array_map(
                     fn (LatestPost $post) => [

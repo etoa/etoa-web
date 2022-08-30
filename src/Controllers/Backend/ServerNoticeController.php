@@ -10,6 +10,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ServerNoticeController extends BackendController
 {
+    /**
+     * @var array<string,array<string,mixed>>
+     */
     private static array $settings = [
         'server_notice' => [
             'label' => 'Servermeldung (BBCode)',

@@ -33,6 +33,9 @@ class NewsController extends FrontendController
         ]);
     }
 
+    /**
+     * @return null|array<int,array<string,mixed>>
+     */
     private function fetchNews(int $news_board_id): ?array
     {
         if (!$news = apcu_fetch('etoa-news-section')) {

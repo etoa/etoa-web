@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ScreenshotsController extends FrontendController
 {
+    /** @var string[] */
     private static array $files = [
         'allianz',
         'auktion',

@@ -13,7 +13,7 @@ use Slim\Routing\RouteCollectorProxy;
 
 class BackendRoutes
 {
-    public function __invoke(RouteCollectorProxy $group)
+    public function __invoke(RouteCollectorProxy $group): void
     {
         $group->get('', OverviewController::class)
             ->setName('admin');

@@ -10,6 +10,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class SettingsController extends BackendController
 {
+    /**
+     * @var array<string,array<string,mixed>>
+     */
     private static array $settings = [
         'news_board' => [
             'label' => 'ID des News Forums',

@@ -17,6 +17,9 @@ abstract class BackendController
 
     abstract protected function getTitle(): string;
 
+    /**
+     * @param array<string,mixed> $args
+     */
     protected function render(Response $response, string $backendTemplate, array $args): Response
     {
         return $this->view->render(
