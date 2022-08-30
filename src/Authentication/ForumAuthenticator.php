@@ -12,6 +12,9 @@ class ForumAuthenticator
     {
     }
 
+    /**
+     * @param string[] $arguments
+     */
     public function __invoke(array $arguments): bool
     {
         if (!isset($arguments['user'])) {

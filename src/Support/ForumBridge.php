@@ -15,9 +15,6 @@ class ForumBridge
     {
     }
 
-    /**
-     * @return User[]
-     */
     public function userByName(string $username): ?User
     {
         $res = $this->conn->executeQuery("
@@ -114,6 +111,7 @@ class ForumBridge
     }
 
     /**
+     * @param int[] $blacklist_boards
      * @return LatestPost[]
      */
     public function latestPosts(int $limit, array $blacklist_boards = []): array
@@ -261,7 +259,7 @@ class ForumBridge
         return password_verify($password, $hash);
     }
 
-    public static function url(?string $type = null, $value = null, $value2 = null): string
+    public static function url(?string $type = null, string|int $value = null, string|int $value2 = null): string
     {
         $baseUrl = config('forum.url', 'https://forum.etoa.ch/');
         if ($type == 'board') {
@@ -291,12 +289,12 @@ class ForumBridge
         return $baseUrl;
     }
 
-    private static function wcftable($name)
+    private static function wcftable(string $name): string
     {
         return 'wcf1_' . $name;
     }
 
-    private static function wbbtable($name)
+    private static function wbbtable(string $name): string
     {
         return 'wbb1_' . $name;
     }

@@ -10,6 +10,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ErrorController extends FrontendController
 {
+    /**
+     * @var array<string,string>
+     */
     private static array $messages = [
         "name" => "Du hast vergessen einen Namen oder ein Passwort einzugeben!",
         "pass" => "Falsches Passwort oder falscher Benutzername!<br/><br/><a href=\"pwrequest\">Passwort vergessen?</a>",

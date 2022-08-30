@@ -20,7 +20,7 @@ class AppRouteProvider
     {
     }
 
-    public function __invoke(RouteCollectorProxy $group)
+    public function __invoke(RouteCollectorProxy $group): void
     {
         if (file_exists(APP_DIR . '/storage/maintenance')) {
             $group->any('/{path:.*}', MaintenancePageController::class);

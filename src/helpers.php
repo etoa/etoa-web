@@ -21,7 +21,7 @@ function config(string $key, mixed $default = null): mixed
 function getAppBasePath(): string
 {
     $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
-    $uri = (string) parse_url('http://a' . $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+    $uri = (string) parse_url('http://a' . ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
     if (stripos($uri, $_SERVER['SCRIPT_NAME']) === 0) {
         return $_SERVER['SCRIPT_NAME'];
     }

@@ -23,7 +23,7 @@ use Slim\Routing\RouteCollectorProxy;
 
 class FrontendRoutes
 {
-    public function __invoke(RouteCollectorProxy $group)
+    public function __invoke(RouteCollectorProxy $group): void
     {
         $group->redirect('/', 'news')
             ->setName('home');
