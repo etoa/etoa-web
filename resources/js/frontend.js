@@ -18,4 +18,5 @@ function rememberLoginRound() {
 window.onload = function () {
     document.getElementById('loginform').addEventListener('submit', updateFormAction);
     document.getElementById("loginround").addEventListener('change', rememberLoginRound);
+    refreshFsLightbox();
 }
