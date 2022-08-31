@@ -1,4 +1,10 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
 module.exports = {
+    plugins: [
+        new MiniCssExtractPlugin(),
+    ],
     entry: {
         frontend: './resources/js/frontend.js',
         backend: './resources/js/backend.js',
@@ -18,17 +24,18 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    {
-                        loader: "style-loader"
-                    },
-                    {
-                        loader: "css-loader",
-                    }
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
                 ]
             }
         ]
     },
+    optimization: {
+        minimizer: [
+            new CssMinimizerPlugin(),
+        ],
+    },
     output: {
-        path: __dirname + '/public/assets',
+        path: __dirname + '/public/dist',
     },
 };
