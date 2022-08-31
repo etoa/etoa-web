@@ -1,10 +1,14 @@
+name: Deploy website on push
+
 on:
   push:
     branches:
       - production
+
 env:
   PHP_VERSION: '8.1'
-name: Deploy website on push
+  NODE_VERSION: '16.x'
+
 jobs:
   web-deploy:
     name: Deploy
@@ -19,6 +23,14 @@ jobs:
         php-version: ${{ env.PHP_VERSION }}
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist  --optimize-autoloader --no-dev
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: Install packages via NPM
+      run: npm ci
+    - name: Build assets
+      run: npm run build
     - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
