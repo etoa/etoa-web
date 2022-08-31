@@ -1,3 +1,5 @@
+import 'fslightbox'
+
 function updateFormAction() {
     const loginRound = document.getElementById('loginround').value;
     if (loginRound == '') {
