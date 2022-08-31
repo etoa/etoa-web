@@ -1,3 +1,5 @@
+import '../css/frontend.css'
+
 import 'fslightbox'
 
 function updateFormAction() {

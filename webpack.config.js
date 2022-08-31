@@ -1,18 +1,7 @@
 module.exports = {
     entry: {
-        frontend: [
-            './resources/js/frontend.js',
-            './resources/css/frontend.css'
-        ],
-        backend: [
-            './resources/js/backend.js',
-            './resources/css/backend.css'
-        ],
-    },
-    output: {
-        path: __dirname + '/public/assets',
-        publicPath: '/assets/',
-        filename: '[name].js'
+        frontend: './resources/js/frontend.js',
+        backend: './resources/js/backend.js',
     },
     module: {
         rules: [
@@ -38,5 +27,8 @@ module.exports = {
                 ]
             }
         ]
-    }
+    },
+    output: {
+        path: __dirname + '/public/assets',
+    },
 };
