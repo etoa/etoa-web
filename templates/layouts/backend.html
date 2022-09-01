@@ -23,14 +23,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link" href="{{ url_for('admin') }}">Übersicht</a>
-                    <a class="nav-link" href="{{ url_for('admin.servernotice') }}">Servermeldung</a>
-                    <a class="nav-link" href="{{ url_for('admin.rounds') }}">Runden</a>
-                    <a class="nav-link" href="{{ url_for('admin.texts') }}">Texte</a>
-                    <a class="nav-link" href="{{ url_for('admin.settings') }}">Einstellungen</a>
+                    {% for item in nav %}
+                    {% include "layouts/includes/nav-item.html" %}
+                    {% endfor %}
                 </div>
                 <div class="navbar-nav">
-                    <a class="nav-link" href="{{ url_for('home') }}" target="_blank">Startseite</a>
+                    {% for item in nav2 %}
+                    {% include "layouts/includes/nav-item.html" %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
