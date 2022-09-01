@@ -1,0 +1,75 @@
+name: Deploy to staging
+
+on:
+  push:
+    branches: [master]
+  workflow_run:
+    workflows: ["CI build"]
+    types:
+      - completed
+
+env:
+  PHP_VERSION: "8.1"
+  NODE_VERSION: "16.x"
+
+jobs:
+  check-secret:
+    runs-on: ubuntu-latest
+    outputs:
+      ftp-data: ${{ steps.ftp-data.outputs.defined }}
+    steps:
+      - id: ftp-data
+        if: "${{ env.STAGING_FTP_SERVER != '' && env.STAGING_FTP_USERNAME != '' && env.STAGING_FTP_PASSWORD != ''}}"
+        run: echo "::set-output name=defined::true"
+        env:
+          STAGING_FTP_SERVER: ${{ secrets.STAGING_FTP_SERVER }}
+          STAGING_FTP_USERNAME: ${{ secrets.STAGING_FTP_USERNAME }}
+          STAGING_FTP_PASSWORD: ${{ secrets.STAGING_FTP_PASSWORD }}
+
+  deploy-staging:
+    name: Deploy to staging
+    runs-on: ubuntu-latest
+    needs: [check-secret]
+    if: (github.repository == 'etoa/etoa-web' && needs.check-secret.outputs.ftp-data == 'true')
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        id: setup-php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install packages via NPM
+        run: npm ci
+      - name: Build assets
+        run: npm run build
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.STAGING_FTP_SERVER }}
+          username: ${{ secrets.STAGING_FTP_USERNAME }}
+          password: ${{ secrets.STAGING_FTP_PASSWORD }}
+          protocol: ftps
+          exclude: .git*
+            - .git*/**
+            - node_modules/**
+            - node_modules/**/*
+            - _db
+            - _db/**
+            - archiv
+            - archiv/**
+            - downloads
+            - downloads/**
+            - forum
+            - forum/**
+            - testforum
+            - testforum/**
+            - zeitung
+            - zeitung/**
+            - .ftpquota
