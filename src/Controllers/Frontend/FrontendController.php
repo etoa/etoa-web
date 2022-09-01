@@ -36,7 +36,7 @@ abstract class FrontendController
     /**
      * @param array<string,mixed> $args
      */
-    protected function render(Response $response, string $frontendTemplate, array $args): Response
+    protected function render(Response $response, string $frontendTemplate, array $args = []): Response
     {
         return $this->view->render(
             $response,

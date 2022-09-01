@@ -41,19 +41,20 @@ final class RoundRepository
         return $this->repo->find($id);
     }
 
-    public function create(string $name, string $url): Round
+    public function create(string $name, string $url, bool $active = false, int $startDate = 0): Round
     {
         $round = new Round();
         $round->name = $name;
         $round->url = $url;
-        $round->active = false;
+        $round->active = $active;
+        $round->startDate = $startDate;
         $this->em->persist($round);
         $this->em->flush();
 
         return $round;
     }
 
-    public function update(int $id, string $name, string $url, bool $active, int $startDate): void
+    public function update(int $id, string $name, string $url, bool $active, int $startDate): Round
     {
         /** @var ?Round $round */
         $round = $this->em->getReference(Round::class, $id);
@@ -63,6 +64,8 @@ final class RoundRepository
         $round->startDate = $startDate;
         $this->em->persist($round);
         $this->em->flush();
+
+        return $round;
     }
 
     public function delete(int ...$ids): void

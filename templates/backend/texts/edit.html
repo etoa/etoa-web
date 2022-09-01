@@ -5,7 +5,7 @@
 <form action="{{ url_for('admin.texts.update', { 'id': text.id }) }}" method="post">
     {% if text %}
     <h2>{{ text.name }}</h2>
-    <div class="mb-4">
+    <div class="mb-3">
         <textarea name="content" rows="28" class="form-control" required>{{ text.content }}</textarea>
     </div>
     <div>

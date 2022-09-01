@@ -4,8 +4,8 @@
 
 <form action="{{ url_for('admin.servernotice.store') }}" method="post">
     {% for setting in settings %}
-    <div class="mb-4">
-        <label for="{{ setting.name }}">{{ setting.label }}</label><br>
+    <div class="mb-3">
+        <label for="{{ setting.name }}" class="form-label">{{ setting.label }}</label>
         {% if setting.type == 'textarea' %}
         <textarea name="{{ setting.name }}" id="{{ setting.name }}" rows="10" class="form-control" {% if
             setting.required %} required {% endif %}

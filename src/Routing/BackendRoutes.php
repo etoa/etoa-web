@@ -28,10 +28,20 @@ class BackendRoutes
         $group->post('/settings', [SettingsController::class, 'store'])
             ->setName('admin.settings.store');
 
-        $group->get('/rounds', [RoundsController::class, 'show'])
+        $group->get('/rounds', [RoundsController::class, 'index'])
             ->setName('admin.rounds');
-        $group->post('/rounds', [RoundsController::class, 'store'])
+        $group->get('/rounds/create', [RoundsController::class, 'create'])
+            ->setName('admin.rounds.create');
+        $group->post('/rounds/create', [RoundsController::class, 'store'])
             ->setName('admin.rounds.store');
+        $group->get('/rounds/{id:[0-9]+}', [RoundsController::class, 'edit'])
+            ->setName('admin.rounds.edit');
+        $group->post('/rounds/{id:[0-9]+}', [RoundsController::class, 'update'])
+            ->setName('admin.rounds.update');
+        $group->get('/rounds/{id:[0-9]+}/delete', [RoundsController::class, 'confirmDelete'])
+            ->setName('admin.rounds.confirmDelete');
+        $group->post('/rounds/{id:[0-9]+}/delete', [RoundsController::class, 'destroy'])
+            ->setName('admin.rounds.destroy');
 
         $group->get('/texts', [TextController::class, 'index'])
             ->setName('admin.texts');

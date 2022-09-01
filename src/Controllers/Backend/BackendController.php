@@ -20,7 +20,7 @@ abstract class BackendController
     /**
      * @param array<string,mixed> $args
      */
-    protected function render(Response $response, string $backendTemplate, array $args): Response
+    protected function render(Response $response, string $backendTemplate, array $args = []): Response
     {
         return $this->view->render(
             $response,
@@ -33,10 +33,13 @@ abstract class BackendController
         );
     }
 
-    protected function redirectToNamedRoute(Request $request, Response $response, string $routeName): Response
+    /**
+     * @param array<string,mixed> $data
+     */
+    protected function redirectToNamedRoute(Request $request, Response $response, string $routeName, array $data = []): Response
     {
         return $response
-            ->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor($routeName))
+            ->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor($routeName, data: $data))
             ->withStatus(302);
     }
 
