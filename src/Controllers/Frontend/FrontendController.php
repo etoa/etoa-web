@@ -10,7 +10,6 @@ use App\Repository\RoundRepository;
 use App\Repository\TextRepository;
 use App\Support\BBCodeConverter;
 use App\Support\ForumBridge;
-use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 
@@ -191,7 +190,7 @@ abstract class FrontendController
             $data = [];
             try {
                 $data['users_online'] = $this->forum->usersOnline();
-            } catch (PDOException $ignored) {
+            } catch (\Doctrine\DBAL\Exception $ignored) {
             }
             try {
                 $board_blacklist = array_map(fn ($e) => (int) $e, explode(',', $this->config->get('infobox_board_blacklist')));
@@ -204,7 +203,7 @@ abstract class FrontendController
                     ],
                     $posts
                 );
-            } catch (PDOException $ignored) {
+            } catch (\Doctrine\DBAL\Exception $ignored) {
             }
             apcu_add('etoa-infobox-forum-news', $data, config('caching.apcu_timeout'));
         }

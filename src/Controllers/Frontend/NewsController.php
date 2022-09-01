@@ -6,7 +6,6 @@ namespace App\Controllers\Frontend;
 
 use App\Models\Forum\Thread;
 use App\Support\ForumBridge;
-use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -57,7 +56,7 @@ class NewsController extends FrontendController
                     'replies' => $thread->post_count - 1,
                 ], $threads);
                 apcu_add('etoa-news-section', $news, config('caching.apcu_timeout'));
-            } catch (PDOException $ignored) {
+            } catch (\Doctrine\DBAL\Exception $ignored) {
                 return null;
             }
         }
