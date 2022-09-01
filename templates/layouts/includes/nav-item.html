@@ -1,0 +1,7 @@
+{% if item.type == 'route' %}
+<a href="{{ url_for(item.route) }}" class="nav-link {% if is_current_url(item.route) %} active {%
+    endif %}">{{ item.label
+    }}</a>
+{% elseif item.type == 'url' %}
+<a href="{{ item.url }}" class="nav-link">{{ item.label }}</a>
+{% endif %}

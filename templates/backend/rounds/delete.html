@@ -1,0 +1,20 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+
+<form action="{{ url_for('admin.rounds.destroy', { 'id': round.id }) }}" method="post">
+    {% if round %}
+    <h2>Runde löschen</h2>
+    <p>Soll die Runde <strong>{{ round.name }}</strong> wirklich gelöscht werden?</p>
+    <div>
+        <input type="submit" name="submit" value="Übernehmen" class="btn btn-primary" />
+        <a href="{{ url_for('admin.rounds') }}" class="btn btn-link">Abbrechen</a>
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        Runde nicht vorhanden!
+    </div>
+    <a href="{{ url_for('admin.rounds') }}" class="btn btn-link">Abbrechen</a>
+    {% endif %}
+</form>
+{% endblock %}

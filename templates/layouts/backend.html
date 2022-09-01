@@ -13,51 +13,49 @@
     <script src="{{ base_path() }}/dist/backend.js" defer></script>
 </head>
 
-<body>
-    <div id="overall">
-        <div id="header">
-            <div id="logo" onclick="javascript: document.location.href='./';">
-            </div>
-            <div id="bar"></div>
-        </div>
-        <div id="main">
-            <div id="menu">
-                <div id="menu_top"></div>
-                <div id="menu_center">
-                    <b>Navigation</b><br />
-                    <a href="{{ url_for('admin') }}">Übersicht</a>
-                    <a href="{{ url_for('admin.servernotice') }}">Servermeldung</a>
-                    <a href="{{ url_for('admin.rounds') }}">Runden</a>
-                    <a href="{{ url_for('admin.texts') }}">Texte</a>
-                    <a href="{{ url_for('admin.settings') }}">Einstellungen</a>
+<body class="bg-white">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">EtoA Login-Administration</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav me-auto">
+                    {% for item in nav %}
+                    {% include "layouts/includes/nav-item.html" %}
+                    {% endfor %}
                 </div>
-                <div id="menu_bottom"></div>
-            </div>
-            <div id="content">
-                <div>
-                    {% if title %}
-                    <h1>{{ title }}</h1>
-                    {% endif %}
-                    {% if error %}
-                    <div class="messagebox">
-                        <div class="error">{{ error | nl2br }}</div>
-                    </div>
-                    {% endif %}
-                    {% if info %}
-                    <div class="messagebox">
-                        <div class="info">{{ info | nl2br }}</div>
-                    </div>
-                    {% endif %}
-                    {% block content %}{% endblock %}
+                <div class="navbar-nav">
+                    {% for item in nav2 %}
+                    {% include "layouts/includes/nav-item.html" %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
-        <div id="overallend">
-        </div>
-        <div id="footer">
-            <div id="server">&copy; EtoA Gaming</div>
-        </div>
+    </nav>
+    <div class="bg-light">
+        <main class="container py-4">
+            {% if title %}
+            <h1>{{ title }}</h1>
+            {% endif %}
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error | nl2br }}
+            </div>
+            {% endif %}
+            {% if info %}
+            <div class="alert alert-info" role="alert">
+                {{ info | nl2br }}
+            </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </main>
     </div>
+    <footer class="text-center py-4">
+        <small>&copy; {{ 'now' | date('Y') }} EtoA Gaming</small>
+    </footer>
 </body>
 
 </html>

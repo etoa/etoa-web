@@ -16,45 +16,70 @@ class RoundsController extends BackendController
         return 'Runden';
     }
 
-    public function show(Request $request, Response $response, RoundRepository $rounds): Response
+    public function index(Request $request, Response $response, RoundRepository $rounds): Response
     {
-        return parent::render($response, 'rounds.html', [
+        return parent::render($response, 'rounds/index.html', [
             'rounds' => $rounds->all(),
         ]);
+    }
+
+    public function create(Request $request, Response $response): Response
+    {
+        return parent::render($response, 'rounds/create.html');
     }
 
     public function store(Request $request, Response $response, RoundRepository $rounds): Response
     {
         $post = $request->getParsedBody();
-        if (isset($post['submit'])) {
-            if (isset($post['name'])) {
-                foreach ($post['name'] as $id => $v) {
-                    if ('' != $post['name'][$id] && '' != $post['url'][$id]) {
-                        $rounds->update(
-                            $id,
-                            name: $post['name'][$id],
-                            url: $post['url'][$id],
-                            active: 1 == $post['active'][$id],
-                            startDate: '' != trim($post['startDate'][$id]) ? Carbon::createFromDate($post['startDate'][$id])->timestamp : 0,
-                        );
-                    }
-                }
-            }
-            $deleted = 0;
-            if (isset($post['delete'])) {
-                foreach ($post['delete'] as $id => $delete) {
-                    if (1 == $delete) {
-                        $rounds->delete(intval($id));
-                        ++$deleted;
-                    }
-                }
-            }
-            $this->setSessionMessage('info', 'Änderungen an den Runden gespeichert.' . ($deleted > 0 ? "\n$deleted Runden entfernt." : ''));
-        }
-        if (isset($post['submit_new'])) {
-            $rounds->create(name: '', url: '');
-            $this->setSessionMessage('info', 'Neue Runde hinzugefügt.');
-        }
+
+        $rounds->create(
+            name: $post['name'],
+            url: $post['url'],
+            active: 1 == $post['active'],
+            startDate: '' != trim($post['startDate']) ? Carbon::createFromDate($post['startDate'])->timestamp : 0,
+        );
+
+        $this->setSessionMessage('info', 'Runde hinzugefügt.');
+
+        return $this->redirectToNamedRoute($request, $response, 'admin.rounds');
+    }
+
+    public function edit(Request $request, Response $response, RoundRepository $rounds, int $id): Response
+    {
+        return parent::render($response, 'rounds/edit.html', [
+            'round' => $rounds->get($id),
+        ]);
+    }
+
+    public function update(Request $request, Response $response, RoundRepository $rounds, int $id): Response
+    {
+        $post = $request->getParsedBody();
+
+        $rounds->update(
+            $id,
+            name: $post['name'],
+            url: $post['url'],
+            active: 1 == $post['active'],
+            startDate: '' != trim($post['startDate']) ? Carbon::createFromDate($post['startDate'])->timestamp : 0,
+        );
+
+        $this->setSessionMessage('info', 'Runde gespeichert.');
+
+        return $this->redirectToNamedRoute($request, $response, 'admin.rounds');
+    }
+
+    public function confirmDelete(Request $request, Response $response, RoundRepository $rounds, int $id): Response
+    {
+        return parent::render($response, 'rounds/delete.html', [
+            'round' => $rounds->get($id),
+        ]);
+    }
+
+    public function destroy(Request $request, Response $response, RoundRepository $rounds, int $id): Response
+    {
+        $this->setSessionMessage('info', 'Runde gelöscht.');
+
+        $rounds->delete($id);
 
         return $this->redirectToNamedRoute($request, $response, 'admin.rounds');
     }

@@ -1,1 +1,2 @@
-import '../css/backend.css'
+import '../scss/backend.scss'
+import 'bootstrap'

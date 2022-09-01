@@ -4,17 +4,21 @@
 
 <form action="{{ url_for('admin.servernotice.store') }}" method="post">
     {% for setting in settings %}
-    <div>
-        <label for="{{ setting.name }}">{{ setting.label }}</label><br>
+    <div class="mb-3">
+        <label for="{{ setting.name }}" class="form-label">{{ setting.label }}</label>
         {% if setting.type == 'textarea' %}
-        <textarea name="{{ setting.name }}" id="{{ setting.name }}" rows="10" cols="120" {% if setting.required %}
-            required {% endif %} placeholder="{{ setting.placeholder }}">{{ setting.value }}</textarea>
+        <textarea name="{{ setting.name }}" id="{{ setting.name }}" rows="10" class="form-control" {% if
+            setting.required %} required {% endif %}
+            placeholder="{{ setting.placeholder }}">{{ setting.value }}</textarea>
         {% else %}
         <input type="{{ setting.type }}" name="{{ setting.name }}" id="{{ setting.name }}" value="{{ setting.value }}"
-            placeholder="{{ setting.placeholder }}" size="30" {% if setting.required %} required {% endif %} />
+            placeholder="{{ setting.placeholder }}" class="form-control" {% if setting.required %} required {% endif
+            %} />
         {% endif %}
     </div>
     {% endfor %}
-    <p><input type="submit" name="submit" value="Übernehmen" /></p>
+    <div>
+        <input type="submit" name="submit" value="Übernehmen" class="btn btn-primary" />
+    </div>
 </form>
 {% endblock %}

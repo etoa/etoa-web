@@ -1,0 +1,31 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+{% if rounds %}
+<div class="list-group mb-3">
+    {% for round in rounds %}
+    <a href="{{ url_for('admin.rounds.edit', { 'id': round.id }) }}" class="list-group-item list-group-item-action"
+        aria-current="true">
+        <div class="d-sm-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ round.name }}</h5>
+            {% if round.startDate %}
+            <small>Startdatum: {{ round.startDate | localDateFormatFromTimestamp }}</small>
+            {% endif %}
+        </div>
+        <p class="mb-1">
+            {% if round.active==1 %}
+            <span class="text-success">Aktiv</span>
+            {% else %}
+            <span class="text-warning">Inaktiv</span>
+            {% endif %}
+        </p>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info" role="alert">
+    Keine Runden vorhanden!
+</div>
+{% endif %}
+<a href="{{ url_for('admin.rounds.create') }}" class="btn btn-primary">Neue Runde</a>
+{% endblock %}

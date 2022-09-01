@@ -2,25 +2,21 @@
 
 {% block content %}
 {% if texts %}
-<table class="tbl">
-    <thead>
-        <tr>
-            <th>Text</th>
-            <th>Schlüsselwort</th>
-            <th>Letzte Änderung</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for text in texts %}
-        <tr>
-            <td><a href="{{ url_for('admin.texts.edit', { 'id': text.id }) }}">{{ text.name }}</a></td>
-            <td>{{ text.keyword }}</td>
-            <td>{{ text.lastChanges | localDateTimeFormatFromTimestamp }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="list-group">
+    {% for text in texts %}
+    <a href="{{ url_for('admin.texts.edit', { 'id': text.id }) }}" class="list-group-item list-group-item-action"
+        aria-current="true">
+        <div class="d-sm-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ text.name }}</h5>
+            <small>{{ text.lastChanges | localDateTimeFormatFromTimestamp }}</small>
+        </div>
+        <p class="mb-1">{{ text.keyword }}</p>
+    </a>
+    {% endfor %}
+</div>
 {% else %}
-<i>Keine Texte vorhanden!</i><br /><br />
+<div class="alert alert-info" role="alert">
+    Keine Texte vorhanden!
+</div>
 {% endif %}
 {% endblock %}

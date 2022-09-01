@@ -1,0 +1,42 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+
+<form action="{{ url_for('admin.rounds.update', { 'id': round.id }) }}" method="post">
+    {% if round %}
+    <h2>Runde bearbeiten</h2>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" name="name" id="name" value="{{ round.name }}" class="form-control" placeholder="Runde XYZ"
+            required />
+    </div>
+    <div class="mb-3">
+        <label for="url" class="form-label">URL</label>
+        <input type="url" name="url" id="url" value="{{ round.url }}" class="form-control"
+            placeholder="https://roundXYZ.etoa.net/" required />
+    </div>
+    <div class="mb-3">
+        <label for="startDate" class="form-label">URL</label>
+        <input type="date" name="startDate" id="startDate" value="{{ round.startDate | dateFromTimestamp }}"
+            class="form-control" />
+    </div>
+    <div class="form-check form-switch mb-3">
+        <input class="form-check-input" type="checkbox" role="switch" name="active" id="active" value="1" {% if
+            round.active==1 %} checked {% endif %}>
+        <label class="form-check-label" for="active">Aktiv</label>
+    </div>
+    <div class="d-flex justify-content-between">
+        <span>
+            <input type="submit" name="submit" value="Übernehmen" class="btn btn-primary" />
+            <a href="{{ url_for('admin.rounds') }}" class="btn btn-link">Zurück</a>
+        </span>
+        <a href="{{ url_for('admin.rounds.confirmDelete', {id: round.id}) }}" class="btn btn-danger">Löschen</a>
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        Runde nicht vorhanden!
+    </div>
+    <a href="{{ url_for('admin.rounds') }}" class="btn btn-link">Zurück</a>
+    {% endif %}
+</form>
+{% endblock %}
