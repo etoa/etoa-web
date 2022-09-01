@@ -27,7 +27,7 @@ a img {
     padding: 0;
     width: 100%;
     height: 100px;
-    background: #eeeeee url(../images/admin/header.png) repeat-x top left;
+    background: #eeeeee url(../images/backend/header.png) repeat-x top left;
 }
 
 #logo {
@@ -35,7 +35,7 @@ a img {
     padding: 0;
     width: 780px;
     height: 80px;
-    background: url(../images/admin/logo.png) no-repeat top left;
+    background: url(../images/backend/logo.png) no-repeat top left;
     cursor: pointer;
 }
 
@@ -75,21 +75,21 @@ a img {
 #menu_top {
     width: 155px;
     height: 30px;
-    background: #f8f8f8 url(../images/admin/menu_top.jpg) no-repeat bottom left;
+    background: #f8f8f8 url(../images/backend/menu_top.jpg) no-repeat bottom left;
     margin: 0px;
 }
 
 #menu_center {
     margin: 0px;
     width: 146px;
-    background: #f8f8f8 url(../images/admin/menu_center.jpg) repeat-y top left;
+    background: #f8f8f8 url(../images/backend/menu_center.jpg) repeat-y top left;
     padding-left: 8px;
 }
 
 #menu_bottom {
     width: 155px;
     height: 14px;
-    background: #f8f8f8 url(../images/admin/menu_bottom.jpg) no-repeat top left;
+    background: #f8f8f8 url(../images/backend/menu_bottom.jpg) no-repeat top left;
 }
 
 #menu h1,
@@ -145,7 +145,7 @@ a img {
 #content h2,
 #content h3 {
     padding-left: 24px;
-    background: transparent url(../images/admin/h3.png) no-repeat center left;
+    background: transparent url(../images/backend/h3.png) no-repeat center left;
 }
 
 #content ul {
@@ -158,7 +158,7 @@ a img {
     margin-left: 16px;
     padding-left: 18px;
     list-style: none;
-    background: transparent url(../images/admin/li.png) no-repeat top left;
+    background: transparent url(../images/backend/li.png) no-repeat top left;
 }
 
 #content a,

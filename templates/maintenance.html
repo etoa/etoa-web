@@ -5,14 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wartungsmodus</title>
-    <link rel="stylesheet" href="{{ base_path() }}/css/maintenance.css">
+    <title>Wartungsmodus | EtoA | Das Sci-Fi Browsergame</title>
+
+    <link rel="shortcut icon" href="{{ base_path() }}/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ base_path() }}/dist/maintenance.css">
+    <script src="{{ base_path() }}/dist/maintenance.js" defer></script>
 </head>
 
 <body>
     <main class="container">
         <p>
-            <img src="{{ base_path() }}/images/maintenance.jpg" style="width: 700px" alt="Maintenance" />
+            <img src="{{ base_path() }}/images/maintenance/maintenance.jpg" style="width: 700px" alt="Maintenance" />
         </p>
         <h2>Die Etoa-Loginseite ist momentan im Wartungsmodus!</h2>
         {% if message %}

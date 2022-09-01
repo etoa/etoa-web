@@ -1,3 +1,7 @@
+import '../css/frontend.css'
+
+import 'fslightbox'
+
 function updateFormAction() {
     const loginRound = document.getElementById('loginround').value;
     if (loginRound == '') {
@@ -16,4 +20,5 @@ function rememberLoginRound() {
 window.onload = function () {
     document.getElementById('loginform').addEventListener('submit', updateFormAction);
     document.getElementById("loginround").addEventListener('change', rememberLoginRound);
+    refreshFsLightbox();
 }
