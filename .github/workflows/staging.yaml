@@ -48,19 +48,20 @@ jobs:
       - name: Build assets
         run: npm run build
       - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        uses: SamKirkland/FTP-Deploy-Action@4.3.1
         with:
           server: ${{ secrets.STAGING_FTP_SERVER }}
           username: ${{ secrets.STAGING_FTP_USERNAME }}
           password: ${{ secrets.STAGING_FTP_PASSWORD }}
           protocol: ftps
-          exclude: .git*
-            - .git*/**
-            - node_modules
-            - node_modules/**
-            - _db
-            - _db/**
-            - .ftpquota
-            - .editorconfig
-            - docker*
-            - phpstan*
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            _db/**
+            public/archiv/**
+            public/pub/**
+            .ftpquota
+            .editorconfig
+            docker*
+            phpstan*

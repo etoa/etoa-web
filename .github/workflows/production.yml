@@ -6,8 +6,8 @@ on:
       - production
 
 env:
-  PHP_VERSION: '8.1'
-  NODE_VERSION: '16.x'
+  PHP_VERSION: "8.1"
+  NODE_VERSION: "16.x"
 
 jobs:
   web-deploy:
@@ -15,44 +15,38 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'etoa/etoa-web'
     steps:
-    - name: Get latest code
-      uses: actions/checkout@v2.3.2
-    - name: Setup PHP
-      id: setup-php
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ env.PHP_VERSION }}
-    - name: Install PHP dependencies via Composer
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist  --optimize-autoloader --no-dev
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-    - name: Install packages via NPM
-      run: npm ci
-    - name: Build assets
-      run: npm run build
-    - name: Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.0.0
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        protocol: ftps
-        exclude: .git*
-          - .git*/**
-          - node_modules/**
-          - node_modules/**/*
-          - _db
-          - _db/**
-          - archiv
-          - archiv/**
-          - downloads
-          - downloads/**
-          - forum
-          - forum/**
-          - testforum
-          - testforum/**
-          - zeitung
-          - zeitung/**
-          - .ftpquota
+      - name: Get latest code
+        uses: actions/checkout@v2.3.2
+      - name: Setup PHP
+        id: setup-php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+      - name: Install PHP dependencies via Composer
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist  --optimize-autoloader --no-dev
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install packages via NPM
+        run: npm ci
+      - name: Build assets
+        run: npm run build
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.1
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            _db/**
+            public/archiv/**
+            public/pub/**
+            .ftpquota
+            .editorconfig
+            docker*
+            phpstan*
