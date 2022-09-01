@@ -61,7 +61,7 @@ class ServerNoticeController extends BackendController
         foreach (self::$settings as $key => $def) {
             $config->set($key, $post[$key]);
         }
-        if ($post['server_notice'] != '') {
+        if ('' != $post['server_notice']) {
             $config->setInt('server_notice_updated', time());
             $logger->info('Updated server notice.', [
                 'content' => $post['server_notice'],

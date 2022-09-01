@@ -28,6 +28,7 @@ class ForumAuthenticator
                 'user.name' => $user?->username,
                 'auth.user' => $arguments['user'],
             ]);
+
             return false;
         }
 
@@ -40,6 +41,7 @@ class ForumAuthenticator
                 'user.groups' => $userGroupIds,
                 'admin.group' => $allowedGroup,
             ]);
+
             return false;
         }
 
