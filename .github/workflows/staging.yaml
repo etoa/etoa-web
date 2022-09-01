@@ -12,6 +12,7 @@ env:
 
 jobs:
   check-secret:
+    name: Check repository secrets
     runs-on: ubuntu-latest
     outputs:
       ftp-data: ${{ steps.ftp-data.outputs.defined }}
