@@ -38,7 +38,7 @@ Run:
 
     ./vendor/bin/php-cs-fixer fix src
 
-## Use docker images
+## Use docker images (for development)
 
 Build and start application:
 

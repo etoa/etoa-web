@@ -5,12 +5,12 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./:/app
   php:
     build:
       context: .
-      dockerfile: PHP.Dockerfile
+      dockerfile: docker/PHP.Dockerfile
     volumes:
       - ./:/app
   mysql:

@@ -22,7 +22,7 @@ return [
     'app' => [
         'locale' => 'de',
         'timezone' => 'Europe/Zurich',
-        'debug' => false,
+        'debug' => true,
     ],
     'auth' => [
         'admin' => [
