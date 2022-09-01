@@ -7,6 +7,7 @@ namespace App\Routing;
 use App\Authentication\ForumAuthenticator;
 use App\Controllers\MaintenancePageController;
 use App\Controllers\PageNotFoundController;
+use App\Controllers\UnauthorizedRequestController;
 use DI\Container;
 use Psr\Http\Server\MiddlewareInterface;
 use Slim\Routing\RouteCollectorProxy;
@@ -43,6 +44,7 @@ class AppRouteProvider
             "realm" => "EtoA Login Administration",
             "authenticator" => $this->container->get(ForumAuthenticator::class),
             'secure' => true,
+            'error' => $this->container->get(UnauthorizedRequestController::class),
         ]);
     }
 }
