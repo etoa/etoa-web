@@ -2,13 +2,13 @@ name: CI Build
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 env:
-  PHP_VERSION: '8.1'
-  NODE_VERSION: '16.x'
+  PHP_VERSION: "8.1"
+  NODE_VERSION: "16.x"
 
 jobs:
   ci-tests:
@@ -16,23 +16,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup PHP
-      id: setup-php
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ env.PHP_VERSION }}
-    - name: Install PHP dependencies via Composer
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress
-    - name: Run PHP CS Fixer
-      run: vendor/bin/php-cs-fixer fix --dry-run --diff src
-    - name: Run PHPStan
-      run: vendor/bin/phpstan analyse --no-progress
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-    - name: Install packages via NPM
-      run: npm ci
-    - name: Build assets
-      run: npm run dev
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+      - name: Install PHP dependencies via Composer
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress
+      - name: Run PHP CS Fixer
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff src
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --no-progress
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install packages via NPM
+        run: npm ci
+      - name: Build assets
+        run: npm run dev

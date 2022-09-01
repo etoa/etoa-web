@@ -15,10 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'etoa/etoa-web'
     steps:
-      - name: Get latest code
-        uses: actions/checkout@v2.3.2
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Setup PHP
-        id: setup-php
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.PHP_VERSION }}
