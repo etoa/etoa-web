@@ -16,10 +16,10 @@ class DatabaseEntityManagerInitializer
     {
         $cache = $debug ?
             DoctrineProvider::wrap(new ArrayAdapter()) :
-            DoctrineProvider::wrap(new FilesystemAdapter(directory: APP_DIR.'/storage/cache/doctrine'));
+            DoctrineProvider::wrap(new FilesystemAdapter(directory: APP_DIR . '/storage/cache/doctrine'));
 
         $config = Setup::createAttributeMetadataConfiguration(
-            [APP_DIR.'/src/Models'],
+            [APP_DIR . '/src/Models'],
             isDevMode: $debug,
             cache: $cache
         );

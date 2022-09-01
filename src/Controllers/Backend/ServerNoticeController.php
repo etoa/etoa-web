@@ -52,7 +52,7 @@ class ServerNoticeController extends BackendController
         $post = $request->getParsedBody();
         foreach (self::$settings as $key => $def) {
             if ($def['required'] && (!isset($post[$key]) || '' == trim($post[$key]))) {
-                $this->setSessionMessage('error', "Das Feld '".$def['label']."' darf nicht leer sein.");
+                $this->setSessionMessage('error', "Das Feld '" . $def['label'] . "' darf nicht leer sein.");
 
                 return $this->redirectToNamedRoute($request, $response, 'admin.servernotice');
             }

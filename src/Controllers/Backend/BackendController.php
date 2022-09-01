@@ -24,7 +24,7 @@ abstract class BackendController
     {
         return $this->view->render(
             $response,
-            'backend/'.$backendTemplate,
+            'backend/' . $backendTemplate,
             array_merge([
                 'title' => $this->getTitle(),
                 'info' => $this->pullSessionMessage('info'),

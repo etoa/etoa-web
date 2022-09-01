@@ -116,7 +116,7 @@ class BBCodeConverter
         $string = preg_replace('/\[img\]([^\[]*)\[\/img\]/i', '<img src="\1" alt="\1" style="border: 0" />', $string);
         $string = preg_replace('/\[img ([0-9]*) ([0-9]*)\]([^\[]*)\[\/img]/i', '<img src="\3" alt="\3" width="\1" height="\2"  style="border: 0" />', $string);
         $string = preg_replace('/\[img ([0-9]*)\]([^\[]*)\[\/img]/i', '<img src="\2" alt="\2" width="\1" style="border: 0" />', $string);
-        $string = preg_replace('/\[flag ([^\[]*)\]/', '<img src="images/flags/i'.strtolower('\1').'.gif" style="border: 0" alt="Flagge \1" class=\"flag\" />', $string);
+        $string = preg_replace('/\[flag ([^\[]*)\]/', '<img src="images/flags/i' . strtolower('\1') . '.gif" style="border: 0" alt="Flagge \1" class=\"flag\" />', $string);
         $string = preg_replace('/\[thumb ([0-9]*)\]([^\[]*)\[\/thumb]/i', '<a href="\2"><img src="\2" alt="\2" width="\1" style="border: 0" /></a>', $string);
 
         $string = preg_replace("/^http:\/\/([^ ,\n]*)/", '[url]http://\\1[/url]', $string);

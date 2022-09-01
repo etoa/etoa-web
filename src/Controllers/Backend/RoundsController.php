@@ -49,7 +49,7 @@ class RoundsController extends BackendController
                     }
                 }
             }
-            $this->setSessionMessage('info', 'Änderungen an den Runden gespeichert.'.($deleted > 0 ? "\n$deleted Runden entfernt." : ''));
+            $this->setSessionMessage('info', 'Änderungen an den Runden gespeichert.' . ($deleted > 0 ? "\n$deleted Runden entfernt." : ''));
         }
         if (isset($post['submit_new'])) {
             $rounds->create(name: '', url: '');

@@ -24,7 +24,7 @@ class ForumBridge
                 password,
                 email
             FROM
-                '.self::wcftable('user').'
+                ' . self::wcftable('user') . '
             WHERE
                 username = :username
             ;', [
@@ -51,7 +51,7 @@ class ForumBridge
             SELECT
                 groupID
             FROM
-                '.self::wcftable('user_to_group').'
+                ' . self::wcftable('user_to_group') . '
             WHERE
                 userID=:userId
             ;', [
@@ -71,9 +71,9 @@ class ForumBridge
                 u.userID,
                 u.username
             FROM
-                '.self::wcftable('user_to_group').' t
+                ' . self::wcftable('user_to_group') . ' t
             INNER JOIN
-                '.self::wcftable('user').' u
+                ' . self::wcftable('user') . ' u
                 ON t.userID = u.userID
                 AND t.groupID = :groupId
             ;', [
@@ -96,7 +96,7 @@ class ForumBridge
                     SELECT
                         COUNT(*)
                     FROM
-                        '.self::wcftable('session').'
+                        ' . self::wcftable('session') . '
                     WHERE
                         lastActivityTime > :time
                     GROUP BY
@@ -121,7 +121,7 @@ class ForumBridge
         $bls = '';
         if (count($blacklist_boards) > 0) {
             sort($blacklist_boards);
-            $bls .= 't.boardid NOT IN ('.implode(',', $blacklist_boards).')';
+            $bls .= 't.boardid NOT IN (' . implode(',', $blacklist_boards) . ')';
         }
 
         $res = $this->conn->executeQuery('
@@ -132,17 +132,17 @@ class ForumBridge
                 p.username,
                 p.time
             FROM
-                '.self::wbbtable('thread').' t
+                ' . self::wbbtable('thread') . ' t
             INNER JOIN
-                '.self::wbbtable('post').' p
+                ' . self::wbbtable('post') . ' p
                 ON p.postID = (
                     SELECT p2.`postID`
-                    FROM `'.self::wbbtable('post').'` p2
+                    FROM `' . self::wbbtable('post') . '` p2
                     WHERE p2.`threadID` = t.`threadID`
                     ORDER BY p2.`time` DESC
                     LIMIT 1
                 )
-            WHERE '.$bls.'
+            WHERE ' . $bls . '
             ORDER BY p.time DESC
             LIMIT :limit
             ;', [
@@ -182,12 +182,12 @@ class ForumBridge
                     SELECT
                         COUNT(p2.threadID)
                     FROM
-                        '.self::wbbtable('post').' p2
+                        ' . self::wbbtable('post') . ' p2
                     WHERE
                         p2.threadID=t.threadID
                 ) AS post_count
             FROM
-                '.self::wbbtable('thread').' t
+                ' . self::wbbtable('thread') . ' t
             INNER JOIN (
                     SELECT
                         p.message,
@@ -196,7 +196,7 @@ class ForumBridge
                         p.threadid,
                         p.lastEditTime
                     FROM
-                    '.self::wbbtable('post').' p
+                    ' . self::wbbtable('post') . ' p
                     ORDER BY p.time
                 ) pp
                 ON pp.threadID=t.threadID
@@ -240,7 +240,7 @@ class ForumBridge
             SELECT
                 subject,
                 message
-            FROM '.self::wbbtable('post').'
+            FROM ' . self::wbbtable('post') . '
             WHERE threadid = :threadId
             ORDER BY time ASC
             LIMIT 1
@@ -269,28 +269,28 @@ class ForumBridge
     {
         $baseUrl = config('forum.url', 'https://forum.etoa.ch/');
         if ('board' == $type) {
-            return $baseUrl.'forum/board/'.$value;
+            return $baseUrl . 'forum/board/' . $value;
         }
         if ('thread' == $type) {
-            return $baseUrl.'forum/thread/'.$value;
+            return $baseUrl . 'forum/thread/' . $value;
         }
         if ('post' == $type) {
-            return $baseUrl.'forum/thread/'.$value2.'?postID='.$value.'#post'.$value;
+            return $baseUrl . 'forum/thread/' . $value2 . '?postID=' . $value . '#post' . $value;
         }
         if ('user' == $type) {
-            return $baseUrl.'user/'.$value;
+            return $baseUrl . 'user/' . $value;
         }
         if ('admin' == $type) {
-            return $baseUrl.'acp/';
+            return $baseUrl . 'acp/';
         }
         if ('account' == $type) {
-            return $baseUrl.'account-management/';
+            return $baseUrl . 'account-management/';
         }
         if ('team' == $type) {
-            return $baseUrl.'team/';
+            return $baseUrl . 'team/';
         }
         if ('register' == $type) {
-            return $baseUrl.'register/';
+            return $baseUrl . 'register/';
         }
 
         return $baseUrl;
@@ -298,11 +298,11 @@ class ForumBridge
 
     private static function wcftable(string $name): string
     {
-        return 'wcf1_'.$name;
+        return 'wcf1_' . $name;
     }
 
     private static function wbbtable(string $name): string
     {
-        return 'wbb1_'.$name;
+        return 'wbb1_' . $name;
     }
 }

@@ -14,7 +14,6 @@ use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 
-// ConnectionException
 abstract class FrontendController
 {
     public function __construct(
@@ -42,7 +41,7 @@ abstract class FrontendController
     {
         return $this->view->render(
             $response,
-            'frontend/'.$frontendTemplate,
+            'frontend/' . $frontendTemplate,
             array_merge([
                 'title' => $this->getTitle(),
                 'site_title' => $this->getSiteTitle(),
@@ -76,13 +75,13 @@ abstract class FrontendController
     private function getGameLogin(): string
     {
         $t = time();
-        $logintoken = sha1($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'].$t).dechex($t);
+        $logintoken = sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $t) . dechex($t);
 
         return $this->view->fetch('frontend/widgets/game_login.html', [
             'loginform' => [
                 'logintoken' => $logintoken,
-                'nickField' => sha1('nick'.$logintoken.$t),
-                'passwordField' => sha1('password'.$logintoken.$t),
+                'nickField' => sha1('nick' . $logintoken . $t),
+                'passwordField' => sha1('password' . $logintoken . $t),
                 'rnd' => mt_rand(10000, 99999),
             ],
             'rounds' => $this->rounds->active(),
