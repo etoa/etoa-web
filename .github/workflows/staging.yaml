@@ -37,9 +37,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.PHP_VERSION }}
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress
-      - name: Use Node.js
+      - name: Install PHP dependencies via Composer
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist  --optimize-autoloader --no-dev
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -56,18 +56,11 @@ jobs:
           protocol: ftps
           exclude: .git*
             - .git*/**
+            - node_modules
             - node_modules/**
-            - node_modules/**/*
             - _db
             - _db/**
-            - archiv
-            - archiv/**
-            - downloads
-            - downloads/**
-            - forum
-            - forum/**
-            - testforum
-            - testforum/**
-            - zeitung
-            - zeitung/**
             - .ftpquota
+            - .editorconfig
+            - docker*
+            - phpstan*
