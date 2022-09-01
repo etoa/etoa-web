@@ -7,6 +7,8 @@ $config = new PhpCsFixer\Config();
 return $config->setRules([
     '@Symfony' => true,
     '@DoctrineAnnotation' => true,
-    'concat_space' => ['spacing' => 'one'],
+    'concat_space' => [
+        'spacing' => 'one',
+    ],
 ])
     ->setFinder($finder);

@@ -64,5 +64,6 @@ jobs:
             public/pub/**
             .ftpquota
             .editorconfig
+            .php-cs*
             docker*
             phpstan*
