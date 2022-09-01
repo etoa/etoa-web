@@ -54,7 +54,8 @@ $container->set(Logger::class, fn () => $logger);
 $app->addErrorMiddleware(
     displayErrorDetails: $debug,
     logErrors: true,
-    logErrorDetails: true
+    logErrorDetails: true,
+    logger: $logger,
 );
 if (!$debug) {
     ini_set('display_errors', '0');
