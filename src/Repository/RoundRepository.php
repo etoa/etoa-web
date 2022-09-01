@@ -76,6 +76,6 @@ final class RoundRepository
 
     public function createPageUrl(Round $round, string $page): string
     {
-        return $round->url . '/show.php?index=' . $page;
+        return $round->url.'/show.php?index='.$page;
     }
 }

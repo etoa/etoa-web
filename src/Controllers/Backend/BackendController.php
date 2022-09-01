@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controllers\Backend;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 
@@ -24,7 +24,7 @@ abstract class BackendController
     {
         return $this->view->render(
             $response,
-            'backend/' . $backendTemplate,
+            'backend/'.$backendTemplate,
             array_merge([
                 'title' => $this->getTitle(),
                 'info' => $this->pullSessionMessage('info'),

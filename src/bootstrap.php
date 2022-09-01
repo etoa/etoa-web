@@ -16,10 +16,10 @@ use Slim\Middleware\Session;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
-define('APP_DIR', __DIR__ . '/../');
+define('APP_DIR', __DIR__.'/../');
 
 // Load libraries
-require APP_DIR . '/vendor/autoload.php';
+require APP_DIR.'/vendor/autoload.php';
 
 // Define debug mode
 $debug = config('app.debug', false);

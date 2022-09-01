@@ -29,13 +29,13 @@ class RoundsController extends BackendController
         if (isset($post['submit'])) {
             if (isset($post['name'])) {
                 foreach ($post['name'] as $id => $v) {
-                    if ($post['name'][$id] != "" && $post['url'][$id] != "") {
+                    if ('' != $post['name'][$id] && '' != $post['url'][$id]) {
                         $rounds->update(
                             $id,
                             name: $post['name'][$id],
                             url: $post['url'][$id],
-                            active: $post['active'][$id] == 1,
-                            startDate: trim($post['startDate'][$id]) != '' ? Carbon::createFromDate($post['startDate'][$id])->timestamp : 0,
+                            active: 1 == $post['active'][$id],
+                            startDate: '' != trim($post['startDate'][$id]) ? Carbon::createFromDate($post['startDate'][$id])->timestamp : 0,
                         );
                     }
                 }
@@ -43,17 +43,17 @@ class RoundsController extends BackendController
             $deleted = 0;
             if (isset($post['delete'])) {
                 foreach ($post['delete'] as $id => $delete) {
-                    if ($delete == 1) {
+                    if (1 == $delete) {
                         $rounds->delete(intval($id));
-                        $deleted++;
+                        ++$deleted;
                     }
                 }
             }
-            $this->setSessionMessage('info', "Änderungen an den Runden gespeichert." . ($deleted > 0 ? "\n$deleted Runden entfernt." : ''));
+            $this->setSessionMessage('info', 'Änderungen an den Runden gespeichert.'.($deleted > 0 ? "\n$deleted Runden entfernt." : ''));
         }
         if (isset($post['submit_new'])) {
             $rounds->create(name: '', url: '');
-            $this->setSessionMessage('info', "Neue Runde hinzugefügt.");
+            $this->setSessionMessage('info', 'Neue Runde hinzugefügt.');
         }
 
         return $this->redirectToNamedRoute($request, $response, 'admin.rounds');

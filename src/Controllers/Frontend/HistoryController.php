@@ -18,7 +18,7 @@ class HistoryController extends TextPageController
 
     public function getTextKey(): string
     {
-        return "history";
+        return 'history';
     }
 
     public function getHeaderImage(): string

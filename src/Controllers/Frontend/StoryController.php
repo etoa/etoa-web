@@ -13,7 +13,7 @@ class StoryController extends TextPageController
 
     public function getTextKey(): string
     {
-        return "story";
+        return 'story';
     }
 
     public function getSiteTitle(): ?string

@@ -10,15 +10,11 @@ use App\Repository\RoundRepository;
 use App\Repository\TextRepository;
 use App\Support\BBCodeConverter;
 use App\Support\ForumBridge;
-use Doctrine\DBAL\Exception;
 use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
-use RuntimeException;
 use Slim\Views\Twig;
-use Twig\Error\LoaderError;
-use Twig\Error\SyntaxError;
-use Twig\Error\RuntimeError;
 
+// ConnectionException
 abstract class FrontendController
 {
     public function __construct(
@@ -31,6 +27,7 @@ abstract class FrontendController
     }
 
     abstract protected function getTitle(): string;
+
     abstract protected function getHeaderImage(): string;
 
     protected function getSiteTitle(): ?string
@@ -45,7 +42,7 @@ abstract class FrontendController
     {
         return $this->view->render(
             $response,
-            'frontend/' . $frontendTemplate,
+            'frontend/'.$frontendTemplate,
             array_merge([
                 'title' => $this->getTitle(),
                 'site_title' => $this->getSiteTitle(),
@@ -65,26 +62,28 @@ abstract class FrontendController
     protected function getTextContent(string $keyword): string
     {
         $text = $this->texts->findByKeyword($keyword);
-        if ($text !== null) {
-            if ($text->content != "") {
+        if (null !== $text) {
+            if ('' != $text->content) {
                 return BBCodeConverter::toHtml($text->content);
             }
-            return "<p><i><b>Fehler:</b> Texteintrag fehlt!</i></p>";
+
+            return '<p><i><b>Fehler:</b> Texteintrag fehlt!</i></p>';
         } else {
-            return "<p><i><b>Fehler:</b> Datensatz fehlt!</i></p>";
+            return '<p><i><b>Fehler:</b> Datensatz fehlt!</i></p>';
         }
     }
 
     private function getGameLogin(): string
     {
         $t = time();
-        $logintoken = sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $t) . dechex($t);
+        $logintoken = sha1($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'].$t).dechex($t);
+
         return $this->view->fetch('frontend/widgets/game_login.html', [
             'loginform' => [
                 'logintoken' => $logintoken,
-                'nickField' => sha1("nick" . $logintoken . $t),
-                'passwordField' => sha1("password" . $logintoken . $t),
-                'rnd' => mt_rand(10000, 99999)
+                'nickField' => sha1('nick'.$logintoken.$t),
+                'passwordField' => sha1('password'.$logintoken.$t),
+                'rnd' => mt_rand(10000, 99999),
             ],
             'rounds' => $this->rounds->active(),
             'selectedRound' => isset($_COOKIE['round']) ? $_COOKIE['round'] : '',
@@ -97,92 +96,92 @@ abstract class FrontendController
         $items = [
             [
                 'type' => 'route',
-                'route' => "news",
-                'label' => "News"
+                'route' => 'news',
+                'label' => 'News',
             ],
             [
                 'type' => 'route',
-                'route' => "features",
-                'label' => "Über EtoA"
+                'route' => 'features',
+                'label' => 'Über EtoA',
             ],
             [
                 'type' => 'route',
-                'route' => "screenshots",
-                'label' => "Bilder"
+                'route' => 'screenshots',
+                'label' => 'Bilder',
             ],
             [
                 'type' => 'route',
-                'route' => "story",
-                'label' => "Story"
+                'route' => 'story',
+                'label' => 'Story',
             ],
             [
                 'type' => 'route',
-                'route' => "rules",
-                'label' => "Regeln"
+                'route' => 'rules',
+                'label' => 'Regeln',
             ],
             [
                 'type' => 'divider',
             ],
             [
                 'type' => 'route',
-                'route' => "register",
-                'label' => "Mitspielen"
+                'route' => 'register',
+                'label' => 'Mitspielen',
             ],
             [
                 'type' => 'route',
-                'route' => "pwrequest",
-                'label' => "Passwort vergessen?"
+                'route' => 'pwrequest',
+                'label' => 'Passwort vergessen?',
             ],
             [
                 'type' => 'divider',
             ],
             [
                 'type' => 'url',
-                "url" => ForumBridge::url(),
-                'label' => "Forum",
+                'url' => ForumBridge::url(),
+                'label' => 'Forum',
             ],
             !empty($tsLink) ? [
                 'type' => 'url',
-                "url" => $tsLink,
-                'label' => "Discord"
+                'url' => $tsLink,
+                'label' => 'Discord',
             ] : null,
             [
                 'type' => 'url',
-                "url" => 'archiv',
-                'label' => "Downloads"
+                'url' => 'archiv',
+                'label' => 'Downloads',
             ],
             [
                 'type' => 'divider',
             ],
             [
                 'type' => 'route',
-                'route' => "banner",
-                'label' => "Weitersagen"
+                'route' => 'banner',
+                'label' => 'Weitersagen',
             ],
             [
                 'type' => 'route',
-                'route' => "donate",
-                'label' => "Spenden"
+                'route' => 'donate',
+                'label' => 'Spenden',
             ],
             [
                 'type' => 'route',
-                'route' => "disclaimer",
-                'label' => "Disclaimer"
+                'route' => 'disclaimer',
+                'label' => 'Disclaimer',
             ],
             [
                 'type' => 'route',
-                'route' => "privacy",
-                'label' => "Datenschutz"
+                'route' => 'privacy',
+                'label' => 'Datenschutz',
             ],
             [
                 'type' => 'route',
-                'route' => "imprint",
-                'label' => "Impressum"
-            ]
+                'route' => 'imprint',
+                'label' => 'Impressum',
+            ],
         ];
 
         return $this->view->fetch('frontend/widgets/main_menu.html', [
-            'nav' => array_filter($items, fn ($i) => $i !== null),
+            'nav' => array_filter($items, fn ($i) => null !== $i),
         ]);
     }
 
@@ -196,7 +195,7 @@ abstract class FrontendController
             } catch (PDOException $ignored) {
             }
             try {
-                $board_blacklist = array_map(fn ($e) => (int) $e, explode(",", $this->config->get('infobox_board_blacklist')));
+                $board_blacklist = array_map(fn ($e) => (int) $e, explode(',', $this->config->get('infobox_board_blacklist')));
                 $posts = $this->forum->latestPosts($num_posts, $board_blacklist);
                 $data['posts'] = array_map(
                     fn (LatestPost $post) => [
@@ -210,6 +209,7 @@ abstract class FrontendController
             }
             apcu_add('etoa-infobox-forum-news', $data, config('caching.apcu_timeout'));
         }
+
         return $this->view->fetch('frontend/widgets/forum_status.html', $data);
     }
 
@@ -217,9 +217,9 @@ abstract class FrontendController
     {
         $server_notice = $this->config->get('server_notice');
 
-        $data = $server_notice != '' ? [
+        $data = '' != $server_notice ? [
             'message' => $server_notice,
-            'color' => $this->config->get('server_notice_color', "#fff"),
+            'color' => $this->config->get('server_notice_color', '#fff'),
             'updated' => $this->config->get('server_notice_updated'),
         ] : [];
 

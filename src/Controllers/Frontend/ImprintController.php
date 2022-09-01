@@ -18,7 +18,7 @@ class ImprintController extends TextPageController
 
     public function getTextKey(): string
     {
-        return "impressum";
+        return 'impressum';
     }
 
     public function getHeaderImage(): string

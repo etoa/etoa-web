@@ -38,8 +38,8 @@ class ServerNoticeController extends BackendController
         return parent::render($response, 'servernotice.html', [
             'settings' => collect(self::$settings)->map(fn ($def, $key) => [
                 'name' => $key,
-                'value' =>  $config->get($key, defaultValue: (string)$def['default'], useCache: false),
-                'placeholder' => (string)$def['default'],
+                'value' => $config->get($key, defaultValue: (string) $def['default'], useCache: false),
+                'placeholder' => (string) $def['default'],
                 'label' => $def['label'],
                 'type' => $def['type'],
                 'required' => $def['required'],
@@ -51,8 +51,9 @@ class ServerNoticeController extends BackendController
     {
         $post = $request->getParsedBody();
         foreach (self::$settings as $key => $def) {
-            if ($def['required'] && (!isset($post[$key]) || trim($post[$key]) == '')) {
-                $this->setSessionMessage('error', "Das Feld '" . $def['label'] . "' darf nicht leer sein.");
+            if ($def['required'] && (!isset($post[$key]) || '' == trim($post[$key]))) {
+                $this->setSessionMessage('error', "Das Feld '".$def['label']."' darf nicht leer sein.");
+
                 return $this->redirectToNamedRoute($request, $response, 'admin.servernotice');
             }
         }
@@ -60,7 +61,7 @@ class ServerNoticeController extends BackendController
             $config->set($key, $post[$key]);
         }
         $config->setInt('server_notice_updated', time());
-        $this->setSessionMessage('info', "Einstellungen gespeichert.");
+        $this->setSessionMessage('info', 'Einstellungen gespeichert.');
 
         return $this->redirectToNamedRoute($request, $response, 'admin.servernotice');
     }

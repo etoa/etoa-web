@@ -15,7 +15,7 @@ use Tuupola\Middleware\HttpBasicAuthentication;
 
 class AppRouteProvider
 {
-    public const CACHE_FILE = APP_DIR . '/storage/cache/routes';
+    public const CACHE_FILE = APP_DIR.'/storage/cache/routes';
 
     public function __construct(private Container $container, private bool $debug = false)
     {
@@ -23,7 +23,7 @@ class AppRouteProvider
 
     public function __invoke(RouteCollectorProxy $group): void
     {
-        if (file_exists(APP_DIR . '/storage/maintenance')) {
+        if (file_exists(APP_DIR.'/storage/maintenance')) {
             $group->any('/{path:.*}', MaintenancePageController::class);
         } else {
             $group->group('', FrontendRoutes::class);
@@ -41,8 +41,8 @@ class AppRouteProvider
     private function getBasicAuth(): MiddlewareInterface
     {
         return new HttpBasicAuthentication([
-            "realm" => "EtoA Login Administration",
-            "authenticator" => $this->container->get(ForumAuthenticator::class),
+            'realm' => 'EtoA Login Administration',
+            'authenticator' => $this->container->get(ForumAuthenticator::class),
             'secure' => true,
             'error' => $this->container->get(UnauthorizedRequestController::class),
         ]);

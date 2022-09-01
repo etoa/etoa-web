@@ -16,8 +16,8 @@ class PageNotFoundController
     {
         return $view->render($response, 'error.html', [
             'code' => StatusCodeInterface::STATUS_NOT_FOUND,
-            'title' => "Diese Seite wurde leider von einem Schwarzen Loch verschluckt!",
-            'description' => "Das tut uns leid! Zum Glück gibt es in unserem Universum noch genügend andere Seiten welche weit genug von Schwarzen Löchern entfernt sind.",
+            'title' => 'Diese Seite wurde leider von einem Schwarzen Loch verschluckt!',
+            'description' => 'Das tut uns leid! Zum Glück gibt es in unserem Universum noch genügend andere Seiten welche weit genug von Schwarzen Löchern entfernt sind.',
             'forumUrl' => ForumBridge::url(),
         ])->withStatus(StatusCodeInterface::STATUS_NOT_FOUND);
     }

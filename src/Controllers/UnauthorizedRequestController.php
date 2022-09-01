@@ -19,8 +19,8 @@ class UnauthorizedRequestController
     {
         return $this->view->render($response, 'error.html', [
             'code' => StatusCodeInterface::STATUS_UNAUTHORIZED,
-            'title' => "Nicht authentisiert!",
-            'description' => "Diese Seite ist nur für authentisierte Benutzer verfügbar.",
+            'title' => 'Nicht authentisiert!',
+            'description' => 'Diese Seite ist nur für authentisierte Benutzer verfügbar.',
             'forumUrl' => ForumBridge::url(),
         ])->withStatus(StatusCodeInterface::STATUS_UNAUTHORIZED);
     }

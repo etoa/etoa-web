@@ -13,7 +13,7 @@ class DisclaimerController extends TextPageController
 
     public function getTextKey(): string
     {
-        return "disclaimer";
+        return 'disclaimer';
     }
 
     public function getHeaderImage(): string

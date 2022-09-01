@@ -27,14 +27,14 @@ class NewsController extends FrontendController
         $news_board_id = $this->config->getInt('news_board');
 
         return parent::render($response, 'news.html', [
-            'text' => $this->getTextContent("home"),
+            'text' => $this->getTextContent('home'),
             'news' => $this->fetchNews($news_board_id),
             'board_url' => ForumBridge::url('board', $news_board_id),
         ]);
     }
 
     /**
-     * @return null|array<int,array<string,mixed>>
+     * @return array<int,array<string,mixed>>|null
      */
     private function fetchNews(int $news_board_id): ?array
     {
@@ -44,7 +44,7 @@ class NewsController extends FrontendController
             try {
                 $threads = $this->forum->newsPosts($num_news, $news_board_id, $status_board_id);
                 $news = array_map(fn (Thread $thread) => [
-                    'prefix' => $thread->board_id == $status_board_id ? "SERVERSTATUS " : "",
+                    'prefix' => $thread->board_id == $status_board_id ? 'SERVERSTATUS ' : '',
                     'url' => ForumBridge::url('thread', $thread->id),
                     'topic' => $thread->topic,
                     'closed' => $thread->board_id == $status_board_id && $thread->closed,
@@ -53,7 +53,7 @@ class NewsController extends FrontendController
                     'updated_at' => $thread->updated_at,
                     'author_url' => ForumBridge::url('user', $thread->user_id),
                     'author' => $thread->user_name,
-                    'message' =>  $thread->message,
+                    'message' => $thread->message,
                     'replies' => $thread->post_count - 1,
                 ], $threads);
                 apcu_add('etoa-news-section', $news, config('caching.apcu_timeout'));
@@ -61,6 +61,7 @@ class NewsController extends FrontendController
                 return null;
             }
         }
+
         return $news;
     }
 }

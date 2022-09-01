@@ -10,15 +10,15 @@ class BBCodeConverter
     {
         $string = str_replace('&', '&amp;', $string);
 
-        $string = str_replace("  ", "&nbsp;&nbsp;", $string);
+        $string = str_replace('  ', '&nbsp;&nbsp;', $string);
 
-        $string = str_replace("\"", "&quot;", $string);
-        $string = str_replace("<", "&lt;", $string);
-        $string = str_replace(">", "&gt;", $string);
+        $string = str_replace('"', '&quot;', $string);
+        $string = str_replace('<', '&lt;', $string);
+        $string = str_replace('>', '&gt;', $string);
 
-        $string =  preg_replace("((\r\n))", trim('<br/>'), $string);
-        $string =  preg_replace("((\n))", trim('<br/>'), $string);
-        $string =  preg_replace("((\r)+)", trim('<br/>'), $string);
+        $string = preg_replace("((\r\n))", trim('<br/>'), $string);
+        $string = preg_replace("((\n))", trim('<br/>'), $string);
+        $string = preg_replace("((\r)+)", trim('<br/>'), $string);
 
         $string = str_replace('[b]', '<b>', $string);
         $string = str_replace('[/b]', '</b>', $string);
@@ -116,12 +116,12 @@ class BBCodeConverter
         $string = preg_replace('/\[img\]([^\[]*)\[\/img\]/i', '<img src="\1" alt="\1" style="border: 0" />', $string);
         $string = preg_replace('/\[img ([0-9]*) ([0-9]*)\]([^\[]*)\[\/img]/i', '<img src="\3" alt="\3" width="\1" height="\2"  style="border: 0" />', $string);
         $string = preg_replace('/\[img ([0-9]*)\]([^\[]*)\[\/img]/i', '<img src="\2" alt="\2" width="\1" style="border: 0" />', $string);
-        $string = preg_replace('/\[flag ([^\[]*)\]/', '<img src="images/flags/i' . strtolower('\1') . '.gif" style="border: 0" alt="Flagge \1" class=\"flag\" />', $string);
+        $string = preg_replace('/\[flag ([^\[]*)\]/', '<img src="images/flags/i'.strtolower('\1').'.gif" style="border: 0" alt="Flagge \1" class=\"flag\" />', $string);
         $string = preg_replace('/\[thumb ([0-9]*)\]([^\[]*)\[\/thumb]/i', '<a href="\2"><img src="\2" alt="\2" width="\1" style="border: 0" /></a>', $string);
 
-        $string = preg_replace("/^http:\/\/([^ ,\n]*)/", "[url]http://\\1[/url]", $string);
-        $string = preg_replace("/^ftp:\/\/([^ ,\n]*)/", "[url]ftp://\\1[/url]", $string);
-        $string = preg_replace("/^www\\.([^ ,\n]*)/", "[url]http://www.\\1[/url]", $string);
+        $string = preg_replace("/^http:\/\/([^ ,\n]*)/", '[url]http://\\1[/url]', $string);
+        $string = preg_replace("/^ftp:\/\/([^ ,\n]*)/", '[url]ftp://\\1[/url]', $string);
+        $string = preg_replace("/^www\\.([^ ,\n]*)/", '[url]http://www.\\1[/url]', $string);
 
         $string = preg_replace('/\[url=\'([^\[]*)\'\]([^\[]*)\[\/url\]/i', '<a href="\1">\2</a>', $string);
         $string = preg_replace('/\[url=([^\[]*)\]([^\[]*)\[\/url\]/i', '<a href="\1">\2</a>', $string);

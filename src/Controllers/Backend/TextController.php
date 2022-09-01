@@ -33,9 +33,9 @@ class TextController extends BackendController
     {
         $post = $request->getParsedBody();
 
-        $texts->update($id, (string)$post['content']);
+        $texts->update($id, (string) $post['content']);
 
-        $this->setSessionMessage('info', "Text gespeichert.");
+        $this->setSessionMessage('info', 'Text gespeichert.');
 
         return $this->redirectToNamedRoute($request, $response, 'admin.texts');
     }

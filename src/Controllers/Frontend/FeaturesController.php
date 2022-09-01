@@ -18,7 +18,7 @@ class FeaturesController extends TextPageController
 
     public function getTextKey(): string
     {
-        return "features";
+        return 'features';
     }
 
     public function getHeaderImage(): string

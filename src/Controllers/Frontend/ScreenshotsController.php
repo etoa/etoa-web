@@ -21,7 +21,7 @@ class ScreenshotsController extends FrontendController
         'wirtschaft',
     ];
 
-    private static string $baseUrl = "/images/screenshots";
+    private static string $baseUrl = '/images/screenshots';
 
     protected function getTitle(): string
     {
@@ -42,8 +42,8 @@ class ScreenshotsController extends FrontendController
     {
         $items = array_map(fn (String $f) => [
             'name' => ucfirst($f),
-            'url' =>  self::$baseUrl . "/" . $f . ".jpg",
-            'thumb_url' => self::$baseUrl . "/" . $f . "_small.jpg",
+            'url' => self::$baseUrl.'/'.$f.'.jpg',
+            'thumb_url' => self::$baseUrl.'/'.$f.'_small.jpg',
         ], self::$files);
 
         return parent::render($response, 'screenshots.html', [

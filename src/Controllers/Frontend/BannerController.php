@@ -18,7 +18,7 @@ class BannerController extends TextPageController
 
     public function getTextKey(): string
     {
-        return "weitersagen";
+        return 'weitersagen';
     }
 
     public function getHeaderImage(): string

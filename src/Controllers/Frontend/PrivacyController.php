@@ -13,7 +13,7 @@ class PrivacyController extends TextPageController
 
     public function getTextKey(): string
     {
-        return "privacy";
+        return 'privacy';
     }
 
     public function getHeaderImage(): string

@@ -24,7 +24,7 @@ final class ConfigSettingRepository
 
         /** @var ?ConfigSetting $item */
         $item = $this->repo->findOneBy(['name' => $name]);
-        if ($item === null) {
+        if (null === $item) {
             return $defaultValue;
         }
         $cache[$name] = $item->value;
@@ -35,14 +35,15 @@ final class ConfigSettingRepository
     public function getInt(string $name, int $defaultValue = 0): int
     {
         $value = $this->get($name);
-        return  $value !== null ? intval($value) : $defaultValue;
+
+        return null !== $value ? intval($value) : $defaultValue;
     }
 
     public function set(string $name, ?string $value): void
     {
         /** @var ?ConfigSetting $item */
-        $item =  $this->repo->findOneBy(['name' => $name]) ?? new ConfigSetting($name);
-        $item->value = $value !== null ? trim($value) : null;
+        $item = $this->repo->findOneBy(['name' => $name]) ?? new ConfigSetting($name);
+        $item->value = null !== $value ? trim($value) : null;
         $this->em->persist($item);
         $this->em->flush();
     }

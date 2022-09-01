@@ -17,17 +17,17 @@ class ForumBridge
 
     public function userByName(string $username): ?User
     {
-        $res = $this->conn->executeQuery("
+        $res = $this->conn->executeQuery('
             SELECT
                 userID,
                 username,
                 password,
                 email
             FROM
-                " . self::wcftable('user') . "
+                '.self::wcftable('user').'
             WHERE
                 username = :username
-            ;", [
+            ;', [
             'username' => $username,
         ]);
         if ($arr = $res->fetchAssociative()) {
@@ -47,14 +47,14 @@ class ForumBridge
      */
     public function groupIdsOfUser(int $userId): array
     {
-        $res = $this->conn->executeQuery("
+        $res = $this->conn->executeQuery('
             SELECT
                 groupID
             FROM
-                " . self::wcftable('user_to_group') . "
+                '.self::wcftable('user_to_group').'
             WHERE
                 userID=:userId
-            ;", [
+            ;', [
             'userId' => $userId,
         ]);
 
@@ -66,17 +66,17 @@ class ForumBridge
      */
     public function usersOfGroup(int $groupId): array
     {
-        $res = $this->conn->executeQuery("
+        $res = $this->conn->executeQuery('
             SELECT
                 u.userID,
                 u.username
             FROM
-                " . self::wcftable('user_to_group') . " t
+                '.self::wcftable('user_to_group').' t
             INNER JOIN
-                " . self::wcftable('user') . " u
+                '.self::wcftable('user').' u
                 ON t.userID = u.userID
                 AND t.groupID = :groupId
-            ;", [
+            ;', [
             'groupId' => $groupId,
         ]);
 
@@ -88,7 +88,7 @@ class ForumBridge
 
     public function usersOnline(int $threshold = 300): int
     {
-        $res = $this->conn->executeQuery("
+        $res = $this->conn->executeQuery('
             SELECT
                 COUNT(*)  as cnt
             FROM
@@ -96,7 +96,7 @@ class ForumBridge
                     SELECT
                         COUNT(*)
                     FROM
-                        " . self::wcftable('session') . "
+                        '.self::wcftable('session').'
                     WHERE
                         lastActivityTime > :time
                     GROUP BY
@@ -104,14 +104,16 @@ class ForumBridge
                         userID,
                         userAgent
                 ) as q
-            ;", [
+            ;', [
             'time' => time() - $threshold,
         ]);
+
         return $res->fetchOne();
     }
 
     /**
      * @param int[] $blacklist_boards
+     *
      * @return LatestPost[]
      */
     public function latestPosts(int $limit, array $blacklist_boards = []): array
@@ -119,10 +121,10 @@ class ForumBridge
         $bls = '';
         if (count($blacklist_boards) > 0) {
             sort($blacklist_boards);
-            $bls .= 't.boardid NOT IN (' . implode(',', $blacklist_boards) . ')';
+            $bls .= 't.boardid NOT IN ('.implode(',', $blacklist_boards).')';
         }
 
-        $res = $this->conn->executeQuery("
+        $res = $this->conn->executeQuery('
             SELECT
                 t.topic,
                 p.postID,
@@ -130,22 +132,23 @@ class ForumBridge
                 p.username,
                 p.time
             FROM
-                " . self::wbbtable('thread') . " t
+                '.self::wbbtable('thread').' t
             INNER JOIN
-                " . self::wbbtable('post') . " p
+                '.self::wbbtable('post').' p
                 ON p.postID = (
                     SELECT p2.`postID`
-                    FROM `" . self::wbbtable('post') . "` p2
+                    FROM `'.self::wbbtable('post').'` p2
                     WHERE p2.`threadID` = t.`threadID`
                     ORDER BY p2.`time` DESC
                     LIMIT 1
                 )
-            WHERE " . $bls . "
+            WHERE '.$bls.'
             ORDER BY p.time DESC
             LIMIT :limit
-            ;", [
-            'limit' => $limit
+            ;', [
+            'limit' => $limit,
         ]);
+
         return array_map(
             fn (array $arr) => new LatestPost(
                 id: $arr['postID'],
@@ -162,7 +165,7 @@ class ForumBridge
      */
     public function newsPosts(int $limit, int $news_board_id, int $status_board_id): array
     {
-        $res = $this->conn->executeQuery("
+        $res = $this->conn->executeQuery('
             SELECT
                 t.topic,
                 t.time,
@@ -179,12 +182,12 @@ class ForumBridge
                     SELECT
                         COUNT(p2.threadID)
                     FROM
-                        " . self::wbbtable('post') . " p2
+                        '.self::wbbtable('post').' p2
                     WHERE
                         p2.threadID=t.threadID
                 ) AS post_count
             FROM
-                " . self::wbbtable('thread') . " t
+                '.self::wbbtable('thread').' t
             INNER JOIN (
                     SELECT
                         p.message,
@@ -193,7 +196,7 @@ class ForumBridge
                         p.threadid,
                         p.lastEditTime
                     FROM
-                    " . self::wbbtable('post') . " p
+                    '.self::wbbtable('post').' p
                     ORDER BY p.time
                 ) pp
                 ON pp.threadID=t.threadID
@@ -210,11 +213,12 @@ class ForumBridge
             ORDER BY
                 t.time DESC
             LIMIT :limit
-            ;", [
+            ;', [
             'limit' => $limit,
             'news_board' => $news_board_id,
             'status_board' => $status_board_id,
         ]);
+
         return array_map(fn (array $arr) => new Thread(
             id: $arr['threadID'],
             topic: $arr['topic'],
@@ -226,21 +230,21 @@ class ForumBridge
             message: $arr['message'],
             post_count: $arr['post_count'],
             last_post_time: $arr['lastPostTime'],
-            closed: $arr['isClosed'] == 1,
+            closed: 1 == $arr['isClosed'],
         ), (array) $res->fetchAllAssociative());
     }
 
     public function thread(int $threadId): ?Thread
     {
-        $res = $this->conn->executeQuery("
+        $res = $this->conn->executeQuery('
             SELECT
                 subject,
                 message
-            FROM " . self::wbbtable('post') . "
+            FROM '.self::wbbtable('post').'
             WHERE threadid = :threadId
             ORDER BY time ASC
             LIMIT 1
-            ;", [
+            ;', [
             'threadId' => $threadId,
         ]);
         if ($arr = $res->fetchAssociative()) {
@@ -250,52 +254,55 @@ class ForumBridge
                 message: $arr['message'],
             );
         }
+
         return null;
     }
 
     public static function authenticateUser(User $user, string $password): bool
     {
         $hash = str_starts_with($user->password, 'Bcrypt:') ? substr($user->password, strlen('Bcrypt:')) : $user->password;
+
         return password_verify($password, $hash);
     }
 
     public static function url(?string $type = null, string|int $value = null, string|int $value2 = null): string
     {
         $baseUrl = config('forum.url', 'https://forum.etoa.ch/');
-        if ($type == 'board') {
-            return $baseUrl . 'forum/board/' . $value;
+        if ('board' == $type) {
+            return $baseUrl.'forum/board/'.$value;
         }
-        if ($type == 'thread') {
-            return $baseUrl . 'forum/thread/' . $value;
+        if ('thread' == $type) {
+            return $baseUrl.'forum/thread/'.$value;
         }
-        if ($type == 'post') {
-            return $baseUrl . 'forum/thread/' . $value2 . '?postID=' . $value . '#post' . $value;
+        if ('post' == $type) {
+            return $baseUrl.'forum/thread/'.$value2.'?postID='.$value.'#post'.$value;
         }
-        if ($type == 'user') {
-            return $baseUrl . 'user/' . $value;
+        if ('user' == $type) {
+            return $baseUrl.'user/'.$value;
         }
-        if ($type == 'admin') {
-            return $baseUrl . 'acp/';
+        if ('admin' == $type) {
+            return $baseUrl.'acp/';
         }
-        if ($type == 'account') {
-            return $baseUrl . 'account-management/';
+        if ('account' == $type) {
+            return $baseUrl.'account-management/';
         }
-        if ($type == 'team') {
-            return $baseUrl . 'team/';
+        if ('team' == $type) {
+            return $baseUrl.'team/';
         }
-        if ($type == 'register') {
-            return $baseUrl . 'register/';
+        if ('register' == $type) {
+            return $baseUrl.'register/';
         }
+
         return $baseUrl;
     }
 
     private static function wcftable(string $name): string
     {
-        return 'wcf1_' . $name;
+        return 'wcf1_'.$name;
     }
 
     private static function wbbtable(string $name): string
     {
-        return 'wbb1_' . $name;
+        return 'wbb1_'.$name;
     }
 }

@@ -22,12 +22,13 @@ class ForumAuthenticator
         }
 
         $user = $this->forum->userByName($arguments['user']);
-        if ($user === null || !ForumBridge::authenticateUser($user, $arguments['password'])) {
+        if (null === $user || !ForumBridge::authenticateUser($user, $arguments['password'])) {
             return false;
         }
 
         $userGroupIds = $this->forum->groupIdsOfUser($user->id);
         $allowedGroup = config('auth.admin.usergroup');
+
         return in_array($allowedGroup, $userGroupIds);
     }
 }
