@@ -2,7 +2,7 @@
 
 {% block content %}
 {% if texts %}
-<table class="tbl">
+<table class="table table-striped table-bordered">
     <thead>
         <tr>
             <th>Text</th>
@@ -21,6 +21,8 @@
     </tbody>
 </table>
 {% else %}
-<i>Keine Texte vorhanden!</i><br /><br />
+<div class="alert alert-info" role="alert">
+    Keine Texte vorhanden!
+</div>
 {% endif %}
 {% endblock %}

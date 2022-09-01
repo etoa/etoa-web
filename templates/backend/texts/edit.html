@@ -5,13 +5,18 @@
 <form action="{{ url_for('admin.texts.update', { 'id': text.id }) }}" method="post">
     {% if text %}
     <h2>{{ text.name }}</h2>
-    <textarea name="content" rows="28" cols="100" required>{{ text.content }}</textarea>
-    <p><input type="submit" name="submit" value="Übernehmen" />
-        <a href="{{ url_for('admin.texts') }}">Zurück</a>
-    </p>
+    <div class="mb-4">
+        <textarea name="content" rows="28" class="form-control" required>{{ text.content }}</textarea>
+    </div>
+    <div>
+        <input type="submit" name="submit" value="Übernehmen" class="btn btn-primary" />
+        <a href="{{ url_for('admin.texts') }}" class="btn btn-link">Zurück</a>
+    </div>
     {% else %}
-    <i>Text nicht vorhanden!</i><br /><br />
-    <a href="{{ url_for('admin.texts') }}">Zurück</a>
+    <div class="alert alert-warning" role="alert">
+        Text nicht vorhanden!
+    </div>
+    <a href="{{ url_for('admin.texts') }}" class="btn btn-link">Zurück</a>
     {% endif %}
 </form>
 {% endblock %}
