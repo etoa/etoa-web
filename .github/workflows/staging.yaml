@@ -16,6 +16,7 @@ jobs:
   check-secret:
     name: Check repository secrets
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     outputs:
       ftp-data: ${{ steps.ftp-data.outputs.defined }}
     steps:
