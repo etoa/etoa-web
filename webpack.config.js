@@ -8,6 +8,7 @@ module.exports = {
     entry: {
         frontend: './resources/js/frontend.js',
         backend: './resources/js/backend.js',
+        error: './resources/js/error.js',
     },
     module: {
         rules: [
