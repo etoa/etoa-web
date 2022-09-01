@@ -12,6 +12,9 @@ use Carbon\Carbon;
 use DI\Bridge\Slim\Bridge;
 use DI\Container;
 use Doctrine\ORM\EntityManager;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
+use Monolog\Logger;
 use Slim\Middleware\Session;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
@@ -39,6 +42,13 @@ $container->set(EntityManager::class, DatabaseEntityManagerInitializer::initiali
 $container->set(ForumDatabaseConnection::class, DatabaseConnectionInitializer::initialize('forum', ForumDatabaseConnection::class));
 
 $app = Bridge::create($container);
+
+$logger = new Logger('app');
+$logger->pushHandler(new StreamHandler(APP_DIR . '/storage/logs/app.log', Level::Info));
+if ($debug) {
+    $logger->pushHandler(new StreamHandler(APP_DIR . '/storage/logs/debug.log', Level::Debug));
+}
+$container->set(Logger::class, fn () => $logger);
 
 // Error handling
 $app->addErrorMiddleware(
