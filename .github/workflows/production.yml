@@ -31,6 +31,8 @@ jobs:
         run: npm ci
       - name: Build assets
         run: npm run build
+      - name: Add clear cache trigger
+        run: touch storage/cache/clear_cache
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.1
         with:

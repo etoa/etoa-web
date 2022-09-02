@@ -27,6 +27,11 @@ require APP_DIR . '/vendor/autoload.php';
 // Define debug mode
 $debug = config('app.debug', false);
 
+// Clear cache if requested
+if (file_exists(APP_DIR . '/storage/cache') && file_exists(APP_DIR . '/storage/cache/clear_cache')) {
+    destroy_dir(APP_DIR . '/storage/cache');
+}
+
 // Define locale
 Carbon::setLocale(config('app.locale', 'de'));
 
