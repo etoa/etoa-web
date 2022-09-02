@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Routing;
 
 use App\Controllers\Backend\OverviewController;
+use App\Controllers\Backend\RedirectsController;
 use App\Controllers\Backend\RoundsController;
 use App\Controllers\Backend\ServerNoticeController;
 use App\Controllers\Backend\SettingsController;
@@ -42,6 +43,21 @@ class BackendRoutes
             ->setName('admin.rounds.confirmDelete');
         $group->post('/rounds/{id:[0-9]+}/delete', [RoundsController::class, 'destroy'])
             ->setName('admin.rounds.destroy');
+
+        $group->get('/redirects', [RedirectsController::class, 'index'])
+            ->setName('admin.redirects');
+        $group->get('/redirects/create', [RedirectsController::class, 'create'])
+            ->setName('admin.redirects.create');
+        $group->post('/redirects/create', [RedirectsController::class, 'store'])
+            ->setName('admin.redirects.store');
+        $group->get('/redirects/{id:[0-9]+}', [RedirectsController::class, 'edit'])
+            ->setName('admin.redirects.edit');
+        $group->post('/redirects/{id:[0-9]+}', [RedirectsController::class, 'update'])
+            ->setName('admin.redirects.update');
+        $group->get('/redirects/{id:[0-9]+}/delete', [RedirectsController::class, 'confirmDelete'])
+            ->setName('admin.redirects.confirmDelete');
+        $group->post('/redirects/{id:[0-9]+}/delete', [RedirectsController::class, 'destroy'])
+            ->setName('admin.redirects.destroy');
 
         $group->get('/texts', [TextController::class, 'index'])
             ->setName('admin.texts');

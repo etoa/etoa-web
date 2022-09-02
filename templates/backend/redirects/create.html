@@ -1,0 +1,27 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+
+<form action="{{ url_for('admin.redirects.store') }}" method="post">
+    <h2>Weiterleitung hinzufügen</h2>
+    <div class="mb-3">
+        <label for="source" class="form-label">Quelle</label>
+        <input type="text" name="source" id="source" value="" class="form-control" placeholder="/some-name" required />
+    </div>
+    <div class="mb-3">
+        <label for="target" class="form-label">Ziel</label>
+        <input type="text" name="target" id="target" value="" class="form-control" placeholder="http://www.example.com"
+            required />
+    </div>
+    <div class="form-check form-switch mb-3">
+        <input class="form-check-input" type="checkbox" role="switch" name="active" id="active" value="1" checked>
+        <label class="form-check-label" for="active">Aktiv</label>
+    </div>
+    <div class="d-flex justify-content-between">
+        <span>
+            <input type="submit" name="submit" value="Übernehmen" class="btn btn-primary" />
+            <a href="{{ url_for('admin.redirects') }}" class="btn btn-link">Abbrechen</a>
+        </span>
+    </div>
+</form>
+{% endblock %}

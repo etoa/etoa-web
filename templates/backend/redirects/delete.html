@@ -1,0 +1,20 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+
+<form action="{{ url_for('admin.redirects.destroy', { 'id': redirect.id }) }}" method="post">
+    {% if redirect %}
+    <h2>Weiterleitung löschen</h2>
+    <p>Soll die Weiterleitung <strong>{{ redirect.source }}</strong> wirklich gelöscht werden?</p>
+    <div>
+        <input type="submit" name="submit" value="Übernehmen" class="btn btn-primary" />
+        <a href="{{ url_for('admin.redirects') }}" class="btn btn-link">Abbrechen</a>
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        Weiterleitung nicht vorhanden!
+    </div>
+    <a href="{{ url_for('admin.redirects') }}" class="btn btn-link">Abbrechen</a>
+    {% endif %}
+</form>
+{% endblock %}

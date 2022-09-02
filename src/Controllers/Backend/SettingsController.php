@@ -126,7 +126,7 @@ class SettingsController extends BackendController
         foreach (self::$settings as $key => $def) {
             $config->set($key, $post[$key]);
         }
-        $this->setSessionMessage('info', 'Einstellungen gespeichert.');
+        $this->setSessionMessage('success', 'Einstellungen gespeichert.');
 
         return $this->redirectToNamedRoute($request, $response, 'admin.settings');
     }

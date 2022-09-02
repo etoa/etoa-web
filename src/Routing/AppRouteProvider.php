@@ -8,6 +8,7 @@ use App\Authentication\ForumAuthenticator;
 use App\Controllers\MaintenancePageController;
 use App\Controllers\PageNotFoundController;
 use App\Controllers\UnauthorizedRequestController;
+use App\Repository\RedirectRepository;
 use DI\Container;
 use Psr\Http\Server\MiddlewareInterface;
 use Slim\Routing\RouteCollectorProxy;
@@ -27,8 +28,16 @@ class AppRouteProvider
             $group->any('/{path:.*}', MaintenancePageController::class);
         } else {
             $group->group('', FrontendRoutes::class);
+
             $group->group('/admin', BackendRoutes::class)
                 ->add($this->getBasicAuth());
+
+            /** @var RedirectRepository $redirects */
+            $redirects = $this->container->get(RedirectRepository::class);
+            foreach ($redirects->active() as $redirect) {
+                $group->redirect($redirect->source, $redirect->target);
+            }
+
             $group->any('/{path:.*}', PageNotFoundController::class);
 
             if (!$this->debug) {
@@ -46,5 +55,12 @@ class AppRouteProvider
             'secure' => true,
             'error' => $this->container->get(UnauthorizedRequestController::class),
         ]);
+    }
+
+    public static function clearCache()
+    {
+        if (is_file(self::CACHE_FILE)) {
+            unlink(self::CACHE_FILE);
+        }
     }
 }

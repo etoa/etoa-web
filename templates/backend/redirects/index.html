@@ -1,0 +1,29 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+{% if redirects %}
+<div class="list-group mb-3">
+    {% for redirect in redirects %}
+    <a href="{{ url_for('admin.redirects.edit', { 'id': redirect.id }) }}"
+        class="list-group-item list-group-item-action" aria-current="true">
+        <div class="d-sm-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ redirect.source }}</h5>
+            {% if redirect.active==1 %}
+            <small class="text-success">Aktiv</small>
+            {% else %}
+            <small class="text-warning">Inaktiv</small>
+            {% endif %}
+        </div>
+        <p class="mb-1">
+            {{ redirect.target }}
+        </p>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info" role="alert">
+    Keine Weiterleitungen vorhanden!
+</div>
+{% endif %}
+<a href="{{ url_for('admin.redirects.create') }}" class="btn btn-primary">Neue Weiterleitung</a>
+{% endblock %}

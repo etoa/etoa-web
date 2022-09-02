@@ -30,6 +30,11 @@ abstract class BackendController
         ],
         [
             'type' => 'route',
+            'route' => 'admin.redirects',
+            'label' => 'Weiterleitungen',
+        ],
+        [
+            'type' => 'route',
             'route' => 'admin.texts',
             'label' => 'Texte',
         ],
@@ -74,6 +79,7 @@ abstract class BackendController
                 'title' => $this->getTitle(),
                 'info' => $this->pullSessionMessage('info'),
                 'error' => $this->pullSessionMessage('error'),
+                'success' => $this->pullSessionMessage('success'),
                 'nav' => self::MAIN_MENU,
                 'nav2' => self::secondaryMenu(),
             ], $args)
