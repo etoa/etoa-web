@@ -50,6 +50,11 @@
                 {{ info | nl2br }}
             </div>
             {% endif %}
+            {% if success %}
+            <div class="alert alert-success" role="alert">
+                {{ success | nl2br }}
+            </div>
+            {% endif %}
             {% block content %}{% endblock %}
         </main>
     </div>

@@ -33,13 +33,13 @@ class RoundsController extends BackendController
         $post = $request->getParsedBody();
 
         $rounds->create(
-            name: $post['name'],
-            url: $post['url'],
+            name: trim($post['name']),
+            url: trim($post['url']),
             active: 1 == $post['active'],
             startDate: '' != trim($post['startDate']) ? Carbon::createFromDate($post['startDate'])->timestamp : 0,
         );
 
-        $this->setSessionMessage('info', 'Runde hinzugefügt.');
+        $this->setSessionMessage('success', 'Runde hinzugefügt.');
 
         return $this->redirectToNamedRoute($request, $response, 'admin.rounds');
     }
@@ -57,13 +57,13 @@ class RoundsController extends BackendController
 
         $rounds->update(
             $id,
-            name: $post['name'],
-            url: $post['url'],
+            name: trim($post['name']),
+            url: trim($post['url']),
             active: 1 == $post['active'],
             startDate: '' != trim($post['startDate']) ? Carbon::createFromDate($post['startDate'])->timestamp : 0,
         );
 
-        $this->setSessionMessage('info', 'Runde gespeichert.');
+        $this->setSessionMessage('success', 'Runde gespeichert.');
 
         return $this->redirectToNamedRoute($request, $response, 'admin.rounds');
     }
@@ -77,9 +77,9 @@ class RoundsController extends BackendController
 
     public function destroy(Request $request, Response $response, RoundRepository $rounds, int $id): Response
     {
-        $this->setSessionMessage('info', 'Runde gelöscht.');
-
         $rounds->delete($id);
+
+        $this->setSessionMessage('success', 'Runde gelöscht.');
 
         return $this->redirectToNamedRoute($request, $response, 'admin.rounds');
     }

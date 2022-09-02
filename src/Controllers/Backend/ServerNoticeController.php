@@ -68,7 +68,7 @@ class ServerNoticeController extends BackendController
             ]);
         }
 
-        $this->setSessionMessage('info', 'Einstellungen gespeichert.');
+        $this->setSessionMessage('success', 'Einstellungen gespeichert.');
 
         return $this->redirectToNamedRoute($request, $response, 'admin.servernotice');
     }
