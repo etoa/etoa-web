@@ -7,6 +7,7 @@ use App\Routing\AppRouteProvider;
 use App\Support\Database\DatabaseConnectionInitializer;
 use App\Support\Database\DatabaseEntityManagerInitializer;
 use App\Support\Database\ForumDatabaseConnection;
+use App\Support\Environment;
 use App\Support\TwigConfigurationInitializer;
 use Carbon\Carbon;
 use DI\Bridge\Slim\Bridge;
@@ -24,8 +25,11 @@ define('APP_DIR', __DIR__ . '/../');
 // Load libraries
 require APP_DIR . '/vendor/autoload.php';
 
-// Define debug mode
+/** @var bool $debug */
 $debug = config('app.debug', false);
+
+/** @var Environment $environment */
+$environment = config('app.environment', Environment::Production);
 
 // Clear cache if requested
 if (file_exists(APP_DIR . '/storage/cache') && file_exists(APP_DIR . '/storage/clear_cache')) {
@@ -38,13 +42,13 @@ Carbon::setLocale(config('app.locale', 'de'));
 
 $twig = TwigConfigurationInitializer::create(
     debug: $debug,
-    caching: !$debug
+    caching: Environment::Production == $environment,
 );
 
 // Init app
 $container = new Container();
 $container->set(Twig::class, fn () => $twig);
-$container->set(EntityManager::class, DatabaseEntityManagerInitializer::initialize($debug));
+$container->set(EntityManager::class, DatabaseEntityManagerInitializer::initialize($environment));
 $container->set(ForumDatabaseConnection::class, DatabaseConnectionInitializer::initialize('forum', ForumDatabaseConnection::class));
 
 $app = Bridge::create($container);
@@ -68,7 +72,7 @@ if (!$debug) {
 }
 
 // HTTPS redirect
-if (!$debug) {
+if (Environment::Production == $environment) {
     $app->add(HttpsRedirectMiddleware::class);
 }
 
@@ -82,7 +86,10 @@ $app->add(TwigMiddleware::create($app, $twig));
 $app->add(Session::class);
 
 // Routing
-$app->group('', new AppRouteProvider($container, $debug));
+$app->group('', new AppRouteProvider(
+    $container,
+    caching: Environment::Production == $environment
+));
 
 // Run app
 $app->run();

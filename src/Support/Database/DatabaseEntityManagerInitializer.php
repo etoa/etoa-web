@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\Database;
 
+use App\Support\Environment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -11,15 +12,15 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class DatabaseEntityManagerInitializer
 {
-    public static function initialize(bool $debug): EntityManager
+    public static function initialize(Environment $environment): EntityManager
     {
-        $cache = $debug
-            ? new ArrayAdapter()
-            : new FilesystemAdapter(directory: APP_DIR . '/storage/cache/doctrine', defaultLifetime: 300);
+        $cache = Environment::Production == $environment
+            ? new FilesystemAdapter(directory: APP_DIR . '/storage/cache/doctrine', defaultLifetime: 300)
+            : new ArrayAdapter();
 
         $config = ORMSetup::createAttributeMetadataConfiguration(
             [APP_DIR . '/src/Models'],
-            isDevMode: $debug,
+            isDevMode: Environment::Development == $environment,
             cache: $cache
         );
 

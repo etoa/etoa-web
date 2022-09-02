@@ -18,7 +18,7 @@ class AppRouteProvider
 {
     public const CACHE_FILE = APP_DIR . '/storage/cache/routes';
 
-    public function __construct(private Container $container, private bool $debug = false)
+    public function __construct(private Container $container, private bool $caching = false)
     {
     }
 
@@ -40,7 +40,7 @@ class AppRouteProvider
 
             $group->any('/{path:.*}', PageNotFoundController::class);
 
-            if (!$this->debug) {
+            if ($this->caching) {
                 $routeCollector = $group->getRouteCollector();
                 $routeCollector->setCacheFile(self::CACHE_FILE);
             }
