@@ -35,16 +35,21 @@ function getAppBasePath(): string
 
 function destroy_dir(string $dir): bool
 {
-    if (!is_dir($dir) || is_link($dir))
+    if (!is_dir($dir) || is_link($dir)) {
         return unlink($dir);
+    }
 
     foreach (scandir($dir) as $file) {
-        if ($file == "." || $file == "..")
+        if ('.' == $file || '..' == $file) {
             continue;
-        if (!destroy_dir($dir . "/" . $file)) {
-            chmod($dir . "/" . $file, 0777);
-            if (!destroy_dir($dir . "/" . $file)) return false;
+        }
+        if (!destroy_dir($dir . '/' . $file)) {
+            chmod($dir . '/' . $file, 0777);
+            if (!destroy_dir($dir . '/' . $file)) {
+                return false;
+            }
         }
     }
+
     return rmdir($dir);
 }
