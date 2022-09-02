@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Support\Database;
 
-use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\ORMSetup;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
@@ -14,11 +13,11 @@ class DatabaseEntityManagerInitializer
 {
     public static function initialize(bool $debug): EntityManager
     {
-        $cache = $debug ?
-            DoctrineProvider::wrap(new ArrayAdapter()) :
-            DoctrineProvider::wrap(new FilesystemAdapter(directory: APP_DIR . '/storage/cache/doctrine'));
+        $cache = $debug
+            ? new ArrayAdapter()
+            : new FilesystemAdapter(directory: APP_DIR . '/storage/cache/doctrine', defaultLifetime: 300);
 
-        $config = Setup::createAttributeMetadataConfiguration(
+        $config = ORMSetup::createAttributeMetadataConfiguration(
             [APP_DIR . '/src/Models'],
             isDevMode: $debug,
             cache: $cache
