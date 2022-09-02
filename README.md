@@ -36,7 +36,7 @@ Run:
 
 Run:
 
-    ./vendor/bin/php-cs-fixer fix src
+    ./vendor/bin/php-cs-fixer fix
 
 ## Use docker images (for development)
 
