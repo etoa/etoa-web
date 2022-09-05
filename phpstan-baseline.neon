@@ -1,0 +1,36 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method App\\\\Authentication\\\\ForumAuthenticator\\:\\:__construct\\(\\) has parameter \\$session with no value type specified in iterable type SlimSession\\\\Helper\\.$#"
+			count: 1
+			path: src/Authentication/ForumAuthenticator.php
+
+		-
+			message: "#^Method App\\\\Controllers\\\\Backend\\\\BackendController\\:\\:__construct\\(\\) has parameter \\$session with no value type specified in iterable type SlimSession\\\\Helper\\.$#"
+			count: 1
+			path: src/Controllers/Backend/BackendController.php
+
+		-
+			message: "#^Property App\\\\Repository\\\\ConfigSettingRepository\\:\\:\\$repo with generic class Doctrine\\\\ORM\\\\EntityRepository does not specify its types\\: TEntityClass$#"
+			count: 1
+			path: src/Repository/ConfigSettingRepository.php
+
+		-
+			message: "#^Property App\\\\Repository\\\\RedirectRepository\\:\\:\\$repo with generic class Doctrine\\\\ORM\\\\EntityRepository does not specify its types\\: TEntityClass$#"
+			count: 1
+			path: src/Repository/RedirectRepository.php
+
+		-
+			message: "#^Property App\\\\Repository\\\\RoundRepository\\:\\:\\$repo with generic class Doctrine\\\\ORM\\\\EntityRepository does not specify its types\\: TEntityClass$#"
+			count: 1
+			path: src/Repository/RoundRepository.php
+
+		-
+			message: "#^Property App\\\\Repository\\\\TextRepository\\:\\:\\$repo with generic class Doctrine\\\\ORM\\\\EntityRepository does not specify its types\\: TEntityClass$#"
+			count: 1
+			path: src/Repository/TextRepository.php
+
+		-
+			message: "#^Unable to resolve the template type T in call to method static method Doctrine\\\\DBAL\\\\DriverManager\\:\\:getConnection\\(\\)$#"
+			count: 1
+			path: src/Support/Database/DatabaseConnectionInitializer.php
