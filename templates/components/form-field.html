@@ -4,6 +4,7 @@
     {% endif %} placeholder="{{ field.placeholder }}">{{ field.value }}</textarea>
 {% else %}
 <input type="{{ field.type }}" name="{{ field.name }}" id="{{ field.name }}" value="{{ field.value }}"
-    placeholder="{{ field.placeholder }}" class="form-control" {% if field.required %} required {% endif %} {% if
-    field.min is defined %} min="{{ field.min }}" {% endif %} />
+    placeholder="{{ field.placeholder }}"
+    class="form-control  {% if field.type == 'color' %} form-control-color {% endif %}" {% if field.required %} required
+    {% endif %} {% if field.min is defined %} min="{{ field.min }}" {% endif %} />
 {% endif %}
