@@ -12,39 +12,48 @@ use Slim\Views\Twig;
 
 abstract class BackendController
 {
-    private const MAIN_MENU = [
-        [
-            'type' => 'route',
-            'route' => 'admin',
-            'label' => 'Übersicht',
-        ],
-        [
-            'type' => 'route',
-            'route' => 'admin.servernotice',
-            'label' => 'Servermeldung',
-        ],
-        [
-            'type' => 'route',
-            'route' => 'admin.rounds',
-            'label' => 'Runden',
-        ],
-        [
-            'type' => 'route',
-            'route' => 'admin.redirects',
-            'label' => 'Weiterleitungen',
-        ],
-        [
-            'type' => 'route',
-            'route' => 'admin.texts',
-            'label' => 'Texte',
-        ],
-        [
-            'type' => 'route',
-            'route' => 'admin.settings',
-            'label' => 'Einstellungen',
-        ],
-    ];
+    /**
+     * @return array<int,array<string,string>>
+     */
+    private static function mainMenu(): array
+    {
+        return [
+            [
+                'type' => 'route',
+                'route' => 'admin',
+                'label' => 'Übersicht',
+            ],
+            [
+                'type' => 'route',
+                'route' => 'admin.servernotice',
+                'label' => 'Servermeldung',
+            ],
+            [
+                'type' => 'route',
+                'route' => 'admin.rounds',
+                'label' => 'Runden',
+            ],
+            [
+                'type' => 'route',
+                'route' => 'admin.redirects',
+                'label' => 'Weiterleitungen',
+            ],
+            [
+                'type' => 'route',
+                'route' => 'admin.texts',
+                'label' => 'Texte',
+            ],
+            [
+                'type' => 'route',
+                'route' => 'admin.settings',
+                'label' => 'Einstellungen',
+            ],
+        ];
+    }
 
+    /**
+     * @return array<int,array<string,string>>
+     */
     private static function secondaryMenu(): array
     {
         return [
@@ -82,7 +91,7 @@ abstract class BackendController
                 'info' => $this->pullSessionMessage('info'),
                 'error' => $this->pullSessionMessage('error'),
                 'success' => $this->pullSessionMessage('success'),
-                'nav' => self::MAIN_MENU,
+                'nav' => self::mainMenu(),
                 'nav2' => self::secondaryMenu(),
             ], $args)
         );

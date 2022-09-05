@@ -11,9 +11,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ServerNoticeController extends AbstractSettingsController
 {
-    /**
-     * @var array<string,array<string,mixed>>
-     */
     protected function getSettings(): array
     {
         return [
@@ -46,7 +43,9 @@ class ServerNoticeController extends AbstractSettingsController
 
     public function store(Request $request, Response $response, ConfigSettingRepository $config, Logger $logger): Response
     {
-        $post = $this->storeSettings($request, $response, $config);
+        if (!($post = $this->storeSettings($request, $response, $config))) {
+            return $this->redirectToNamedRoute($request, $response, 'admin.servernotice');
+        }
 
         if ('' != $post['server_notice']) {
             $config->setInt('server_notice_updated', time());

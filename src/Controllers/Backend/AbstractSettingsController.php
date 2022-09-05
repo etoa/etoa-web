@@ -9,12 +9,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 abstract class AbstractSettingsController extends BackendController
 {
     /**
-     * @var array<string,array<string,mixed>>
+     * @return array<string,array<string,mixed>>
      */
     abstract protected function getSettings(): array;
 
     /**
-     * @var array<string,array<string,mixed>>
+     * @return array<string,array<string,mixed>>
      */
     protected function getFields(ConfigSettingRepository $config): array
     {
@@ -32,20 +32,20 @@ abstract class AbstractSettingsController extends BackendController
     }
 
     /**
-     * @var array<string,array<string,mixed>>
+     * @return array<string,array<string,mixed>>|false
      */
-    protected function storeSettings(Request $request, Response $response, ConfigSettingRepository $config): array
+    protected function storeSettings(Request $request, Response $response, ConfigSettingRepository $config): array|false
     {
         $post = $request->getParsedBody();
         foreach ($this->getSettings() as $key => $def) {
             if ($def['required'] && (!isset($post[$key]) || '' == trim($post[$key]))) {
                 $this->setSessionMessage('error', "Das Feld '" . $def['label'] . "' darf nicht leer sein.");
 
-                return $this->redirectToNamedRoute($request, $response, 'admin.settings');
+                return false;
             }
         }
         foreach ($this->getSettings() as $key => $def) {
-            $config->set($key, $post[$key]);
+            $config->set($key, trim($post[$key]));
         }
 
         return $post;

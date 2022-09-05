@@ -57,7 +57,7 @@ class AppRouteProvider
         ]);
     }
 
-    public static function clearCache()
+    public static function clearCache(): void
     {
         if (is_file(self::CACHE_FILE)) {
             unlink(self::CACHE_FILE);
