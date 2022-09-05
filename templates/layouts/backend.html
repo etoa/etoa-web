@@ -24,12 +24,12 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav me-auto">
                     {% for item in nav %}
-                    {% include "layouts/includes/nav-item.html" %}
+                    {% include "components/nav-item.html" with {'item': item} only %}
                     {% endfor %}
                 </div>
                 <div class="navbar-nav">
                     {% for item in nav2 %}
-                    {% include "layouts/includes/nav-item.html" %}
+                    {% include "components/nav-item.html" with {'item': item} only %}
                     {% endfor %}
                 </div>
             </div>

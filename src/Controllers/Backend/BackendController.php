@@ -52,11 +52,13 @@ abstract class BackendController
                 'type' => 'route',
                 'route' => 'home',
                 'label' => 'Startseite',
+                'target' => '_blank',
             ],
             [
                 'type' => 'url',
                 'url' => ForumBridge::url(),
                 'label' => 'Forum',
+                'target' => '_blank',
             ],
         ];
     }
