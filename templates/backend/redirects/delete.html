@@ -7,14 +7,14 @@
     <h2>Weiterleitung löschen</h2>
     <p>Soll die Weiterleitung <strong>{{ redirect.source }}</strong> wirklich gelöscht werden?</p>
     <div>
-        <input type="submit" name="submit" value="Übernehmen" class="btn btn-primary" />
+        <input type="submit" name="submit" value="Übernehmen" class="btn btn-danger" />
         <a href="{{ url_for('admin.redirects') }}" class="btn btn-link">Abbrechen</a>
     </div>
     {% else %}
     <div class="alert alert-warning" role="alert">
         Weiterleitung nicht vorhanden!
     </div>
-    <a href="{{ url_for('admin.redirects') }}" class="btn btn-link">Abbrechen</a>
+    <a href="{{ url_for('admin.redirects') }}" class="btn btn-link">Zurück</a>
     {% endif %}
 </form>
 {% endblock %}

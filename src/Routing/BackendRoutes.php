@@ -67,7 +67,11 @@ class BackendRoutes
         $group->post('/texts/{id:[0-9]+}', [TextController::class, 'update'])
             ->setName('admin.texts.update');
 
-        $group->get('/files', FilesController::class)
+        $group->get('/files', [FilesController::class, 'index'])
             ->setName('admin.files');
+        $group->get('/files/delete', [FilesController::class, 'confirmDelete'])
+            ->setName('admin.files.confirmDelete');
+        $group->post('/files/delete', [FilesController::class, 'destroy'])
+            ->setName('admin.files.destroy');
     }
 }

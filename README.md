@@ -5,7 +5,8 @@ Portal site for the Escape to Andromeda browser game.
 ## Requirements
 
 * PHP 8.1+
-* APCu PHP Extension
+  * APCu PHP extension
+  * Intl PHP extension
 * MySQL/MariaDB
 * Composer 2.x
 * NodeJS 16.x

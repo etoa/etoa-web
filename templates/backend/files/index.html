@@ -1,0 +1,31 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Datei</th>
+                <th>Typ</th>
+                <th>Grösse</th>
+                <th>Letzte Änderung</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files %}
+            <tr>
+                <td>{{ file.path }}</td>
+                <td>{{ file.mimeType }}</td>
+                <td>{{ file.fileSize | humanSize }}</td>
+                <td>{{ file.lastModified | localDateTimeFormatFromTimestamp }}</td>
+                <td class="text-end">
+                    <a href="{{ base_path() }}{{ file.url }}" target="_blank">Öffnen</a>
+                    <a href="{{ url_for('admin.files.confirmDelete', {}, {'path': file.path}) }}">Löschen</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
