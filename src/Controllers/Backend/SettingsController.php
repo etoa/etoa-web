@@ -23,6 +23,7 @@ class SettingsController extends BackendController
         'news_posts_num' => [
             'label' => 'Anzahl News Posts auf der Startseite',
             'type' => 'number',
+            'min' => 1,
             'default' => 3,
             'required' => true,
         ],
@@ -53,6 +54,7 @@ class SettingsController extends BackendController
         'latest_posts_num' => [
             'label' => 'Anzahl der neusten Posts in der Infobox',
             'type' => 'number',
+            'min' => 1,
             'default' => 5,
             'required' => true,
         ],
@@ -101,15 +103,18 @@ class SettingsController extends BackendController
 
     public function show(Request $request, Response $response, ConfigSettingRepository $config): Response
     {
-        return parent::render($response, 'settings.html', [
-            'settings' => collect(self::$settings)->map(fn ($def, $key) => [
+        $fields = [];
+        foreach (self::$settings as $key => $def) {
+            $fields[$key] = [
+                ...$def,
                 'name' => $key,
                 'value' => $config->get($key, defaultValue: (string) $def['default'], useCache: false),
                 'placeholder' => (string) $def['default'],
-                'label' => $def['label'],
-                'type' => $def['type'],
-                'required' => $def['required'],
-            ])->toArray(),
+            ];
+        }
+
+        return parent::render($response, 'settings.html', [
+            'fields' => $fields,
         ]);
     }
 

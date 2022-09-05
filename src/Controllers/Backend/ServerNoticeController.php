@@ -23,8 +23,8 @@ class ServerNoticeController extends BackendController
         ],
         'server_notice_color' => [
             'label' => 'Farbe der Servermeldung',
-            'type' => 'text',
-            'default' => 'orange',
+            'type' => 'color',
+            'default' => '#ff8000',
             'required' => true,
         ],
     ];
@@ -36,15 +36,18 @@ class ServerNoticeController extends BackendController
 
     public function show(Request $request, Response $response, ConfigSettingRepository $config): Response
     {
-        return parent::render($response, 'servernotice.html', [
-            'settings' => collect(self::$settings)->map(fn ($def, $key) => [
+        $fields = [];
+        foreach (self::$settings as $key => $def) {
+            $fields[$key] = [
+                ...$def,
                 'name' => $key,
                 'value' => $config->get($key, defaultValue: (string) $def['default'], useCache: false),
                 'placeholder' => (string) $def['default'],
-                'label' => $def['label'],
-                'type' => $def['type'],
-                'required' => $def['required'],
-            ])->toArray(),
+            ];
+        }
+
+        return parent::render($response, 'servernotice.html', [
+            'fields' => $fields,
         ]);
     }
 

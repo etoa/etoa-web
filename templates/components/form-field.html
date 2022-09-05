@@ -1,0 +1,9 @@
+<label for="{{ field.name }}" class="form-label">{{ field.label }}</label>
+{% if field.type == 'textarea' %}
+<textarea name="{{ field.name }}" id="{{ field.name }}" rows="10" class="form-control" {% if field.required %} required
+    {% endif %} placeholder="{{ field.placeholder }}">{{ field.value }}</textarea>
+{% else %}
+<input type="{{ field.type }}" name="{{ field.name }}" id="{{ field.name }}" value="{{ field.value }}"
+    placeholder="{{ field.placeholder }}" class="form-control" {% if field.required %} required {% endif %} {% if
+    field.min is defined %} min="{{ field.min }}" {% endif %} />
+{% endif %}
