@@ -45,6 +45,11 @@ abstract class BackendController
             ],
             [
                 'type' => 'route',
+                'route' => 'admin.files',
+                'label' => 'Dateien',
+            ],
+            [
+                'type' => 'route',
                 'route' => 'admin.settings',
                 'label' => 'Einstellungen',
             ],

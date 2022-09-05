@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Routing;
 
+use App\Controllers\Backend\FilesController;
 use App\Controllers\Backend\OverviewController;
 use App\Controllers\Backend\RedirectsController;
 use App\Controllers\Backend\RoundsController;
@@ -65,5 +66,8 @@ class BackendRoutes
             ->setName('admin.texts.edit');
         $group->post('/texts/{id:[0-9]+}', [TextController::class, 'update'])
             ->setName('admin.texts.update');
+
+        $group->get('/files', FilesController::class)
+            ->setName('admin.files');
     }
 }
