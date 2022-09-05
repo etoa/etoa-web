@@ -1,5 +1,30 @@
 {% extends "layouts/backend.html" %}
 
 {% block content %}
-files
+{#
+<pre>
+    {{ dump(files) }}
+</pre> #}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Datei</th>
+            <th>Typ</th>
+            <th>Letzte Änderung</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for file in files %}
+        <tr>
+            <td>{{ file.path }}</td>
+            <td>{{ file.mimeType }}</td>
+            <td>{{ file.lastModified | localDateTimeFormatFromTimestamp }}</td>
+            <td class="text-end">
+                <a href="{{ base_path() }}{{ file.url }}" target="_blank">Öffnen</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
