@@ -1,6 +1,7 @@
 {% extends "layouts/backend.html" %}
 
 {% block content %}
+{% if files %}
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -28,4 +29,9 @@
         </tbody>
     </table>
 </div>
+{% else %}
+<div class="alert alert-info" role="alert">
+    Keine Dateien vorhanden!
+</div>
+{% endif %}
 {% endblock %}
