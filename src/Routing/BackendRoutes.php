@@ -62,9 +62,9 @@ class BackendRoutes
 
         $group->get('/texts', [TextController::class, 'index'])
             ->setName('admin.texts');
-        $group->get('/texts/{id:[0-9]+}', [TextController::class, 'edit'])
+        $group->get('/texts/{key}', [TextController::class, 'edit'])
             ->setName('admin.texts.edit');
-        $group->post('/texts/{id:[0-9]+}', [TextController::class, 'update'])
+        $group->post('/texts/{key}', [TextController::class, 'update'])
             ->setName('admin.texts.update');
 
         $group->get('/files', [FilesController::class, 'index'])

@@ -3,14 +3,18 @@
 {% block content %}
 {% if texts %}
 <div class="list-group">
-    {% for text in texts %}
-    <a href="{{ url_for('admin.texts.edit', { 'id': text.id }) }}" class="list-group-item list-group-item-action"
+    {% for key, text in texts %}
+    <a href="{{ url_for('admin.texts.edit', { 'key': key }) }}" class="list-group-item list-group-item-action"
         aria-current="true">
-        <div class="d-sm-flex w-100 justify-content-between">
+        <div class="d-sm-flex w-100 justify-content-between align-items-center">
             <h5 class="mb-1">{{ text.name }}</h5>
-            <small>{{ text.lastChanges | localDateTimeFormatFromTimestamp }}</small>
+            <small>
+                {% if text.lastChanges %}
+                <strong>Letzte Änderung:</strong>
+                {{ text.lastChanges | localDateTimeFormatFromTimestamp }}
+                {% endif %}
+            </small>
         </div>
-        <p class="mb-1">{{ text.keyword }}</p>
     </a>
     {% endfor %}
 </div>
