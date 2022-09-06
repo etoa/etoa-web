@@ -22,6 +22,7 @@
                 <td>{{ file.lastModified | localDateTimeFormatFromTimestamp }}</td>
                 <td class="text-end">
                     <a href="{{ base_path() }}{{ file.url }}" target="_blank">Öffnen</a>
+                    <a href="{{ url_for('admin.files.edit', {}, {'path': file.path}) }}">Umbenennen</a>
                     <a href="{{ url_for('admin.files.confirmDelete', {}, {'path': file.path}) }}">Löschen</a>
                 </td>
             </tr>

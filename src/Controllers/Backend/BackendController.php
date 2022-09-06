@@ -104,11 +104,16 @@ abstract class BackendController
 
     /**
      * @param array<string,mixed> $data
+     * @param array<string,mixed> $queryParams
      */
-    protected function redirectToNamedRoute(Request $request, Response $response, string $routeName, array $data = []): Response
+    protected function redirectToNamedRoute(Request $request, Response $response, string $routeName, array $data = [], array $queryParams = []): Response
     {
         return $response
-            ->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor($routeName, data: $data))
+            ->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor(
+                $routeName,
+                data: $data,
+                queryParams: $queryParams
+            ))
             ->withStatus(302);
     }
 

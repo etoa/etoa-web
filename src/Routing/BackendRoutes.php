@@ -71,6 +71,10 @@ class BackendRoutes
             ->setName('admin.files');
         $group->post('/files', [FilesController::class, 'upload'])
             ->setName('admin.files.upload');
+        $group->get('/files/edit', [FilesController::class, 'edit'])
+            ->setName('admin.files.edit');
+        $group->post('/files/edit', [FilesController::class, 'update'])
+            ->setName('admin.files.update');
         $group->get('/files/delete', [FilesController::class, 'confirmDelete'])
             ->setName('admin.files.confirmDelete');
         $group->post('/files/delete', [FilesController::class, 'destroy'])
