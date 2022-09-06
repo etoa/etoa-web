@@ -67,6 +67,7 @@ abstract class FrontendController
         }
 
         $templates = require APP_DIR . '/config/texts.php';
+
         return isset($templates[$keyword]) ? $templates[$keyword]->default : null;
     }
 

@@ -16,6 +16,11 @@ parameters:
 			path: src/Controllers/Backend/FilesController.php
 
 		-
+			message: "#^Method App\\\\Controllers\\\\Backend\\\\TextController\\:\\:__construct\\(\\) has parameter \\$session with no value type specified in iterable type SlimSession\\\\Helper\\.$#"
+			count: 1
+			path: src/Controllers/Backend/TextController.php
+
+		-
 			message: "#^Property App\\\\Repository\\\\ConfigSettingRepository\\:\\:\\$repo with generic class Doctrine\\\\ORM\\\\EntityRepository does not specify its types\\: TEntityClass$#"
 			count: 1
 			path: src/Repository/ConfigSettingRepository.php

@@ -11,6 +11,7 @@ use Slim\Views\Twig;
 
 class TextController extends BackendController
 {
+    /** @var array<string,array<string,mixed>> */
     private readonly array $templates;
 
     public function __construct(protected Twig $view, protected \SlimSession\Helper $session)
@@ -69,7 +70,7 @@ class TextController extends BackendController
         }
 
         $text = $texts->findByKeyword($key);
-        if ($text !== null) {
+        if (null !== $text) {
             $texts->update($text->getId(), (string) $post['content']);
         } else {
             $texts->create($key, (string) $post['content']);
