@@ -57,18 +57,17 @@ abstract class FrontendController
         );
     }
 
-    protected function getTextContent(string $keyword): string
+    protected function getTextContent(string $keyword): ?string
     {
         $text = $this->texts->findByKeyword($keyword);
         if (null !== $text) {
             if ('' != $text->content) {
                 return BBCodeConverter::toHtml($text->content);
             }
-
-            return '<p><i><b>Fehler:</b> Texteintrag fehlt!</i></p>';
-        } else {
-            return '<p><i><b>Fehler:</b> Datensatz fehlt!</i></p>';
         }
+
+        $templates = require APP_DIR . '/config/texts.php';
+        return isset($templates[$keyword]) ? $templates[$keyword]->default : null;
     }
 
     private function getGameLogin(): string
