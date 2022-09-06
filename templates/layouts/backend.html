@@ -13,10 +13,10 @@
     <script src="{{ base_path() }}/dist/backend.js" defer></script>
 </head>
 
-<body class="bg-white">
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">EtoA Login-Administration</a>
+<body class="bg-light">
+    <nav class="navbar sticky-top navbar-expand-xl navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('admin') }}">EtoA Login-Administration</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -35,7 +35,7 @@
             </div>
         </div>
     </nav>
-    <div class="bg-light">
+    <div>
         <main class="container py-4">
             {% if title %}
             <h1>{{ title }}</h1>
@@ -58,8 +58,10 @@
             {% block content %}{% endblock %}
         </main>
     </div>
-    <footer class="text-center py-4">
-        <small>&copy; {{ 'now' | date('Y') }} EtoA Gaming</small>
+    <footer>
+        <div class="container border-top py-3">
+            <small class="text-muted">&copy; {{ 'now' | date('Y') }} EtoA Gaming</small>
+        </div>
     </footer>
 </body>
 
