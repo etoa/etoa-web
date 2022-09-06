@@ -15,10 +15,11 @@ class ServerNoticeController extends AbstractSettingsController
     {
         return [
             'server_notice' => [
-                'label' => 'Servermeldung (BBCode)',
+                'label' => 'Servermeldung',
                 'type' => 'textarea',
                 'default' => '',
                 'required' => false,
+                'description' => 'Inhalt in BBCode',
             ],
             'server_notice_color' => [
                 'label' => 'Farbe der Servermeldung',

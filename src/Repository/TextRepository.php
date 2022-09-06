@@ -35,11 +35,12 @@ final class TextRepository
         return $this->repo->findOneBy(['keyword' => $keyword]);
     }
 
-    public function create(string $keyword, string $name): Text
+    public function create(string $keyword, string $content): Text
     {
         $text = new Text();
         $text->keyword = $keyword;
-        $text->name = $name;
+        $text->content = $content;
+        $text->lastChanges = time();
         $this->em->persist($text);
         $this->em->flush();
 

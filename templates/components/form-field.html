@@ -1,10 +1,15 @@
 <label for="{{ field.name }}" class="form-label">{{ field.label }}</label>
 {% if field.type == 'textarea' %}
 <textarea name="{{ field.name }}" id="{{ field.name }}" rows="10" class="form-control" {% if field.required %} required
-    {% endif %} placeholder="{{ field.placeholder }}">{{ field.value }}</textarea>
+    {% endif %} {% if field.placeholder %} placeholder="{{ field.placeholder }}" {% endif %} {% if field.description %}
+    aria-describedby="{{ field.name }}Help" {% endif %}>{{ field.value }}</textarea>
 {% else %}
-<input type="{{ field.type }}" name="{{ field.name }}" id="{{ field.name }}" value="{{ field.value }}"
-    placeholder="{{ field.placeholder }}"
+<input type="{{ field.type }}" name="{{ field.name }}" id="{{ field.name }}" value="{{ field.value }}" {% if
+    field.placeholder %} placeholder="{{ field.placeholder }}" {% endif %}
     class="form-control  {% if field.type == 'color' %} form-control-color {% endif %}" {% if field.required %} required
-    {% endif %} {% if field.min is defined %} min="{{ field.min }}" {% endif %} />
+    {% endif %} {% if field.min is defined %} min="{{ field.min }}" {% endif %} {% if field.description %}
+    aria-describedby="{{ field.name }}Help" {% endif %} />
+{% endif %}
+{% if field.description %}
+<div id="{{ field.name }}Help" class="form-text">{{ field.description }}</div>
 {% endif %}

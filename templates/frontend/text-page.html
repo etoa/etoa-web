@@ -1,5 +1,9 @@
 {% extends "frontend/default.html" %}
 
 {% block main %}
+{% if text %}
 {{ text|raw }}
+{% else %}
+<i><b>Fehler:</b> Texteintrag fehlt!</i>
+{% endif %}
 {% endblock %}
