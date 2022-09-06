@@ -43,7 +43,7 @@ class FilesController extends BackendController
     {
         $detector = new FinfoMimeTypeDetector();
 
-        /** @var string[] $files */
+        /** @var array<int,array<string,mixed>> $files */
         $files = $this->filesystem->listContents('/', FilesystemReader::LIST_DEEP)
             ->filter(fn (StorageAttributes $attributes) => $attributes->isFile() && !str_starts_with($attributes->path(), '.'))
             ->sortByPath()
@@ -137,7 +137,7 @@ class FilesController extends BackendController
             $this->log->info('Renamed file ' . $path . ' to ' . $destination);
             $this->deleteEmptyDirecytories();
             $this->setSessionMessage('success', 'Datei umbenannt.');
-        } catch (FilesystemException | UnableToMoveFile $exception) {
+        } catch (FilesystemException|UnableToMoveFile $exception) {
             $this->setSessionMessage('error', 'Datei konnte nicht umbenannt werden: ' . $exception->getMessage());
         }
 
@@ -161,7 +161,7 @@ class FilesController extends BackendController
                         $this->filesystem->deleteDirectory($dir);
                         ++$deleted;
                         $this->log->debug('Deleted directory ' . $dir);
-                    } catch (FilesystemException | UnableToDeleteDirectory $exception) {
+                    } catch (FilesystemException|UnableToDeleteDirectory $exception) {
                         $this->log->error('Unable to delete directory ' . $dir . ': ' . $exception->getMessage());
                     }
                 }
@@ -193,7 +193,7 @@ class FilesController extends BackendController
             $this->log->info('Deleted file ' . $path);
             $this->deleteEmptyDirecytories();
             $this->setSessionMessage('success', 'Datei gelöscht.');
-        } catch (FilesystemException | UnableToDeleteFile $exception) {
+        } catch (FilesystemException|UnableToDeleteFile $exception) {
             $this->setSessionMessage('error', 'Datei konnte nicht gelöscht werden: ' . $exception->getMessage());
         }
 
