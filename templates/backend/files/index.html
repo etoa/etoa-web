@@ -34,4 +34,16 @@
     Keine Dateien vorhanden!
 </div>
 {% endif %}
+
+<form action="{{ url_for('admin.files.upload') }}" method="post" enctype="multipart/form-data">
+    <h2>Datei hochladen</h2>
+    <div class="mb-3">
+        <label for="file" class="form-label">Datei</label>
+        <input type="file" name="file" id="file" class="form-control" required aria-describedby="fileHelp" />
+        <div id="fileHelp" class="form-text">Maximum {{maxFileSize}} MB</div>
+    </div>
+    <div>
+        <input type="submit" name="submit" value="Übernehmen" class="btn btn-primary" />
+    </div>
+</form>
 {% endblock %}
