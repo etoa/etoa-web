@@ -1,0 +1,24 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+
+<form action="{{ url_for('admin.files.update', {}, {'path': path}) }}" method="post">
+    {% if path %}
+    <h2>Datei umbenennen</h2>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" name="name" id="name" value="{{ path }}" placeholder="{{ path }}" class="form-control"
+            required />
+    </div>
+    <div>
+        <input type="submit" name="submit" value="Übernehmen" class="btn btn-primary" />
+        <a href="{{ url_for('admin.files') }}" class="btn btn-link">Abbrechen</a>
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        Datei nicht vorhanden!
+    </div>
+    <a href="{{ url_for('admin.files') }}" class="btn btn-link">Zurück</a>
+    {% endif %}
+</form>
+{% endblock %}

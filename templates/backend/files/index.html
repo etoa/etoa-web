@@ -1,0 +1,54 @@
+{% extends "layouts/backend.html" %}
+
+{% block content %}
+{% if files %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Datei</th>
+                <th>Typ</th>
+                <th>Grösse</th>
+                <th>Letzte Änderung</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files %}
+            <tr>
+                <td>{{ file.path }}</td>
+                <td>{{ file.mimeType }}</td>
+                <td>{{ file.fileSize | humanSize }}</td>
+                <td>{{ file.lastModified | localDateTimeFormatFromTimestamp }}</td>
+                <td class="text-end">
+                    <a href="{{ base_path() }}{{ file.url }}" target="_blank">Öffnen</a>
+                    <a href="{{ url_for('admin.files.edit', {}, {'path': file.path}) }}">Umbenennen</a>
+                    <a href="{{ url_for('admin.files.confirmDelete', {}, {'path': file.path}) }}">Löschen</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info" role="alert">
+    Keine Dateien vorhanden!
+</div>
+{% endif %}
+
+<form action="{{ url_for('admin.files.upload') }}" method="post" enctype="multipart/form-data">
+    <div class="card mt-2">
+        <div class="card-body pb-0">
+            <h5 class="card-title">Datei hochladen</h5>
+            <div class="mb-3">
+                <label for="file" class="form-label">Datei</label>
+                <input type="file" name="file" id="file" class="form-control" required aria-describedby="fileHelp" />
+                <div id="fileHelp" class="form-text">Maximum {{maxFileSize}} MB</div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" name="submit" value="Übernehmen" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+{% endblock %}

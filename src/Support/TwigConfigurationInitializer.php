@@ -6,6 +6,7 @@ namespace App\Support;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use CodeInc\HumanReadableFileSize\HumanReadableFileSize;
 use Slim\Views\Twig;
 use Twig\Extension\DebugExtension;
 use Twig\TwigFilter;
@@ -24,6 +25,10 @@ class TwigConfigurationInitializer
         if ($debug) {
             $twig->addExtension(new DebugExtension());
         }
+
+        $twig->getEnvironment()->addFilter(new \Twig\TwigFilter('humanSize', function ($value) {
+            return null !== $value ? HumanReadableFileSize::getHumanSize($value, 1) : null;
+        }));
 
         $twig->getEnvironment()->addFilter(new TwigFilter('humanInterval', function ($value) {
             return CarbonInterval::seconds($value)->cascade()->forHumans();
