@@ -10,5 +10,8 @@ return $config->setRules([
     'concat_space' => [
         'spacing' => 'one',
     ],
+    'types_spaces' => [
+        'space' => 'single',
+    ],
 ])
     ->setFinder($finder);

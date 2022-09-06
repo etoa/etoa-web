@@ -34,7 +34,7 @@ abstract class AbstractSettingsController extends BackendController
     /**
      * @return array<string,array<string,mixed>>|false
      */
-    protected function storeSettings(Request $request, Response $response, ConfigSettingRepository $config): array|false
+    protected function storeSettings(Request $request, Response $response, ConfigSettingRepository $config): array | false
     {
         $post = $request->getParsedBody();
         foreach ($this->getSettings() as $key => $def) {

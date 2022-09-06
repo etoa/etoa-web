@@ -265,7 +265,7 @@ class ForumBridge
         return password_verify($password, $hash);
     }
 
-    public static function url(?string $type = null, string|int $value = null, string|int $value2 = null): string
+    public static function url(?string $type = null, string | int $value = null, string | int $value2 = null): string
     {
         $baseUrl = config('forum.url', 'https://forum.etoa.ch/');
         if ('board' == $type) {
