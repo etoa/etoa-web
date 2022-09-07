@@ -1,7 +1,5 @@
 <?php
 
-use App\Support\Environment;
-
 return [
     'database' => [
         'default' => [
@@ -24,7 +22,7 @@ return [
     'app' => [
         'locale' => 'de',
         'timezone' => 'Europe/Zurich',
-        'environment' => Environment::Development,
+        'environment' => App\Support\Environment::Development,
         'debug' => true,
     ],
     'auth' => [
