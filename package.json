@@ -1,7 +1,5 @@
 {
-    "name": "etoa-web",
     "private": true,
-    "version": "0.0.0",
     "scripts": {
         "watch": "webpack --watch --mode development",
         "dev": "webpack --mode development",
