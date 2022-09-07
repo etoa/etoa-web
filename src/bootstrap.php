@@ -8,13 +8,12 @@ use App\Support\Database\DatabaseConnectionInitializer;
 use App\Support\Database\DatabaseEntityManagerInitializer;
 use App\Support\Database\ForumDatabaseConnection;
 use App\Support\Environment;
+use App\Support\LoggerInitializer;
 use App\Support\TwigConfigurationInitializer;
 use Carbon\Carbon;
 use DI\Bridge\Slim\Bridge;
 use DI\Container;
 use Doctrine\ORM\EntityManager;
-use Monolog\Handler\StreamHandler;
-use Monolog\Level;
 use Monolog\Logger;
 use Slim\Middleware\Session;
 use Slim\Views\Twig;
@@ -55,11 +54,7 @@ $container->set(ForumDatabaseConnection::class, DatabaseConnectionInitializer::i
 
 $app = Bridge::create($container);
 
-$logger = new Logger('app');
-$logger->pushHandler(new StreamHandler(STORAGE_DIR . '/logs/app.log', Level::Info));
-if ($debug) {
-    $logger->pushHandler(new StreamHandler(STORAGE_DIR . '/logs/debug.log', Level::Debug));
-}
+$logger = LoggerInitializer::init($debug);
 $container->set(Logger::class, fn () => $logger);
 
 // Error handling
