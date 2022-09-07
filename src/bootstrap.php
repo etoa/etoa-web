@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use DI\Bridge\Slim\Bridge;
 use DI\Container;
 use Doctrine\ORM\EntityManager;
+use Middlewares\TrailingSlash;
 use Monolog\Logger;
 use Slim\Middleware\Session;
 use Slim\Views\Twig;
@@ -83,6 +84,7 @@ $app->add(TwigMiddleware::create($app, $twig));
 $app->add(Session::class);
 
 // Routing
+$app->add(new TrailingSlash(false));
 $app->group('', new AppRouteProvider(
     $container,
     caching: Environment::Production == $environment
