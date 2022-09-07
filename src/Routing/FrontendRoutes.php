@@ -25,7 +25,7 @@ class FrontendRoutes
 {
     public function __invoke(RouteCollectorProxy $group): void
     {
-        $group->redirect('/', 'news')
+        $group->redirect('', 'news')
             ->setName('home');
         $group->get('/story', StoryController::class)
             ->setName('story');
