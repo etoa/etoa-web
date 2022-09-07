@@ -10,10 +10,25 @@ env:
   NODE_VERSION: "16.x"
 
 jobs:
+  check-secret:
+    name: Check repository secrets
+    runs-on: ubuntu-latest
+    outputs:
+      ftp-data: ${{ steps.ftp-data.outputs.defined }}
+    steps:
+      - id: ftp-data
+        if: "${{ env.FTP_SERVER != '' && env.FTP_USERNAME != '' && env.FTP_PASSWORD != ''}}"
+        run: echo "::set-output name=defined::true"
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+
   web-deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: github.repository == 'etoa/etoa-web'
+    needs: [check-secret]
+    if: (github.repository == 'etoa/etoa-web' && needs.check-secret.outputs.ftp-data == 'true')
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -33,6 +48,12 @@ jobs:
         run: npm run build
       - name: Add clear cache trigger
         run: touch storage/clear_cache.trigger
+      - name: Log git info
+        shell: bash
+        run: |
+          echo "Commit: $(git rev-parse --short HEAD)" >> gitinfo
+          echo "Branch: ${GITHUB_REF#refs/heads/}" >> gitinfo
+          echo "Build date: $(date)" >> gitinfo
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.1
         with:
@@ -52,3 +73,7 @@ jobs:
             .php-cs*
             docker*
             phpstan*
+            *.md
+            package*.json
+            composer.*
+            webpack.*

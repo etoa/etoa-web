@@ -28,12 +28,11 @@ jobs:
           STAGING_FTP_USERNAME: ${{ secrets.STAGING_FTP_USERNAME }}
           STAGING_FTP_PASSWORD: ${{ secrets.STAGING_FTP_PASSWORD }}
 
-  deploy-staging:
+  web-deploy:
     name: Deploy to staging
     runs-on: ubuntu-latest
     needs: [check-secret]
     if: (github.repository == 'etoa/etoa-web' && needs.check-secret.outputs.ftp-data == 'true')
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

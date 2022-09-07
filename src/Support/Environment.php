@@ -2,8 +2,8 @@
 
 namespace App\Support;
 
-enum Environment
+enum Environment: string
 {
-    case Development;
-    case Production;
+    case Development = 'Development';
+    case Production = 'Production';
 }

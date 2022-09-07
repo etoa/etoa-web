@@ -28,6 +28,30 @@ class OverviewController extends BackendController
                 'name' => $admin->username,
                 'url' => ForumBridge::url('user', $admin->id),
             ], $admins),
+            'sysinfo' => $this->getSystemAppInfo(),
         ]);
+    }
+
+    private function getSystemAppInfo(): array
+    {
+        $data = [
+            'Environment' => config('app.environment')->value,
+            'OS' => PHP_OS_FAMILY,
+            'Web server' => $_SERVER['SERVER_SOFTWARE'],
+            'PHP' => phpversion(),
+        ];
+        $gitInfoFile = APP_DIR . '/gitinfo';
+        if (file_exists($gitInfoFile)) {
+            $content = file_get_contents($gitInfoFile);
+            $lines = array_filter(array_map('trim', explode("\n", $content)));
+            foreach ($lines as $line) {
+                $parts = explode(': ', $line, 2);
+                if (2 == count($parts)) {
+                    $data[$parts[0]] = $parts[1];
+                }
+            }
+        }
+
+        return $data;
     }
 }

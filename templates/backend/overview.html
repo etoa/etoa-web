@@ -18,7 +18,9 @@
 {% if rounds %}
 <ul>
     {% for round in rounds %}
-    <li><a href="{{ round.url }}admin" target="_blank">{{ round.name }}</a></li>
+    <li>
+        <a href="{{ round.url }}admin" target="_blank">{{ round.name }}</a>
+    </li>
     {% endfor %}
 </ul>
 {% endif %}
@@ -27,7 +29,19 @@
 <p>Folgende Leute haben Zugang auf diese Tool:</p>
 <ul>
     {% for admin in admins %}
-    <li><a href="{{ admin.url }}" target="_blank">{{ admin.name }}</a></li>
+    <li>
+        <a href="{{ admin.url }}" target="_blank">{{ admin.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>System</h2>
+<ul>
+    {% for key, value in sysinfo %}
+    <li>
+        <strong>{{ key }}:</strong>
+        {{ value }}
+    </li>
     {% endfor %}
 </ul>
 {% endblock %}
