@@ -23,6 +23,7 @@ class DatabaseEntityManagerInitializer
             isDevMode: Environment::Development == $environment,
             cache: $cache
         );
+        $config->setAutoGenerateProxyClasses(true);
 
         return EntityManager::create([
             'driver' => 'pdo_mysql',
