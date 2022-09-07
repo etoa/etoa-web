@@ -2,46 +2,61 @@
 
 {% block content %}
 <p>
-    Willkommen in der Loginserver-Administration!<br>
-    Diese Seite dient der Verwaltung gewisser Bereiche der Login-Page.
-</p>
-<p>
-    Besuche folgende Seiten für andere Administrationsmöglichkeiten:
+    Willkommen in der Loginserver-Administration!
+    Diese Seite dient der Verwaltung der Login-Page.
 </p>
 
-<h2>Community-Administration</h2>
-<ul>
-    <li><a href="{{ forumAdminUrl }}" target="_blank">Forum-Administration</a></li>
-</ul>
+<div class="row g-4">
+    <div class="col-md-6 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Administration</h5>
+                <p class="card-text">
+                    Besuche folgende Seiten für andere Administrationsmöglichkeiten:
+                </p>
+                <ul class="mb-0">
+                    <li>
+                        <a href="{{ forumAdminUrl }}" target="_blank">Forum-Administration</a>
+                    </li>
+                    {% for round in rounds %}
+                    <li>
+                        <a href="{{ round.url }}admin" target="_blank">{{ round.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Login Administratoren</h5>
+                <p class="card-text">Folgende Leute haben Zugang auf diese Tool:</p>
+                <ul class="mb-0">
+                    {% for admin in admins %}
+                    <li>
+                        <a href="{{ admin.url }}" target="_blank">{{ admin.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">System & Applikation</h5>
+                <ul class="mb-0">
+                    {% for key, value in sysinfo %}
+                    <li>
+                        <strong>{{ key }}:</strong>
+                        {{ value }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h2>Game-Administration</h2>
-{% if rounds %}
-<ul>
-    {% for round in rounds %}
-    <li>
-        <a href="{{ round.url }}admin" target="_blank">{{ round.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
-
-<h2>Zugriff</h2>
-<p>Folgende Leute haben Zugang auf diese Tool:</p>
-<ul>
-    {% for admin in admins %}
-    <li>
-        <a href="{{ admin.url }}" target="_blank">{{ admin.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
-
-<h2>System</h2>
-<ul>
-    {% for key, value in sysinfo %}
-    <li>
-        <strong>{{ key }}:</strong>
-        {{ value }}
-    </li>
-    {% endfor %}
-</ul>
 {% endblock %}
