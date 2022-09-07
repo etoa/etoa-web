@@ -6,17 +6,20 @@
     {% for round in rounds %}
     <a href="{{ url_for('admin.rounds.edit', { 'id': round.id }) }}" class="list-group-item list-group-item-action"
         aria-current="true">
-        <div class="d-sm-flex w-100 justify-content-between">
+        <div class="d-sm-flex w-100 justify-content-between align-items-center">
             <h5 class="mb-1">{{ round.name }}</h5>
-            {% if round.startDate %}
-            <small>Startdatum: {{ round.startDate | localDateFormatFromTimestamp }}</small>
-            {% endif %}
-        </div>
-        <p class="mb-1">
             {% if round.active==1 %}
             <span class="text-success">Aktiv</span>
             {% else %}
             <span class="text-warning">Inaktiv</span>
+            {% endif %}
+        </div>
+        <p class="mb-1">
+            Startdatum:
+            {% if round.startDate %}
+            {{ round.startDate | localDateFormatFromTimestamp }}
+            {% else %}
+            Nicht definiert
             {% endif %}
         </p>
     </a>

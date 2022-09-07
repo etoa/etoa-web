@@ -6,7 +6,7 @@
     {% if text %}
     <h2>{{ text.name }}</h2>
     <div class="mb-3">
-        <textarea name="content" rows="28" class="form-control" placeholder="{{ text.default }}" required
+        <textarea name="content" rows="28" class="form-control" placeholder="{{ text.default }}" required autofocus
             aria-describedby="contentHelp">{{ text.content }}</textarea>
         <div id="contentHelp" class="form-text">Inhalt in BBCode</div>
     </div>

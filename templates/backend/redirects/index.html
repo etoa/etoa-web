@@ -6,7 +6,7 @@
     {% for redirect in redirects %}
     <a href="{{ url_for('admin.redirects.edit', { 'id': redirect.id }) }}"
         class="list-group-item list-group-item-action" aria-current="true">
-        <div class="d-sm-flex w-100 justify-content-between">
+        <div class="d-sm-flex w-100 justify-content-between align-items-center">
             <h5 class="mb-1">{{ redirect.source }}</h5>
             {% if redirect.active==1 %}
             <small class="text-success">Aktiv</small>
