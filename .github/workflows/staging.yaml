@@ -53,10 +53,12 @@ jobs:
         run: npm run build
       - name: Add clear cache trigger
         run: touch storage/clear_cache.trigger
-      - name: Store Git hash
+      - name: Log git info
         shell: bash
         run: |
-          echo "$(git rev-parse HEAD)" >> githash
+          echo "Commit: $(git rev-parse --short HEAD)" >> gitinfo
+          echo "Branch: ${GITHUB_REF#refs/heads/}" >> gitinfo
+          echo "Build date: $(date)" >> gitinfo
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.1
         with:
