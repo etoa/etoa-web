@@ -39,6 +39,7 @@ final class TextRepository
     {
         $text = new Text();
         $text->keyword = $keyword;
+        $text->name = ucfirst($keyword);
         $text->content = $content;
         $text->lastChanges = time();
         $this->em->persist($text);

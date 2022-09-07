@@ -27,5 +27,5 @@ class Text
     public int $lastChanges = 0;
 
     #[Column(name: 'text_author_id')]
-    public string $authorId;
+    public int $authorId = 0;
 }
