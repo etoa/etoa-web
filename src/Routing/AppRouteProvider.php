@@ -16,7 +16,8 @@ use Tuupola\Middleware\HttpBasicAuthentication;
 
 class AppRouteProvider
 {
-    public const CACHE_FILE = APP_DIR . '/storage/cache/routes';
+    private const CACHE_FILE = CACHE_DIR . '/routes.cache';
+    public const MAINTENANCE_PAGE_TRIGGER = STORAGE_DIR . '/maintenance';
 
     public function __construct(private Container $container, private bool $caching = false)
     {
@@ -24,7 +25,7 @@ class AppRouteProvider
 
     public function __invoke(RouteCollectorProxy $group): void
     {
-        if (file_exists(APP_DIR . '/storage/maintenance')) {
+        if (file_exists(self::MAINTENANCE_PAGE_TRIGGER)) {
             $group->any('/{path:.*}', MaintenancePageController::class);
         } else {
             $group->group('', FrontendRoutes::class);

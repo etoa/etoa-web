@@ -15,7 +15,7 @@ class DatabaseEntityManagerInitializer
     public static function initialize(Environment $environment): EntityManager
     {
         $cache = Environment::Production == $environment
-            ? new FilesystemAdapter(directory: APP_DIR . '/storage/cache/doctrine', defaultLifetime: 300)
+            ? new FilesystemAdapter(directory: CACHE_DIR . '/doctrine', defaultLifetime: 300)
             : new ArrayAdapter();
 
         $config = ORMSetup::createAttributeMetadataConfiguration(

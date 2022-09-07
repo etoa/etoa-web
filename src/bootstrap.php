@@ -21,6 +21,8 @@ use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
 define('APP_DIR', __DIR__ . '/../');
+define('STORAGE_DIR', APP_DIR . '/storage');
+define('CACHE_DIR', STORAGE_DIR . '/cache');
 
 // Load libraries
 require APP_DIR . '/vendor/autoload.php';
@@ -32,9 +34,9 @@ $debug = config('app.debug', false);
 $environment = config('app.environment', Environment::Production);
 
 // Clear cache if requested
-if (file_exists(APP_DIR . '/storage/cache') && file_exists(APP_DIR . '/storage/clear_cache')) {
-    destroy_dir(APP_DIR . '/storage/cache');
-    unlink(APP_DIR . '/storage/clear_cache');
+if (file_exists(CACHE_DIR) && file_exists(STORAGE_DIR . '/clear_cache.trigger')) {
+    destroy_dir(CACHE_DIR);
+    unlink(STORAGE_DIR . '/clear_cache.trigger');
 }
 
 // Define locale
@@ -54,9 +56,9 @@ $container->set(ForumDatabaseConnection::class, DatabaseConnectionInitializer::i
 $app = Bridge::create($container);
 
 $logger = new Logger('app');
-$logger->pushHandler(new StreamHandler(APP_DIR . '/storage/logs/app.log', Level::Info));
+$logger->pushHandler(new StreamHandler(STORAGE_DIR . '/logs/app.log', Level::Info));
 if ($debug) {
-    $logger->pushHandler(new StreamHandler(APP_DIR . '/storage/logs/debug.log', Level::Debug));
+    $logger->pushHandler(new StreamHandler(STORAGE_DIR . '/logs/debug.log', Level::Debug));
 }
 $container->set(Logger::class, fn () => $logger);
 
