@@ -81,3 +81,4 @@ jobs:
             package*.json
             composer.*
             webpack.*
+            resources/**
