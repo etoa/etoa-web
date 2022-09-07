@@ -11,20 +11,15 @@ use Doctrine\ORM\Mapping\Table;
 #[Entity, Table(name: 'redirects')]
 class Redirect
 {
-    #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
-    private int $id;
+    #[Column, Id, GeneratedValue]
+    public int $id;
 
-    #[Column(type: 'string', unique: true, nullable: false)]
+    #[Column(unique: true)]
     public string $source;
 
-    #[Column(type: 'string', nullable: false)]
+    #[Column(nullable: false)]
     public string $target;
 
-    #[Column(type: 'boolean', nullable: false)]
+    #[Column(nullable: false)]
     public bool $active = true;
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
 }

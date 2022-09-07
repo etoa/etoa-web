@@ -11,23 +11,18 @@ use Doctrine\ORM\Mapping\Table;
 #[Entity, Table(name: 'rounds')]
 class Round
 {
-    #[Id, Column(type: 'integer', name: 'round_id'), GeneratedValue(strategy: 'AUTO')]
-    private int $id;
+    #[Column(name: 'round_id'), Id, GeneratedValue]
+    public int $id;
 
-    #[Column(type: 'string', name: 'round_name', unique: true, nullable: false)]
+    #[Column(name: 'round_name', unique: true)]
     public string $name;
 
-    #[Column(type: 'string', name: 'round_url', nullable: false)]
+    #[Column(name: 'round_url')]
     public string $url;
 
-    #[Column(type: 'boolean', name: 'round_active', nullable: false)]
+    #[Column(name: 'round_active')]
     public bool $active = false;
 
-    #[Column(type: 'integer', name: 'round_startdate', nullable: false)]
+    #[Column(name: 'round_startdate')]
     public int $startDate = 0;
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
 }

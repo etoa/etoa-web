@@ -11,26 +11,21 @@ use Doctrine\ORM\Mapping\Table;
 #[Entity, Table(name: 'texts')]
 class Text
 {
-    #[Id, Column(type: 'integer', name: 'text_id'), GeneratedValue(strategy: 'AUTO')]
-    private int $id;
+    #[Column(name: 'text_id'), Id, GeneratedValue]
+    public int $id;
 
-    #[Column(type: 'string', name: 'text_keyword', unique: true, nullable: false)]
+    #[Column(name: 'text_keyword', unique: true)]
     public string $keyword;
 
-    #[Column(type: 'string', name: 'text_name', nullable: false)]
+    #[Column(name: 'text_name')]
     public string $name;
 
-    #[Column(type: 'string', name: 'text_text', nullable: false)]
+    #[Column(name: 'text_text')]
     public string $content;
 
-    #[Column(type: 'integer', name: 'text_last_changes', nullable: false)]
+    #[Column(name: 'text_last_changes')]
     public int $lastChanges = 0;
 
-    #[Column(type: 'integer', name: 'text_author_id', nullable: false)]
+    #[Column(name: 'text_author_id')]
     public string $authorId;
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
 }

@@ -33,7 +33,7 @@ class TextController extends BackendController
             $text = $texts->findByKeyword($key);
             $items[$key] = [
                 ...$template,
-                'id' => $text?->getId(),
+                'id' => $text?->id,
                 'lastChanges' => $text?->lastChanges,
             ];
         }
@@ -71,7 +71,7 @@ class TextController extends BackendController
 
         $text = $texts->findByKeyword($key);
         if (null !== $text) {
-            $texts->update($text->getId(), (string) $post['content']);
+            $texts->update($text->id, (string) $post['content']);
         } else {
             $texts->create($key, (string) $post['content']);
         }
