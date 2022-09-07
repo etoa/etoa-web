@@ -32,6 +32,9 @@ class OverviewController extends BackendController
         ]);
     }
 
+    /**
+     * @return array<string>
+     */
     private function getSystemAppInfo(): array
     {
         $data = [
