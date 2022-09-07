@@ -145,7 +145,7 @@ abstract class FrontendController
             ] : null,
             [
                 'type' => 'url',
-                'url' => 'archiv',
+                'url' => 'files',
                 'label' => 'Downloads',
             ],
             [
