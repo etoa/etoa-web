@@ -1,0 +1,13 @@
+$primary: #2c2e58;
+
+@import "~bootstrap/scss/bootstrap";
+
+.center-page {
+    margin: 0 auto 0 auto;
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

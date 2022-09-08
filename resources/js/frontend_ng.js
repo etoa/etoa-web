@@ -1,4 +1,5 @@
 import '../scss/frontend_ng.scss'
+import 'bootstrap'
 
 function updateLoginFormAction() {
     const loginRound = document.getElementById('loginround').value;

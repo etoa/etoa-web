@@ -2,31 +2,45 @@
 
 {% block content %}
 
-{% if rounds %}
-<form action="{{ rounds[0].url }}" method="post" id="loginform">
-    <div>
-        <input type="text" name="{{ loginform.nickField }}" placeholder="Benutzername" autofocus />
+<div class="p-4">
+    <div class="mb-3">
+        <img src="{{ base_path() }}/images/logo.png" alt="Logo" style="max-width: 300px" />
     </div>
-    <div>
-        <input type="password" name="{{ loginform.passwordField }}" placeholder="Password" />
+    <div class="card bg-light shadow">
+        <div class="card-body">
+            {% if rounds %}
+            <form action="{{ rounds[0].url }}" method="post" id="loginform">
+                <div class="form-floating mb-3">
+                    <input type="text" name="{{ loginform.nickField }}" id="nickInput" autofocus class="form-control"
+                        placeholder="Benutzername" />
+                    <label for="nickInput">Benutzername</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" name="{{ loginform.passwordField }}" id="passwordInput" class="form-control"
+                        placeholder="Passwort" />
+                    <label for="passwordInput">Passwort</label>
+                </div>
+                <div class="mb-3">
+                    <select id="loginround" name="round" class="form-select">
+                        {% for round in rounds %}
+                        <option value="{{ round.url }}" {% if round.url==selectedRound %}selected="selected" {% endif
+                            %}>
+                            {{ round.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="d-grid">
+                    <input type="submit" value="Login" name="login" class="btn btn-primary" />
+                    <input type="hidden" name="token" value="{{ loginform.logintoken }}" />
+                </div>
+            </form>
+            {% else %}
+            <div class="alert alert-info mb-0" role="alert">Es sind keine aktiven Runden vorhanden.</div>
+            {% endif %}
+        </div>
     </div>
-    <div>
-        <select id="loginround" name="round">
-            {% for round in rounds %}
-            <option value="{{ round.url }}" {% if round.url==selectedRound %}selected="selected" {% endif %}>
-                {{ round.name }}
-            </option>
-            {% endfor %}
-        </select>
-    </div>
-    <div>
-        <input type="submit" value="Login" name="login" />
-        <input type="hidden" name="token" value="{{ loginform.logintoken }}" />
-    </div>
-</form>
-{% else %}
-<p>Es sind keine aktiven Runden vorhanden.</p>
-{% endif %}
+</div>
 
 
 {% endblock %}
