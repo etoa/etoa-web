@@ -11,6 +11,8 @@ use App\Support\Database\ForumDatabaseConnection;
 
 class ForumBridge
 {
+    private const GUEST_GROUP_TYPE = 2;
+
     public function __construct(private ForumDatabaseConnection $conn)
     {
     }
@@ -112,38 +114,34 @@ class ForumBridge
     }
 
     /**
-     * @param int[] $blacklist_boards
-     *
      * @return LatestPost[]
      */
-    public function latestPosts(int $limit, array $blacklist_boards = []): array
+    public function latestPosts(int $limit): array
     {
-        $bls = '';
-        if (count($blacklist_boards) > 0) {
-            sort($blacklist_boards);
-            $bls .= 't.boardid NOT IN (' . implode(',', $blacklist_boards) . ')';
-        }
-
         $res = $this->conn->executeQuery('
             SELECT
-                t.topic,
-                p.postID,
                 t.threadID,
-                p.username,
-                p.time
-            FROM
-                ' . self::wbbtable('thread') . ' t
-            INNER JOIN
-                ' . self::wbbtable('post') . ' p
-                ON p.postID = (
-                    SELECT p2.`postID`
-                    FROM `' . self::wbbtable('post') . '` p2
-                    WHERE p2.`threadID` = t.`threadID`
-                    ORDER BY p2.`time` DESC
-                    LIMIT 1
+                t.topic,
+                t.lastPostTime,
+                t.lastPostID,
+                t.lastPoster
+            FROM ' . self::wbbtable('thread') . ' t
+            WHERE t.boardID IN (
+                SELECT b.boardID FROM ' . self::wbbtable('board') . ' b
+                WHERE boardID NOT IN (
+                    SELECT otg.objectID FROM ' . self::wcftable('acl_option_to_group') . ' otg
+                        INNER JOIN ' . self::wcftable('acl_option') . ' aclo ON otg.optionID = aclo.optionID
+                        INNER JOIN ' . self::wcftable('object_type') . ' ot ON aclo.objectTypeID=ot.objectTypeID AND ot.objectType=\'com.woltlab.wbb.board\'
                 )
-            WHERE ' . $bls . '
-            ORDER BY p.time DESC
+                OR boardID IN (
+                    SELECT otg2.objectID FROM ' . self::wcftable('acl_option_to_group') . ' otg2
+                        INNER JOIN ' . self::wcftable('acl_option') . ' aclo2 ON otg2.optionID = aclo2.optionID AND aclo2.optionName = \'canReadThread\'
+                        INNER JOIN ' . self::wcftable('object_type') . ' ot2 ON aclo2.objectTypeID = ot2.objectTypeID AND ot2.objectType=\'com.woltlab.wbb.board\'
+                        INNER JOIN ' . self::wcftable('user_group') . ' ug2 ON ug2.groupID = otg2.groupID AND ug2.groupType = ' . self::GUEST_GROUP_TYPE . '
+                    WHERE otg2.optionValue=1
+                )
+            )
+            ORDER BY t.lastPostTime DESC
             LIMIT :limit
             ;', [
             'limit' => $limit,
@@ -151,10 +149,11 @@ class ForumBridge
 
         return array_map(
             fn (array $arr) => new LatestPost(
-                id: $arr['postID'],
+                id: $arr['lastPostID'],
                 topic: $arr['topic'],
-                time: $arr['time'],
+                time: $arr['lastPostTime'],
                 thread_id: $arr['threadID'],
+                username: $arr['lastPoster'],
             ),
             (array) $res->fetchAllAssociative()
         );

@@ -9,6 +9,7 @@ class LatestPost
         public string $topic,
         public int $time,
         public int $thread_id,
+        public ?string $username,
     ) {
     }
 }

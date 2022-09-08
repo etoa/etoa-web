@@ -44,12 +44,6 @@ class SettingsController extends AbstractSettingsController
                 'default' => '',
                 'required' => false,
             ],
-            'infobox_board_blacklist' => [
-                'label' => 'Forum IDs welche nicht in der Infobox erscheinen sollen',
-                'type' => 'text',
-                'default' => '',
-                'required' => false,
-            ],
             'latest_posts_num' => [
                 'label' => 'Anzahl der neusten Posts in der Infobox',
                 'type' => 'number',

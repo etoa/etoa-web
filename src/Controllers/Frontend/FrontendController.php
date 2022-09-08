@@ -193,12 +193,12 @@ abstract class FrontendController
             } catch (\Doctrine\DBAL\Exception $ignored) {
             }
             try {
-                $board_blacklist = array_map(fn ($e) => (int) $e, explode(',', $this->config->get('infobox_board_blacklist')));
-                $posts = $this->forum->latestPosts($num_posts, $board_blacklist);
+                $posts = $this->forum->latestPosts($num_posts);
                 $data['posts'] = array_map(
                     fn (LatestPost $post) => [
                         'topic' => $post->topic,
                         'time' => $post->time,
+                        'username' => $post->username,
                         'url' => ForumBridge::url('post', $post->id, $post->thread_id),
                     ],
                     $posts
