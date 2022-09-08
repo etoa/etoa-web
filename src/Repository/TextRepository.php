@@ -66,4 +66,18 @@ final class TextRepository
         }
         $this->em->flush();
     }
+
+    public function getContent(string $keyword): ?string
+    {
+        $text = $this->findByKeyword($keyword);
+        if (null !== $text) {
+            if ('' != $text->content) {
+                return $text->content;
+            }
+        }
+
+        $templates = require APP_DIR . '/config/texts.php';
+
+        return isset($templates[$keyword]) ? $templates[$keyword]->default : null;
+    }
 }

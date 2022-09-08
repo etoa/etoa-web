@@ -6,8 +6,12 @@ namespace App\Support;
 
 class BBCodeConverter
 {
-    public static function toHtml(string $string): string
+    public static function toHtml(?string $string): string
     {
+        if (null === $string) {
+            return '';
+        }
+
         $string = str_replace('&', '&amp;', $string);
 
         $string = str_replace('  ', '&nbsp;&nbsp;', $string);
