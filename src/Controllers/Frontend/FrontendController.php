@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
+use App\Controllers\AbstractController;
 use App\Models\Forum\LatestPost;
 use App\Repository\ConfigSettingRepository;
 use App\Repository\RoundRepository;
@@ -13,7 +14,7 @@ use App\Support\ForumBridge;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 
-abstract class FrontendController
+abstract class FrontendController extends AbstractController
 {
     public function __construct(
         protected Twig $view,

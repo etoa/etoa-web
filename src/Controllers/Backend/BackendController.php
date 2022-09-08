@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controllers\Backend;
 
+use App\Controllers\AbstractController;
 use App\Support\ForumBridge;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 
-abstract class BackendController
+abstract class BackendController extends AbstractController
 {
     /**
      * @return array<int,array<string,string>>
@@ -100,21 +99,6 @@ abstract class BackendController
                 'nav2' => self::secondaryMenu(),
             ], $args)
         );
-    }
-
-    /**
-     * @param array<string,mixed> $data
-     * @param array<string,mixed> $queryParams
-     */
-    protected function redirectToNamedRoute(Request $request, Response $response, string $routeName, array $data = [], array $queryParams = []): Response
-    {
-        return $response
-            ->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor(
-                $routeName,
-                data: $data,
-                queryParams: $queryParams
-            ))
-            ->withStatus(302);
     }
 
     protected function setSessionMessage(string $key, string $value): void
