@@ -33,6 +33,8 @@ class AppRouteProvider
             $group->group('/admin', BackendRoutes::class)
                 ->add($this->getBasicAuth());
 
+            $group->group('/ng', FrontendNgRoutes::class);
+
             /** @var RedirectRepository $redirects */
             $redirects = $this->container->get(RedirectRepository::class);
             foreach ($redirects->active() as $redirect) {

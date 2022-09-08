@@ -11,6 +11,7 @@ module.exports = {
         backend: './resources/js/backend.js',
         error: './resources/js/error.js',
         maintenance: './resources/js/maintenance.js',
+        frontend_ng: './resources/js/frontend_ng.js',
     },
     module: {
         rules: [

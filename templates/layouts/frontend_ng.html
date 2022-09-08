@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EtoA - Das kostenlose Sci-Fi Browsergame." />
+    <title>{% if title %}{{ title }} | {% endif %}EtoA | Das Sci-Fi Browsergame</title>
+
+    <link rel="shortcut icon" href="{{ base_path() }}/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ base_path() }}/dist/frontend_ng.css">
+    <script src="{{ base_path() }}/dist/frontend_ng.js" defer></script>
+</head>
+
+<body>
+    {% block content %}{% endblock %}
+</body>
+
+</html>
