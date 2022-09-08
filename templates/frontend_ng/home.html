@@ -1,5 +1,32 @@
 {% extends "layouts/frontend_ng.html" %}
 
 {% block content %}
-TEST
+
+{% if rounds %}
+<form action="{{ rounds[0].url }}" method="post" id="loginform">
+    <div>
+        <input type="text" name="{{ loginform.nickField }}" placeholder="Benutzername" autofocus />
+    </div>
+    <div>
+        <input type="password" name="{{ loginform.passwordField }}" placeholder="Password" />
+    </div>
+    <div>
+        <select id="loginround" name="round">
+            {% for round in rounds %}
+            <option value="{{ round.url }}" {% if round.url==selectedRound %}selected="selected" {% endif %}>
+                {{ round.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Login" name="login" />
+        <input type="hidden" name="token" value="{{ loginform.logintoken }}" />
+    </div>
+</form>
+{% else %}
+<p>Es sind keine aktiven Runden vorhanden.</p>
+{% endif %}
+
+
 {% endblock %}
