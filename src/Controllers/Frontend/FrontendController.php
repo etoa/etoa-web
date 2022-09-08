@@ -7,10 +7,10 @@ namespace App\Controllers\Frontend;
 use App\Controllers\AbstractController;
 use App\Models\Forum\LatestPost;
 use App\Repository\ConfigSettingRepository;
-use App\Repository\RoundRepository;
 use App\Repository\TextRepository;
 use App\Support\BBCodeConverter;
 use App\Support\ForumBridge;
+use App\Support\GameLoginFormService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 
@@ -18,10 +18,10 @@ abstract class FrontendController extends AbstractController
 {
     public function __construct(
         protected Twig $view,
-        private RoundRepository $rounds,
         private TextRepository $texts,
         protected ConfigSettingRepository $config,
         protected ForumBridge $forum,
+        private GameLoginFormService $loginForm,
     ) {
     }
 
@@ -74,17 +74,9 @@ abstract class FrontendController extends AbstractController
 
     private function getGameLogin(): string
     {
-        $t = time();
-        $logintoken = sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $t) . dechex($t);
-
         return $this->view->fetch('frontend/widgets/game_login.html', [
-            'loginform' => [
-                'logintoken' => $logintoken,
-                'nickField' => sha1('nick' . $logintoken . $t),
-                'passwordField' => sha1('password' . $logintoken . $t),
-                'rnd' => mt_rand(10000, 99999),
-            ],
-            'rounds' => $this->rounds->active(),
+            'loginform' => $this->loginForm->createLoginFormData(),
+            'rounds' => $this->loginForm->getRounds(),
             'selectedRound' => isset($_COOKIE['round']) ? $_COOKIE['round'] : '',
         ]);
     }
