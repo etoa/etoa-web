@@ -18,6 +18,7 @@ use App\Controllers\Frontend\RegisterController;
 use App\Controllers\Frontend\RequestPasswordController;
 use App\Controllers\Frontend\RulesController;
 use App\Controllers\Frontend\ScreenshotsController;
+use App\Controllers\Frontend\StartPageController;
 use App\Controllers\Frontend\StoryController;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -25,7 +26,7 @@ class FrontendRoutes
 {
     public function __invoke(RouteCollectorProxy $group): void
     {
-        $group->redirect('', 'news')
+        $group->get('', StartPageController::class)
             ->setName('home');
         $group->get('/story', StoryController::class)
             ->setName('story');
