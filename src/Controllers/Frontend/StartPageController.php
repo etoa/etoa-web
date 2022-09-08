@@ -14,7 +14,7 @@ class StartPageController extends AbstractController
     {
         $page = $request->getQueryParams()['page'] ?? null;
         $err = $request->getQueryParams()['err'] ?? null;
-        if ($page == 'err' && $err !== null) {
+        if ('err' == $page && null !== $err) {
             return $this->redirectToNamedRoute($request, $response, 'error', queryParams: ['err' => $err]);
         }
 
