@@ -60,16 +60,7 @@ abstract class FrontendController extends AbstractController
 
     protected function getTextContent(string $keyword): ?string
     {
-        $text = $this->texts->findByKeyword($keyword);
-        if (null !== $text) {
-            if ('' != $text->content) {
-                return BBCodeConverter::toHtml($text->content);
-            }
-        }
-
-        $templates = require APP_DIR . '/config/texts.php';
-
-        return isset($templates[$keyword]) ? $templates[$keyword]->default : null;
+        return BBCodeConverter::toHtml($this->texts->getContent($keyword));
     }
 
     private function getGameLogin(): string
