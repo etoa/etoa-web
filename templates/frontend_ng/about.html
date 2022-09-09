@@ -7,11 +7,13 @@
         <img src="{{ base_path() }}/images/logo.png" alt="Logo" style="max-width: 300px" />
     </div>
 
-    {% for heading, content in blocks %}
+    {% for item in blocks %}
+    {% if item.heading %}
+    <h2 class="display-4 text-light mb-4">{{ item.heading }}</h2>
+    {% endif %}
     <div class="card text-bg-dark mb-4">
         <div class="card-body">
-            <h5 class="card-title">{{ heading }}</h5>
-            {{ content | raw }}
+            {{ item.content | raw }}
         </div>
     </div>
     {% endfor %}

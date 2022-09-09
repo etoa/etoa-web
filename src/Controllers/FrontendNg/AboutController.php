@@ -19,12 +19,30 @@ class AboutController extends AbstractController
     {
         return $view->render($response, 'frontend_ng/about.html', [
             'blocks' => [
-                'home' => $this->getTextContent('home'),
-                'story' => $this->getTextContent('story'),
-                'features' => $this->getTextContent('features'),
-                'spenden' => $this->getTextContent('spenden'),
-                'weitersagen' => $this->getTextContent('weitersagen'),
-                'impressum' => $this->getTextContent('impressum'),
+                [
+                    'heading' => null,
+                    'content' => $this->getTextContent('home'),
+                ],
+                [
+                    'heading' => 'Story',
+                    'content' => $this->getTextContent('story'),
+                ],
+                [
+                    'heading' => 'Features',
+                    'content' => $this->getTextContent('features'),
+                ],
+                [
+                    'heading' => 'Spenden',
+                    'content' => $this->getTextContent('spenden'),
+                ],
+                [
+                    'heading' => 'Weitersagen',
+                    'content' => $this->getTextContent('weitersagen'),
+                ],
+                [
+                    'heading' => 'Impressum',
+                    'content' => $this->getTextContent('impressum'),
+                ],
             ],
         ]);
     }
