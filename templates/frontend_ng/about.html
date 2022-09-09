@@ -1,0 +1,28 @@
+{% extends "layouts/frontend_ng.html" %}
+
+{% block content %}
+
+<div class="my-4 container">
+    <div class="mb-4 text-center">
+        <img src="{{ base_path() }}/images/logo.png" alt="Logo" style="max-width: 300px" />
+    </div>
+
+    {% for heading, content in blocks %}
+    <div class="card text-bg-dark mb-4">
+        <div class="card-body">
+            <h5 class="card-title">{{ heading }}</h5>
+            {{ content | raw }}
+        </div>
+    </div>
+    {% endfor %}
+
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link link-light" href="{{ url_for('ng.home') }}">&laquo; Zurück zum Login</a>
+        </li>
+    </ul>
+
+</div>
+
+
+{% endblock %}

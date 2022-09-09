@@ -3,6 +3,8 @@
 namespace App\Controllers\FrontendNg;
 
 use App\Controllers\AbstractController;
+use App\Repository\ConfigSettingRepository;
+use App\Support\ForumBridge;
 use App\Support\GameLoginFormService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -12,6 +14,7 @@ class HomeController extends AbstractController
 {
     public function __construct(
         private GameLoginFormService $loginForm,
+        protected ConfigSettingRepository $config,
     ) {
     }
 
@@ -20,6 +23,8 @@ class HomeController extends AbstractController
         return $view->render($response, 'frontend_ng/home.html', [
             'loginform' => $this->loginForm->createLoginFormData(),
             'rounds' => $this->loginForm->getRounds(),
+            'forumUrl' => ForumBridge::url(),
+            'discordUrl' => $this->config->get('ts_link'),
         ]);
     }
 }

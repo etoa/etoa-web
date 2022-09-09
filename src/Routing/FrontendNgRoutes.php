@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Routing;
 
+use App\Controllers\FrontendNg\AboutController;
 use App\Controllers\FrontendNg\HomeController;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -13,5 +14,7 @@ class FrontendNgRoutes
     {
         $group->get('', HomeController::class)
             ->setName('ng.home');
+        $group->get('about', AboutController::class)
+            ->setName('ng.about');
     }
 }
