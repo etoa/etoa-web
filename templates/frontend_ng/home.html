@@ -22,14 +22,16 @@
                     <label for="passwordInput">Passwort</label>
                 </div>
                 <div class="mb-3">
-                    <select id="loginround" name="round" class="form-select text-bg-dark">
-                        {% for round in rounds %}
-                        <option value="{{ round.url }}" {% if round.url==selectedRound %}selected="selected" {% endif
-                            %}>
-                            {{ round.name }}
-                        </option>
-                        {% endfor %}
-                    </select>
+                    <div class="input-group">
+                        <div class="input-group-text text-bg-dark">Runde</div>
+                        <select id="loginround" name="round" class="form-select text-bg-dark">
+                            {% for round in rounds %}
+                            <option value="{{ round.url }}" data-register-url="{{ round.register_url }}">
+                                {{ round.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
                 <div class="d-grid">
                     <input type="submit" value="Login" name="login" class="btn btn-primary" />
@@ -38,8 +40,8 @@
             </form>
             <hr>
             <div class="text-center">
-                <a href="#" class="card-link link-light">Registrieren</a>
-                <a href="#" class="card-link link-light">Neues Passwort</a>
+                <a href="{{ rounds[0].register_url }}" class="card-link link-light">Registrieren</a>
+                <a href="{{ rounds[0].password_recovery_url }}" class="card-link link-light">Passwort anfordern</a>
             </div>
         </div>
     </div>

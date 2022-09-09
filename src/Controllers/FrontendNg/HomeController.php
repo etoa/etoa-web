@@ -3,6 +3,7 @@
 namespace App\Controllers\FrontendNg;
 
 use App\Controllers\AbstractController;
+use App\Models\Round;
 use App\Repository\ConfigSettingRepository;
 use App\Support\ForumBridge;
 use App\Support\GameLoginFormService;
@@ -22,7 +23,12 @@ class HomeController extends AbstractController
     {
         return $view->render($response, 'frontend_ng/home.html', [
             'loginform' => $this->loginForm->createLoginFormData(),
-            'rounds' => $this->loginForm->getRounds(),
+            'rounds' => array_map(fn (Round $round) => [
+                'name' => $round->name,
+                'url' => $round->url,
+                'register_url' => $this->loginForm->getRegistrationUrl($round),
+                'password_recovery_url' => $this->loginForm->getPasswordRecoveryUrl($round),
+            ], $this->loginForm->getRounds()),
             'forumUrl' => ForumBridge::url(),
             'discordUrl' => $this->config->get('ts_link'),
         ]);

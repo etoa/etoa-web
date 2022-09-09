@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Models\Round;
 use App\Repository\RoundRepository;
 
 class GameLoginFormService
@@ -33,5 +34,20 @@ class GameLoginFormService
     public function getRounds(): array
     {
         return $this->rounds->active();
+    }
+
+    public function getRegistrationUrl(Round $round)
+    {
+        return self::createRoundUrl($round, 'register');
+    }
+
+    public function getPasswordRecoveryUrl(Round $round)
+    {
+        return self::createRoundUrl($round, 'pwforgot');
+    }
+
+    private static function createRoundUrl(Round $round, string $page): string
+    {
+        return $round->url . '/show.php?index=' . $page;
     }
 }
