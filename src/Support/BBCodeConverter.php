@@ -6,7 +6,7 @@ namespace App\Support;
 
 class BBCodeConverter
 {
-    public static function toHtml(string $string): string
+    public static function toHtml(?string $string): string
     {
         if (null === $string) {
             return '';

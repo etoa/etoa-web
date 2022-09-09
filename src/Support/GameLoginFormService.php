@@ -36,12 +36,12 @@ class GameLoginFormService
         return $this->rounds->active();
     }
 
-    public function getRegistrationUrl(Round $round)
+    public function getRegistrationUrl(Round $round): string
     {
         return self::createRoundUrl($round, 'register');
     }
 
-    public function getPasswordRecoveryUrl(Round $round)
+    public function getPasswordRecoveryUrl(Round $round): string
     {
         return self::createRoundUrl($round, 'pwforgot');
     }
