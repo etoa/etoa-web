@@ -3,7 +3,7 @@
 <div class="boxTitle">{{ textblock.title }}</div>
 <div class="boxLine"></div>
 <div class="boxData">
-    {% if textblock %}
+    {% if textblock.content %}
     {{ textblock.content | raw }}
     {% else %}
     <i><b>Fehler:</b> Inhalt fehlt!</i>
