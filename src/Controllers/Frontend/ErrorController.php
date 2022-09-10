@@ -31,19 +31,9 @@ class ErrorController extends FrontendController
         'unknown' => 'Unbekannter Fehler. Bitte den Entwickler kontaktieren!',
     ];
 
-    protected function getTitle(): string
-    {
-        return 'Da ist was schiefgegangen...';
-    }
-
     protected function getHeaderImage(): string
     {
         return 'err.png';
-    }
-
-    protected function getSiteTitle(): ?string
-    {
-        return 'Fehler';
     }
 
     public function __invoke(Request $request, Response $response): Response

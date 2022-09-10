@@ -1,0 +1,22 @@
+{% extends "frontend/default.html" %}
+
+{% block site_title 'Registration' %}
+{% block title 'Melde dich für eine Runde an' %}
+
+{% block main %}
+{% if rounds %}
+Bitte wähle eine Runde aus:
+<ul>
+    {% for round in rounds %}
+    <li>
+        <a href="{{ round.url }}">{{ round.name }}</a>
+        {% if round.startDate %}
+        (online seit {{ round.startDate | localDateFormatFromTimestamp }})
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="loginmsg"><i>Momentan gibt es keine aktiven Runden.</i></p>
+{% endif %}
+{% endblock %}

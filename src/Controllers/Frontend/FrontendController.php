@@ -25,14 +25,7 @@ abstract class FrontendController extends AbstractController
     ) {
     }
 
-    // abstract protected function getTitle(): string;
-
     abstract protected function getHeaderImage(): string;
-
-    protected function getSiteTitle(): ?string
-    {
-        return null;
-    }
 
     /**
      * @param array<string,mixed> $args
@@ -43,8 +36,6 @@ abstract class FrontendController extends AbstractController
             $response,
             'frontend/' . $frontendTemplate,
             array_merge([
-                // 'title' => $this->getTitle(), // TODO
-                'site_title' => $this->getSiteTitle(),
                 'header_img' => $this->getHeaderImage(),
                 'votebanner' => $this->config->get('buttons'),
                 'adds' => $this->config->get('adds'),

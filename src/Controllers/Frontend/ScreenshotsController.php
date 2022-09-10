@@ -23,16 +23,6 @@ class ScreenshotsController extends FrontendController
 
     private static string $baseUrl = '/images/screenshots';
 
-    protected function getTitle(): string
-    {
-        return 'Bilder von EtoA';
-    }
-
-    protected function getSiteTitle(): ?string
-    {
-        return 'Screenshots';
-    }
-
     protected function getHeaderImage(): string
     {
         return 'screenshots.png';

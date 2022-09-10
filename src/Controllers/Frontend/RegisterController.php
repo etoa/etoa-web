@@ -11,19 +11,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class RegisterController extends FrontendController
 {
-    protected function getTitle(): string
-    {
-        return 'Melde dich für eine Runde an';
-    }
-
     protected function getHeaderImage(): string
     {
         return 'register.png';
-    }
-
-    protected function getSiteTitle(): ?string
-    {
-        return 'Registration';
     }
 
     public function __invoke(Request $request, Response $response, RoundRepository $rounds): Response
@@ -34,8 +24,7 @@ class RegisterController extends FrontendController
             'startDate' => $round->startDate,
         ], $rounds->active());
 
-        return parent::render($response, 'rounds.html', [
-            'text' => 'Bitte wähle die Runde aus:',
+        return parent::render($response, 'register.html', [
             'rounds' => $rounds,
         ]);
     }

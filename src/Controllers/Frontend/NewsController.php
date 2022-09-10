@@ -11,11 +11,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class NewsController extends FrontendController
 {
-    protected function getTitle(): string
-    {
-        return 'News';
-    }
-
     protected function getHeaderImage(): string
     {
         return 'news.png';

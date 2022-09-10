@@ -11,19 +11,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class RequestPasswordController extends FrontendController
 {
-    protected function getTitle(): string
-    {
-        return 'Neues Passwort anfordern';
-    }
-
     protected function getHeaderImage(): string
     {
         return 'pwrequest.png';
-    }
-
-    protected function getSiteTitle(): ?string
-    {
-        return 'Passwort anfordern';
     }
 
     public function __invoke(Request $request, Response $response, RoundRepository $rounds): Response
@@ -31,11 +21,9 @@ class RequestPasswordController extends FrontendController
         $rounds = array_map(fn (Round $round) => [
             'url' => $rounds->createPageUrl($round, 'pwforgot'),
             'name' => $round->name,
-            'startDate' => $round->startDate,
         ], $rounds->active());
 
-        return parent::render($response, 'rounds.html', [
-            'text' => 'Bitte wähle die Runde aus, in der sich dein Account befindet:',
+        return parent::render($response, 'request_password.html', [
             'rounds' => $rounds,
         ]);
     }

@@ -1,14 +1,15 @@
 {% extends "layouts/frontend.html" %}
 
-{% block site_title %}{{ site_title|default(title) }}{% endblock %}
-
 {% block content %}
 <br />
 <div class="boxLine"></div>
-<div class="boxTitle">{{ title }}</div>
+{% if block('title') is defined %}
+<div class="boxTitle">{% block title %}{% endblock %}</div>
 <div class="boxLine"></div>
+{% endif %}
 <div class="boxData">
     {% block main %}{% endblock %}
 </div>
 <div class="boxLine"></div>
+<br>
 {% endblock %}
