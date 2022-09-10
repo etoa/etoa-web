@@ -18,7 +18,7 @@ class RulesController extends ContentPageController
         return 'regeln.png';
     }
 
-    protected function getTextBlocks(): array
+    protected function getBlocks(): array
     {
         $thread_id = $this->config->getInt('rules_thread', 0);
         $thread = $this->forum->thread($thread_id);

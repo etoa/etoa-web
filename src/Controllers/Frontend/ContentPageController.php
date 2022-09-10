@@ -18,14 +18,14 @@ abstract class ContentPageController extends FrontendController
     /**
      * @return ContentBlock[]
      */
-    abstract protected function getTextBlocks(): array;
+    abstract protected function getBlocks(): array;
 
     public function __invoke(Request $request, Response $response, Twig $twig): Response
     {
         return parent::render($response, 'content-page.html', [
             'site_title' => $this->getSiteTitle(),
             'header_img' => $this->getHeaderImage(),
-            'content_blocks' => array_map(fn (ContentBlock $block) => $block->render($twig), $this->getTextBlocks()),
+            'content_blocks' => array_map(fn (ContentBlock $block) => $block->render($twig), $this->getBlocks()),
         ]);
     }
 }

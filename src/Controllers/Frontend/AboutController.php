@@ -19,7 +19,7 @@ class AboutController extends ContentPageController
         return 'features.png';
     }
 
-    protected function getTextBlocks(): array
+    protected function getBlocks(): array
     {
         return [
             new TextBlock(

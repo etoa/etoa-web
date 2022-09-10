@@ -19,7 +19,7 @@ class SupportUsController extends ContentPageController
         return 'spenden.png';
     }
 
-    protected function getTextBlocks(): array
+    protected function getBlocks(): array
     {
         return [
             new TextBlock(

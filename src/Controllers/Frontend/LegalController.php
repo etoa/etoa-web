@@ -18,7 +18,7 @@ class LegalController extends ContentPageController
         return 'impressum.png';
     }
 
-    protected function getTextBlocks(): array
+    protected function getBlocks(): array
     {
         return [
             new TextBlock(
