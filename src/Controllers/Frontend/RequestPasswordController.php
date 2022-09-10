@@ -11,11 +11,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class RequestPasswordController extends FrontendController
 {
-    protected function getHeaderImage(): string
-    {
-        return 'pwrequest.png';
-    }
-
     public function __invoke(Request $request, Response $response, RoundRepository $rounds): Response
     {
         $rounds = array_map(fn (Round $round) => [

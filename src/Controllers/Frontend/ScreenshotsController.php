@@ -23,11 +23,6 @@ class ScreenshotsController extends FrontendController
 
     private static string $baseUrl = '/images/screenshots';
 
-    protected function getHeaderImage(): string
-    {
-        return 'screenshots.png';
-    }
-
     public function __invoke(Request $request, Response $response): Response
     {
         $items = array_map(fn (String $f) => [

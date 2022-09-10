@@ -11,11 +11,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class RegisterController extends FrontendController
 {
-    protected function getHeaderImage(): string
-    {
-        return 'register.png';
-    }
-
     public function __invoke(Request $request, Response $response, RoundRepository $rounds): Response
     {
         $rounds = array_map(fn (Round $round) => [

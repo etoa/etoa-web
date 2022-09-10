@@ -12,6 +12,8 @@ abstract class TextPageController extends FrontendController
 {
     abstract protected function getSiteTitle(): ?string;
 
+    abstract protected function getHeaderImage(): string;
+
     /**
      * @return TextBlock[]
      */
@@ -21,6 +23,7 @@ abstract class TextPageController extends FrontendController
     {
         return parent::render($response, 'text-page.html', [
             'site_title' => $this->getSiteTitle(),
+            'header_img' => $this->getHeaderImage(),
             'textblocks' => $this->getTextBlocks(),
         ]);
     }

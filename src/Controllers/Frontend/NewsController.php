@@ -11,11 +11,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class NewsController extends FrontendController
 {
-    protected function getHeaderImage(): string
-    {
-        return 'news.png';
-    }
-
     public function __invoke(Request $request, Response $response): Response
     {
         $news_board_id = $this->config->getInt('news_board');

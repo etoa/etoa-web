@@ -31,11 +31,6 @@ class ErrorController extends FrontendController
         'unknown' => 'Unbekannter Fehler. Bitte den Entwickler kontaktieren!',
     ];
 
-    protected function getHeaderImage(): string
-    {
-        return 'err.png';
-    }
-
     public function __invoke(Request $request, Response $response): Response
     {
         $code = $request->getQueryParams()['err'] ?? 'unknown';

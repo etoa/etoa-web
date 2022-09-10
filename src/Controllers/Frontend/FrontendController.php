@@ -25,8 +25,6 @@ abstract class FrontendController extends AbstractController
     ) {
     }
 
-    abstract protected function getHeaderImage(): string;
-
     /**
      * @param array<string,mixed> $args
      */
@@ -36,7 +34,6 @@ abstract class FrontendController extends AbstractController
             $response,
             'frontend/' . $frontendTemplate,
             array_merge([
-                'header_img' => $this->getHeaderImage(),
                 'votebanner' => $this->config->get('buttons'),
                 'adds' => $this->config->get('adds'),
                 'footerJs' => $this->config->get('footer_js'),
