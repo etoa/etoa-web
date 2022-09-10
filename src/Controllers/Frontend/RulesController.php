@@ -4,39 +4,30 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
-use App\Models\Forum\Thread;
+use App\UI\TextBlock;
 
 class RulesController extends TextPageController
 {
-    private function getThread(): ?Thread
-    {
-        $thread_id = $this->config->getInt('rules_thread', 0);
-
-        return $this->forum->thread($thread_id);
-    }
-
-    public function getTitle(): string
-    {
-        return $this->getThread()?->topic ?? 'Es trat ein Fehler auf!';
-    }
-
     public function getSiteTitle(): ?string
     {
         return 'Regeln';
     }
 
-    public function getText(): string
-    {
-        return $this->getThread()?->message ?? 'Regeln nicht vorhanden!';
-    }
-
-    public function getTextKey(): string
-    {
-        return '';
-    }
-
     public function getHeaderImage(): string
     {
         return 'regeln.png';
+    }
+
+    protected function getTextBlocks(): array
+    {
+        $thread_id = $this->config->getInt('rules_thread', 0);
+        $thread = $this->forum->thread($thread_id);
+
+        return [
+            new TextBlock(
+                title: $thread?->topic ?? 'Es trat ein Fehler auf!',
+                content: $thread?->message ?? 'Regeln nicht vorhanden!',
+            ),
+        ];
     }
 }

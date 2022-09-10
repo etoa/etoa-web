@@ -1,9 +1,10 @@
-{% extends "frontend/default.html" %}
+{% extends "layouts/frontend.html" %}
 
-{% block main %}
-{% if text %}
-{{ text | raw }}
-{% else %}
-<i><b>Fehler:</b> Texteintrag fehlt!</i>
-{% endif %}
+{% block site_title %}{{ site_title }}{% endblock %}
+
+{% block content %}
+{% for textblock in textblocks %}
+{% include "components/text-block.html" with {'textblock': textblock} only %}
+{% endfor %}
+<br>
 {% endblock %}

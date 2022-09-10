@@ -25,7 +25,7 @@ abstract class FrontendController extends AbstractController
     ) {
     }
 
-    abstract protected function getTitle(): string;
+    // abstract protected function getTitle(): string;
 
     abstract protected function getHeaderImage(): string;
 
@@ -43,7 +43,7 @@ abstract class FrontendController extends AbstractController
             $response,
             'frontend/' . $frontendTemplate,
             array_merge([
-                'title' => $this->getTitle(),
+                // 'title' => $this->getTitle(), // TODO
                 'site_title' => $this->getSiteTitle(),
                 'header_img' => $this->getHeaderImage(),
                 'votebanner' => $this->config->get('buttons'),
@@ -83,18 +83,13 @@ abstract class FrontendController extends AbstractController
             ],
             [
                 'type' => 'route',
-                'route' => 'features',
+                'route' => 'about',
                 'label' => 'Über EtoA',
             ],
             [
                 'type' => 'route',
                 'route' => 'screenshots',
                 'label' => 'Bilder',
-            ],
-            [
-                'type' => 'route',
-                'route' => 'story',
-                'label' => 'Story',
             ],
             [
                 'type' => 'route',
@@ -137,28 +132,13 @@ abstract class FrontendController extends AbstractController
             ],
             [
                 'type' => 'route',
-                'route' => 'banner',
-                'label' => 'Weitersagen',
-            ],
-            [
-                'type' => 'route',
                 'route' => 'donate',
-                'label' => 'Spenden',
+                'label' => 'Unterstütze uns',
             ],
             [
                 'type' => 'route',
-                'route' => 'disclaimer',
-                'label' => 'Disclaimer',
-            ],
-            [
-                'type' => 'route',
-                'route' => 'privacy',
-                'label' => 'Datenschutz',
-            ],
-            [
-                'type' => 'route',
-                'route' => 'imprint',
-                'label' => 'Impressum',
+                'route' => 'legal',
+                'label' => 'Rechtliches',
             ],
         ];
 
