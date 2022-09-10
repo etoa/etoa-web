@@ -1,35 +1,35 @@
-{% extends "frontend/default.html" %}
-
-{% block main %}
-{{ text|raw }}
-
-<div id="smart-button-container" style="margin: auto;">
-    <table style="width: 300px">
-        <tr>
-            <td><label for="description">Zweck </label></td>
-            <td><input type="text" name="descriptionInput" id="description" maxlength="127" value="Spende"></td>
-            <td>
-                <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a
-                    description</p>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="amount">Betrag (CHF)</label></td>
-            <td><input name="amountInput" type="number" id="amount" value=""></td>
-            <td>
-                <p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Please enter a
-                    price</p>
-            </td>
-        </tr>
-    </table>
-    <div id="invoiceidDiv" style="text-align: center; display: none;"><label for="invoiceid"> </label><input
-            name="invoiceid" maxlength="127" type="text" id="invoiceid" value=""></div>
-    <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
-    <div style="text-align: center; margin-top: 0.625rem; width: 300px;" id="paypal-button-container"></div>
+<br />
+<div class="boxLine"></div>
+<div class="boxTitle">{{ title }}</div>
+<div class="boxLine"></div>
+<div class="boxData">
+    <div id="smart-button-container" style="margin: auto;">
+        <table style="width: 300px">
+            <tr>
+                <td><label for="description">Zweck </label></td>
+                <td><input type="text" name="descriptionInput" id="description" maxlength="127" value="Spende"></td>
+                <td>
+                    <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Bitte gib einen
+                        Spendenzweck ein</p>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="amount">Betrag (CHF)</label></td>
+                <td><input name="amountInput" type="number" id="amount" value=""></td>
+                <td>
+                    <p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Bitte gib einen
+                        Betrag ein</p>
+                </td>
+            </tr>
+        </table>
+        <div id="invoiceidDiv" style="text-align: center; display: none;"><label for="invoiceid"> </label><input
+                name="invoiceid" maxlength="127" type="text" id="invoiceid" value=""></div>
+        <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
+        <div style="text-align: center; margin-top: 0.625rem; width: 300px;" id="paypal-button-container"></div>
+    </div>
 </div>
-{% endblock %}
+<div class="boxLine"></div>
 
-{% block footer %}
 <script
     src="https://www.paypal.com/sdk/js?client-id=AQ9pzSF1ZTlq8wSs0XROBpc0rwRArzqonJVOMnaOsZFi6b1eSco0j2OLPVJ1bjny9VJ1cq0pGV9io-nO&enable-funding=venmo&currency=CHF"
     data-sdk-integration-source="button-factory"></script>
@@ -141,4 +141,3 @@
     }
     initPayPalButton();
 </script>
-{% endblock footer %}

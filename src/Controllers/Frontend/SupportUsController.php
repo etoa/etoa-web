@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Frontend;
 
+use App\UI\CustomTemplateBlock;
 use App\UI\TextBlock;
 
 class SupportUsController extends ContentPageController
@@ -24,6 +25,10 @@ class SupportUsController extends ContentPageController
             new TextBlock(
                 title: 'Damit EtoA am Laufen bleibt...',
                 content: $this->getTextContent('spenden')
+            ),
+            new CustomTemplateBlock(
+                template: 'components/donate-block.html',
+                data: ['title' => 'Onlinespende'],
             ),
             new TextBlock(
                 title: 'Mache Werbung für EtoA',
