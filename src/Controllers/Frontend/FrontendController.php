@@ -76,11 +76,6 @@ abstract class FrontendController extends AbstractController
             ],
             [
                 'type' => 'route',
-                'route' => 'screenshots',
-                'label' => 'Bilder',
-            ],
-            [
-                'type' => 'route',
                 'route' => 'rules',
                 'label' => 'Regeln',
             ],

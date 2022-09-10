@@ -12,7 +12,6 @@ use App\Controllers\Frontend\NewsController;
 use App\Controllers\Frontend\RegisterController;
 use App\Controllers\Frontend\RequestPasswordController;
 use App\Controllers\Frontend\RulesController;
-use App\Controllers\Frontend\ScreenshotsController;
 use App\Controllers\Frontend\StartPageController;
 use App\Controllers\Frontend\SupportUsController;
 use Slim\Routing\RouteCollectorProxy;
@@ -32,9 +31,6 @@ class FrontendRoutes
         $group->redirect('/story', 'about');
         $group->get('/about', AboutController::class)
             ->setName('about');
-
-        $group->get('/screenshots', ScreenshotsController::class)
-            ->setName('screenshots');
 
         $group->redirect('/disclaimer', 'legal');
         $group->redirect('/privacy', 'legal');

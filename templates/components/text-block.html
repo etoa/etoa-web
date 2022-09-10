@@ -1,10 +1,10 @@
 <br />
 <div class="boxLine"></div>
-<div class="boxTitle">{{ textblock.title }}</div>
+<div class="boxTitle">{{ title }}</div>
 <div class="boxLine"></div>
 <div class="boxData">
-    {% if textblock.content %}
-    {{ textblock.content | raw }}
+    {% if content %}
+    {{ content | raw }}
     {% else %}
     <i><b>Fehler:</b> Inhalt fehlt!</i>
     {% endif %}

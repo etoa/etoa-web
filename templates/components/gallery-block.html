@@ -1,0 +1,12 @@
+<br />
+<div class="boxLine"></div>
+<div class="boxTitle">{{ title }}</div>
+<div class="boxLine"></div>
+<div class="boxData">
+    {% for item in images %}
+    <a href="{{ base_path() }}{{ item.url }}" data-fslightbox="gallery" data-caption="{{ item.name }}">
+        <img src="{{ base_path() }}{{ item.thumb_url }}" style="width:250px;height:187px;" alt="{{ item.name }}"
+            title="{{ item.name }}" /></a> &nbsp;
+    {% endfor %}
+</div>
+<div class="boxLine"></div>
