@@ -7,7 +7,7 @@ namespace App\Controllers\Frontend;
 use App\UI\GalleryBlock;
 use App\UI\TextBlock;
 
-class AboutController extends TextPageController
+class AboutController extends ContentPageController
 {
     public function getSiteTitle(): ?string
     {

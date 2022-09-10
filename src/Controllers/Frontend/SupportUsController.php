@@ -6,7 +6,7 @@ namespace App\Controllers\Frontend;
 
 use App\UI\TextBlock;
 
-class SupportUsController extends TextPageController
+class SupportUsController extends ContentPageController
 {
     public function getSiteTitle(): ?string
     {

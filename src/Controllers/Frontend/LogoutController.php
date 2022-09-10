@@ -6,7 +6,7 @@ namespace App\Controllers\Frontend;
 
 use App\UI\TextBlock;
 
-class LogoutController extends TextPageController
+class LogoutController extends ContentPageController
 {
     public function getSiteTitle(): string
     {

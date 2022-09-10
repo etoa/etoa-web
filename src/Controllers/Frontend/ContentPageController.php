@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 
-abstract class TextPageController extends FrontendController
+abstract class ContentPageController extends FrontendController
 {
     abstract protected function getSiteTitle(): ?string;
 
@@ -22,7 +22,7 @@ abstract class TextPageController extends FrontendController
 
     public function __invoke(Request $request, Response $response, Twig $twig): Response
     {
-        return parent::render($response, 'text-page.html', [
+        return parent::render($response, 'content-page.html', [
             'site_title' => $this->getSiteTitle(),
             'header_img' => $this->getHeaderImage(),
             'content_blocks' => array_map(fn (ContentBlock $block) => $block->render($twig), $this->getTextBlocks()),
