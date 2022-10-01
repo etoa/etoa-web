@@ -69,7 +69,7 @@ abstract class FrontendController extends AbstractController
 
         $templates = require APP_DIR . '/config/texts.php';
 
-        return isset($templates[$keyword]) ? $templates[$keyword]->default : null;
+        return isset($templates[$keyword]) ? BBCodeConverter::toHtml($templates[$keyword]['default']) : null;
     }
 
     private function getGameLogin(): string
