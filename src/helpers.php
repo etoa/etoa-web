@@ -11,7 +11,7 @@ function config(string $key, mixed $default = null): mixed
 {
     $file = APP_DIR . '/config/app.php';
     if (!is_file($file)) {
-        copy(APP_DIR . '/config/app.dist.php', $file);
+        die('Application is not configured properly, please set-up the configuration file (config/app.php).');
     }
     $config = require $file;
     $dot = new Dot($config);
