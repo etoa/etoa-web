@@ -17,7 +17,7 @@ return [
         ],
     ],
     'caching' => [
-        'apcu_timeout' => 300,
+        'timeout' => 300,
     ],
     'app' => [
         'locale' => 'de',

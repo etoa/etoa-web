@@ -11,8 +11,10 @@ use App\Repository\RoundRepository;
 use App\Repository\TextRepository;
 use App\Support\BBCodeConverter;
 use App\Support\ForumBridge;
+use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 abstract class FrontendController extends AbstractController
 {
@@ -22,6 +24,7 @@ abstract class FrontendController extends AbstractController
         private TextRepository $texts,
         protected ConfigSettingRepository $config,
         protected ForumBridge $forum,
+        protected Logger $logger
     ) {
     }
 
@@ -186,12 +189,14 @@ abstract class FrontendController extends AbstractController
 
     private function getForumStatus(): string
     {
-        if (!$data = apcu_fetch('etoa-infobox-forum-news')) {
+        $cache = new FilesystemAdapter(defaultLifetime: config('caching.timeout', 300));
+        $data = $cache->get('etoa-infobox-forum-news', function () {
             $num_posts = $this->config->getInt('latest_posts_num', 5);
             $data = [];
             try {
                 $data['users_online'] = $this->forum->usersOnline();
-            } catch (\Doctrine\DBAL\Exception $ignored) {
+            } catch (\Doctrine\DBAL\Exception $ex) {
+                $this->logger->error('Unable to load users online: ' . $ex->getMessage());
             }
             try {
                 $posts = $this->forum->latestPosts($num_posts);
@@ -204,10 +209,12 @@ abstract class FrontendController extends AbstractController
                     ],
                     $posts
                 );
-            } catch (\Doctrine\DBAL\Exception $ignored) {
+            } catch (\Doctrine\DBAL\Exception $ex) {
+                $this->logger->error('Unable to load latest posts: ' . $ex->getMessage());
             }
-            apcu_add('etoa-infobox-forum-news', $data, config('caching.apcu_timeout'));
-        }
+
+            return $data;
+        });
 
         return $this->view->fetch('frontend/widgets/forum_status.html', $data);
     }
