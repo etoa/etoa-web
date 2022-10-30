@@ -8,7 +8,6 @@ use App\Models\Forum\Thread;
 use App\Support\ForumBridge;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class NewsController extends FrontendController
 {
@@ -38,8 +37,7 @@ class NewsController extends FrontendController
      */
     private function fetchNews(int $news_board_id): ?array
     {
-        $cache = new FilesystemAdapter(defaultLifetime: config('caching.timeout', 300));
-        $news = $cache->get('etoa-news-section', function () use ($news_board_id) {
+        $news = $this->cache->get('etoa-news-section', function () use ($news_board_id) {
             $status_board_id = $this->config->getInt('status_board');
             $num_news = $this->config->getInt('news_posts_num', 3);
             try {

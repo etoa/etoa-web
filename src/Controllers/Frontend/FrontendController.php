@@ -14,7 +14,7 @@ use App\Support\ForumBridge;
 use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Cache\CacheInterface;
 
 abstract class FrontendController extends AbstractController
 {
@@ -24,7 +24,8 @@ abstract class FrontendController extends AbstractController
         private TextRepository $texts,
         protected ConfigSettingRepository $config,
         protected ForumBridge $forum,
-        protected Logger $logger
+        protected Logger $logger,
+        protected CacheInterface $cache,
     ) {
     }
 
@@ -189,8 +190,7 @@ abstract class FrontendController extends AbstractController
 
     private function getForumStatus(): string
     {
-        $cache = new FilesystemAdapter(defaultLifetime: config('caching.timeout', 300));
-        $data = $cache->get('etoa-infobox-forum-news', function () {
+        $data = $this->cache->get('etoa-infobox-forum-news', function () {
             $num_posts = $this->config->getInt('latest_posts_num', 5);
             $data = [];
             try {
