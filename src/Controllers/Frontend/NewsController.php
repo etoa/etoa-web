@@ -37,7 +37,7 @@ class NewsController extends FrontendController
      */
     private function fetchNews(int $news_board_id): ?array
     {
-        if (!$news = apcu_fetch('etoa-news-section')) {
+        $news = $this->cache->get('etoa-news-section', function () use ($news_board_id) {
             $status_board_id = $this->config->getInt('status_board');
             $num_news = $this->config->getInt('news_posts_num', 3);
             try {
@@ -55,11 +55,14 @@ class NewsController extends FrontendController
                     'message' => $thread->message,
                     'replies' => $thread->post_count - 1,
                 ], $threads);
-                apcu_add('etoa-news-section', $news, config('caching.apcu_timeout'));
-            } catch (\Doctrine\DBAL\Exception $ignored) {
-                return null;
+
+                return $news;
+            } catch (\Doctrine\DBAL\Exception $ex) {
+                $this->logger->error('Unable to load news: ' . $ex->getMessage());
             }
-        }
+
+            return null;
+        });
 
         return $news;
     }

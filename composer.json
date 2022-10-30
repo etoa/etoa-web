@@ -20,7 +20,7 @@
         "tuupola/slim-basic-auth": "^3.3",
         "bryanjhv/slim-session": "~4.0",
         "doctrine/orm": "^2.13",
-        "symfony/cache": "^6.0",
+        "symfony/cache": "^6.1",
         "monolog/monolog": "^3.2",
         "league/flysystem": "^3.0",
         "codeinc/human-readable-file-size": "^1.0",

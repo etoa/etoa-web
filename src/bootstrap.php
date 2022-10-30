@@ -19,6 +19,8 @@ use Monolog\Logger;
 use Slim\Middleware\Session;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Cache\CacheInterface;
 
 define('APP_DIR', __DIR__ . '/../');
 define('STORAGE_DIR', APP_DIR . '/storage');
@@ -89,6 +91,9 @@ $app->group('', new AppRouteProvider(
     $container,
     caching: Environment::Production == $environment
 ));
+
+// Caching
+$container->set(CacheInterface::class, fn () => new FilesystemAdapter(defaultLifetime: config('caching.timeout', 300)));
 
 // Run app
 $app->run();
