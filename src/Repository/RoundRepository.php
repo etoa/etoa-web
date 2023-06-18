@@ -10,7 +10,7 @@ final class RoundRepository
 {
     private EntityRepository $repo;
 
-    public function __construct(private EntityManager $em)
+    public function __construct(private readonly EntityManager $em)
     {
         $this->repo = $em->getRepository(Round::class);
     }

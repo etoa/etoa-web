@@ -1,7 +1,7 @@
 body {
     color: #fff;
     background: #000 url('../images/error/blackhole.jpg') center center no-repeat;
-    font-family: arial, helvetica, verdana;
+    font-family: arial, helvetica, verdana, sans-serif;
     font-size: 10pt;
 }
 
@@ -43,7 +43,7 @@ span {
 
 .links {
     width: 500px;
-    margin: 0px auto;
+    margin: 0 auto;
     text-align: center;
 }
 

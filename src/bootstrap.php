@@ -22,9 +22,9 @@ use Slim\Views\TwigMiddleware;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\CacheInterface;
 
-define('APP_DIR', __DIR__ . '/../');
-define('STORAGE_DIR', APP_DIR . '/storage');
-define('CACHE_DIR', STORAGE_DIR . '/cache');
+const APP_DIR = __DIR__ . '/../';
+const STORAGE_DIR = APP_DIR . '/storage';
+const CACHE_DIR = STORAGE_DIR . '/cache';
 
 // Load libraries
 require APP_DIR . '/vendor/autoload.php';

@@ -6,6 +6,8 @@ namespace App\Controllers\Frontend;
 
 use App\Models\Forum\Thread;
 use App\Support\ForumBridge;
+use Doctrine\DBAL\Exception as DBALException;
+use Psr\Cache\InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -34,15 +36,18 @@ class NewsController extends FrontendController
 
     /**
      * @return array<int,array<string,mixed>>|null
+     *
+     * @throws InvalidArgumentException
      */
     private function fetchNews(int $news_board_id): ?array
     {
-        $news = $this->cache->get('etoa-news-section', function () use ($news_board_id) {
+        return $this->cache->get('etoa-news-section', function () use ($news_board_id) {
             $status_board_id = $this->config->getInt('status_board');
             $num_news = $this->config->getInt('news_posts_num', 3);
             try {
                 $threads = $this->forum->newsPosts($num_news, $news_board_id, $status_board_id);
-                $news = array_map(fn (Thread $thread) => [
+
+                return array_map(fn (Thread $thread) => [
                     'prefix' => $thread->board_id == $status_board_id ? 'SERVERSTATUS ' : '',
                     'url' => ForumBridge::url('thread', $thread->id),
                     'topic' => $thread->topic,
@@ -55,15 +60,11 @@ class NewsController extends FrontendController
                     'message' => $thread->message,
                     'replies' => $thread->post_count - 1,
                 ], $threads);
-
-                return $news;
-            } catch (\Doctrine\DBAL\Exception $ex) {
+            } catch (DBALException $ex) {
                 $this->logger->error('Unable to load news: ' . $ex->getMessage());
             }
 
             return null;
         });
-
-        return $news;
     }
 }

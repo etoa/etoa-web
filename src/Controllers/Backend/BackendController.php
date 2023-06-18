@@ -8,6 +8,7 @@ use App\Controllers\AbstractController;
 use App\Support\ForumBridge;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
+use SlimSession\Helper as SlimSessionHelper;
 
 abstract class BackendController extends AbstractController
 {
@@ -76,7 +77,7 @@ abstract class BackendController extends AbstractController
         ];
     }
 
-    public function __construct(protected Twig $view, protected \SlimSession\Helper $session)
+    public function __construct(protected Twig $view, protected SlimSessionHelper $session)
     {
     }
 

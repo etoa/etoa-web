@@ -105,7 +105,7 @@ class BBCodeConverter
         $string = str_replace('[line]', '<hr class="line" />', $string);
         $string = str_replace('[LINE]', '<hr class="line" />', $string);
 
-        $string = preg_replace('/\[codebox ([^\[]*) ([^\[]*)\]/', '<textarea readonly=\"readonly\" rows=\"\1\" cols=\"\2\">', $string);
+        $string = preg_replace('/\[codebox ([^\[]*) ([^\[]*)]/', '<textarea readonly=\"readonly\" rows=\"\1\" cols=\"\2\">', $string);
 
         $string = str_replace('[codebox]', '<textarea readonly=\"readonly\" rows=\"3\" cols=\"60\">', $string);
         $string = str_replace('[/codebox]', '</textarea>', $string);
@@ -170,8 +170,6 @@ class BBCodeConverter
         $string = str_replace('[/size]', '</span>', $string);
         $string = str_replace('[/SIZE]', '</span>', $string);
 
-        $string = stripslashes($string);
-
-        return $string;
+        return stripslashes($string);
     }
 }

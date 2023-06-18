@@ -19,7 +19,7 @@ class AppRouteProvider
     private const CACHE_FILE = CACHE_DIR . '/routes.cache';
     public const MAINTENANCE_PAGE_TRIGGER = STORAGE_DIR . '/maintenance';
 
-    public function __construct(private Container $container, private bool $caching = false)
+    public function __construct(private readonly Container $container, private readonly bool $caching = false)
     {
     }
 

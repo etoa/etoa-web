@@ -1,5 +1,5 @@
 body {
-    background: #000 url('../images/frontend/background.jpg') no-repeat 0px 20px;
+    background: #000 url('../images/frontend/background.jpg') no-repeat 0 20px;
     margin-left: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -37,7 +37,7 @@ a img {
 
 div.Table_01 {
     position: absolute;
-    left: 0px;
+    left: 0;
     top: 20px;
     width: 276px;
     height: 600px;
@@ -93,15 +93,6 @@ div.Line1009_ {
     height: 600px;
 }
 
-.tbldata {
-    font-size: 9pt;
-    color: #0099ff;
-    border: 0px solid #fff;
-    width: 161px;
-    height: 14px;
-    background-color: #000000;
-}
-
 #divScrollTextCont {
     position: absolute;
     left: 303px;
@@ -112,7 +103,7 @@ div.Line1009_ {
 
 #divText {
     position: absolute;
-    left: 0px;
+    left: 0;
     top: 1px;
     visibility: visible;
     font-family: Arial, Helvetica, sans-serif;
@@ -126,7 +117,7 @@ div.Line1009_ {
     top: 135px;
     width: 104px;
     height: 19px;
-    border: 0px solid #fff;
+    border: 0 solid #fff;
     background-image: url(../images/frontend/btn_login.gif);
     background-repeat: no-repeat;
 }
@@ -152,7 +143,7 @@ form#loginform input[type="text"] {
     width: 159px;
     height: 15px;
     color: #ffffff;
-    border: 0px solid #fff;
+    border: 0 solid #fff;
     background-image: url(../images/frontend/txt_name.gif);
     background-repeat: no-repeat;
 }
@@ -164,7 +155,7 @@ form#loginform input[type="password"] {
     width: 159px;
     height: 15px;
     color: #ffffff;
-    border: 0px solid #fff;
+    border: 0 solid #fff;
     background-image: url(../images/frontend/txt_pw.gif);
     background-repeat: no-repeat;
 }
@@ -176,20 +167,20 @@ form#loginform input[type="password"] {
     width: 140px;
     height: 15px;
     color: #ffffff;
-    border: 0px;
+    border: 0;
     background: #212121;
 }
 
 h1 {
     font-size: 13pt;
-    padding: 0px 0px;
-    margin: 10px 0px 8px 0px;
+    padding: 0 0;
+    margin: 10px 0 8px 0;
 }
 
 h2 {
     font-size: 11pt;
-    padding: 0px 0px;
-    margin: 0px;
+    padding: 0 0;
+    margin: 0;
 }
 
 .boxTitle {
@@ -226,14 +217,14 @@ h2 {
     width: 620px;
     height: 8px;
     background: #000 url("../images/frontend/hline.gif") repeat-x;
-    padding: 0px 8px 0px 0px;
+    padding: 0 8px 0 0;
 }
 
 .rightBoxLine {
     width: 200px;
     height: 8px;
     background: #000 url("../images/frontend/hline.gif") repeat-x;
-    padding: 0px 8px 0px 0px;
+    padding: 0 8px 0 0;
 }
 
 .subtitle {
@@ -297,7 +288,7 @@ tr.d1 th {
     font-weight: bold;
     text-decoration: none;
     font-size: 9pt;
-    padding: 0px 0px 0px 28px;
+    padding: 0 0 0 28px;
     margin: 0;
     color: #b1b3d1;
     background: none;
@@ -313,7 +304,7 @@ tr.d1 th {
 }
 
 #mainMenu img.hline {
-    padding: 2px 0px 2px 25px;
+    padding: 2px 0 2px 25px;
     height: 6px;
     width: 140px;
     margin: 0;

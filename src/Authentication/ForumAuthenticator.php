@@ -6,10 +6,11 @@ namespace App\Authentication;
 
 use App\Support\ForumBridge;
 use Monolog\Logger;
+use SlimSession\Helper as SlimSessionHelper;
 
 class ForumAuthenticator
 {
-    public function __construct(private ForumBridge $forum, private Logger $logger, protected \SlimSession\Helper $session)
+    public function __construct(private readonly ForumBridge $forum, private readonly Logger $logger, protected SlimSessionHelper $session)
     {
     }
 
@@ -36,7 +37,7 @@ class ForumAuthenticator
         $allowedGroup = config('auth.admin.usergroup');
 
         if (!in_array($allowedGroup, $userGroupIds)) {
-            $this->logger->warning('User tried to authenticate but is not in allowed groupd.', [
+            $this->logger->warning('User tried to authenticate but is not in allowed group.', [
                 'user.name' => $user->username,
                 'user.groups' => $userGroupIds,
                 'admin.group' => $allowedGroup,

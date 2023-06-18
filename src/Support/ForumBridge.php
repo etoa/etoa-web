@@ -13,7 +13,7 @@ class ForumBridge
 {
     private const GUEST_GROUP_TYPE = 2;
 
-    public function __construct(private ForumDatabaseConnection $conn)
+    public function __construct(private readonly ForumDatabaseConnection $conn)
     {
     }
 
@@ -60,7 +60,7 @@ class ForumBridge
             'userId' => $userId,
         ]);
 
-        return (array) $res->fetchFirstColumn();
+        return $res->fetchFirstColumn();
     }
 
     /**
@@ -85,7 +85,7 @@ class ForumBridge
         return array_map(fn (array $arr) => new User(
             id: $arr['userID'],
             username: $arr['username'],
-        ), (array) $res->fetchAllAssociative());
+        ), $res->fetchAllAssociative());
     }
 
     public function usersOnline(int $threshold = 300): int
@@ -155,7 +155,7 @@ class ForumBridge
                 thread_id: $arr['threadID'],
                 username: $arr['lastPoster'],
             ),
-            (array) $res->fetchAllAssociative()
+            $res->fetchAllAssociative()
         );
     }
 
@@ -221,16 +221,16 @@ class ForumBridge
         return array_map(fn (array $arr) => new Thread(
             id: $arr['threadID'],
             topic: $arr['topic'],
+            message: $arr['message'],
             time: $arr['time'],
             board_id: $arr['boardID'],
             user_id: $arr['userid'],
             user_name: $arr['username'],
             updated_at: $arr['lastEditTime'],
-            message: $arr['message'],
-            post_count: $arr['post_count'],
             last_post_time: $arr['lastPostTime'],
+            post_count: $arr['post_count'],
             closed: 1 == $arr['isClosed'],
-        ), (array) $res->fetchAllAssociative());
+        ), $res->fetchAllAssociative());
     }
 
     public function thread(int $threadId): ?Thread
@@ -264,7 +264,7 @@ class ForumBridge
         return password_verify($password, $hash);
     }
 
-    public static function url(?string $type = null, string | int $value = null, string | int $value2 = null): string
+    public static function url(string $type = null, string | int $value = null, string | int $value2 = null): string
     {
         $baseUrl = config('forum.url', 'https://forum.etoa.ch/');
         if ('board' == $type) {

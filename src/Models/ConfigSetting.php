@@ -15,7 +15,7 @@ class ConfigSetting
     public int $id;
 
     public function __construct(
-        #[Column(name: 'config_name', unique: true)] private string $name,
+        #[Column(name: 'config_name', unique: true)] private readonly string $name,
         #[Column(name: 'config_value', nullable: true)] public ?string $value = null
     ) {
     }

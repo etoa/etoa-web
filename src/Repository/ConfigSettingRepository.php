@@ -10,12 +10,12 @@ final class ConfigSettingRepository
 {
     private EntityRepository $repo;
 
-    public function __construct(private EntityManager $em)
+    public function __construct(private readonly EntityManager $em)
     {
         $this->repo = $em->getRepository(ConfigSetting::class);
     }
 
-    public function get(string $name, ?string $defaultValue = null, bool $useCache = true): ?string
+    public function get(string $name, string $defaultValue = null, bool $useCache = true): ?string
     {
         static $cache = [];
         if ($useCache && isset($cache[$name])) {

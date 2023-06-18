@@ -10,7 +10,7 @@ class RulesController extends TextPageController
 {
     private function getThread(): ?Thread
     {
-        $thread_id = $this->config->getInt('rules_thread', 0);
+        $thread_id = $this->config->getInt('rules_thread');
 
         return $this->forum->thread($thread_id);
     }

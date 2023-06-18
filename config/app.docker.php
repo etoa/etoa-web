@@ -28,7 +28,7 @@ return [
     'auth' => [
         'admin' => [
             'usergroup' => 20,
-        ]
+        ],
     ],
     'forum' => [
         'url' => 'https://forum.etoa.ch/',

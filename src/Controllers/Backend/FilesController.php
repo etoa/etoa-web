@@ -18,6 +18,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\UploadedFileInterface;
 use Slim\Views\Twig;
+use SlimSession\Helper as SlimSessionHelper;
 
 class FilesController extends BackendController
 {
@@ -27,7 +28,7 @@ class FilesController extends BackendController
 
     private Filesystem $filesystem;
 
-    public function __construct(protected Twig $view, protected \SlimSession\Helper $session, private Logger $log)
+    public function __construct(protected Twig $view, protected SlimSessionHelper $session, private readonly Logger $log)
     {
         parent::__construct($view, $session);
         $adapter = new LocalFilesystemAdapter(self::BASE_PATH);
@@ -39,7 +40,7 @@ class FilesController extends BackendController
         return 'Dateimanager';
     }
 
-    public function index(Request $request, Response $response): Response
+    public function index(Response $response): Response
     {
         $detector = new FinfoMimeTypeDetector();
 
@@ -150,7 +151,7 @@ class FilesController extends BackendController
         while (0 != $deleted) {
             $deleted = 0;
             /** @var string[] $directories */
-            $directories = $this->filesystem->listContents('/', Filesystem::LIST_DEEP)
+            $directories = $this->filesystem->listContents('/', FilesystemReader::LIST_DEEP)
                 ->filter(fn (StorageAttributes $attributes) => $attributes->isDir())
                 ->map(fn (StorageAttributes $attributes) => $attributes->path())
                 ->toArray();

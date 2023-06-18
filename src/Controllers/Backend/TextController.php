@@ -8,13 +8,14 @@ use App\Repository\TextRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
+use SlimSession\Helper as SlimSessionHelper;
 
 class TextController extends BackendController
 {
     /** @var array<string,array<string,mixed>> */
     private readonly array $templates;
 
-    public function __construct(protected Twig $view, protected \SlimSession\Helper $session)
+    public function __construct(protected Twig $view, protected SlimSessionHelper $session)
     {
         parent::__construct($view, $session);
 

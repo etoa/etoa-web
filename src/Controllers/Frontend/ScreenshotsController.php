@@ -40,7 +40,7 @@ class ScreenshotsController extends FrontendController
 
     public function __invoke(Request $request, Response $response): Response
     {
-        $items = array_map(fn (String $f) => [
+        $items = array_map(fn (string $f) => [
             'name' => ucfirst($f),
             'url' => self::$baseUrl . '/' . $f . '.jpg',
             'thumb_url' => self::$baseUrl . '/' . $f . '_small.jpg',

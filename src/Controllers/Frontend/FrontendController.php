@@ -11,6 +11,7 @@ use App\Repository\RoundRepository;
 use App\Repository\TextRepository;
 use App\Support\BBCodeConverter;
 use App\Support\ForumBridge;
+use Doctrine\DBAL\Exception as DBALException;
 use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
@@ -20,8 +21,8 @@ abstract class FrontendController extends AbstractController
 {
     public function __construct(
         protected Twig $view,
-        private RoundRepository $rounds,
-        private TextRepository $texts,
+        private readonly RoundRepository $rounds,
+        private readonly TextRepository $texts,
         protected ConfigSettingRepository $config,
         protected ForumBridge $forum,
         protected Logger $logger,
@@ -89,7 +90,7 @@ abstract class FrontendController extends AbstractController
                 'rnd' => mt_rand(10000, 99999),
             ],
             'rounds' => $this->rounds->active(),
-            'selectedRound' => isset($_COOKIE['round']) ? $_COOKIE['round'] : '',
+            'selectedRound' => $_COOKIE['round'] ?? '',
         ]);
     }
 
@@ -195,7 +196,7 @@ abstract class FrontendController extends AbstractController
             $data = [];
             try {
                 $data['users_online'] = $this->forum->usersOnline();
-            } catch (\Doctrine\DBAL\Exception $ex) {
+            } catch (DBALException $ex) {
                 $this->logger->error('Unable to load users online: ' . $ex->getMessage());
             }
             try {
@@ -209,7 +210,7 @@ abstract class FrontendController extends AbstractController
                     ],
                     $posts
                 );
-            } catch (\Doctrine\DBAL\Exception $ex) {
+            } catch (DBALException $ex) {
                 $this->logger->error('Unable to load latest posts: ' . $ex->getMessage());
             }
 

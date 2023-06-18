@@ -4,7 +4,7 @@ import 'fslightbox'
 
 function updateFormAction() {
     const loginRound = document.getElementById('loginround').value;
-    if (loginRound == '') {
+    if (loginRound === '') {
         alert('Du hast keine Runde ausgewählt.');
     } else {
         document.getElementById('loginform').action = loginRound;

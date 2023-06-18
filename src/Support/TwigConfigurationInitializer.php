@@ -26,7 +26,7 @@ class TwigConfigurationInitializer
             $twig->addExtension(new DebugExtension());
         }
 
-        $twig->getEnvironment()->addFilter(new \Twig\TwigFilter('humanSize', function ($value) {
+        $twig->getEnvironment()->addFilter(new TwigFilter('humanSize', function ($value) {
             return null !== $value ? HumanReadableFileSize::getHumanSize($value, 1) : null;
         }));
 

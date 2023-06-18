@@ -24,7 +24,9 @@
         "monolog/monolog": "^3.2",
         "league/flysystem": "^3.0",
         "codeinc/human-readable-file-size": "^1.0",
-        "middlewares/trailing-slash": "^2.0"
+        "middlewares/trailing-slash": "^2.0",
+        "ext-pdo": "*",
+        "ext-intl": "*"
     },
     "autoload": {
         "psr-4": {
