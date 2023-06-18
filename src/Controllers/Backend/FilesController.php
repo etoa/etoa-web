@@ -57,7 +57,7 @@ class FilesController extends BackendController
             ])
             ->toArray();
 
-        return parent::render($response, 'files/index.html', [
+        return parent::render($response, 'files/index.html.twig', [
             'files' => $files,
             'maxFileSize' => $this->getMaxFileSize(),
         ]);
@@ -101,7 +101,7 @@ class FilesController extends BackendController
     {
         $path = $request->getQueryParams()['path'] ?? null;
 
-        return parent::render($response, 'files/edit.html', [
+        return parent::render($response, 'files/edit.html.twig', [
             'path' => null !== $path && $this->filesystem->fileExists($path) ? $path : null,
         ]);
     }
@@ -174,7 +174,7 @@ class FilesController extends BackendController
     {
         $path = $request->getQueryParams()['path'] ?? null;
 
-        return parent::render($response, 'files/delete.html', [
+        return parent::render($response, 'files/delete.html.twig', [
             'path' => null !== $path && $this->filesystem->fileExists($path) ? $path : null,
         ]);
     }

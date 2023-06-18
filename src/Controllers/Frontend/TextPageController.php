@@ -18,7 +18,7 @@ abstract class TextPageController extends FrontendController
 
     public function __invoke(Request $request, Response $response): Response
     {
-        return parent::render($response, 'text-page.html', [
+        return parent::render($response, 'text-page.html.twig', [
             'text' => $this->getText(),
         ]);
     }

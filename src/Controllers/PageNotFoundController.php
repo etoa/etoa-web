@@ -14,7 +14,7 @@ class PageNotFoundController
 {
     public function __invoke(Request $request, Response $response, Twig $view): Response
     {
-        return $view->render($response, 'error.html', [
+        return $view->render($response, 'error.html.twig', [
             'code' => StatusCodeInterface::STATUS_NOT_FOUND,
             'title' => 'Diese Seite wurde leider von einem Schwarzen Loch verschluckt!',
             'description' => 'Das tut uns leid! Zum Glück gibt es in unserem Universum noch genügend andere Seiten welche weit genug von Schwarzen Löchern entfernt sind.',

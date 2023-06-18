@@ -17,7 +17,7 @@ class UnauthorizedRequestController
 
     public function __invoke(Response $response): Response
     {
-        return $this->view->render($response, 'error.html', [
+        return $this->view->render($response, 'error.html.twig', [
             'code' => StatusCodeInterface::STATUS_UNAUTHORIZED,
             'title' => 'Nicht authentisiert!',
             'description' => 'Diese Seite ist nur für authentisierte Benutzer verfügbar.',

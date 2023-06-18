@@ -46,7 +46,7 @@ class ScreenshotsController extends FrontendController
             'thumb_url' => self::$baseUrl . '/' . $f . '_small.jpg',
         ], self::$files);
 
-        return parent::render($response, 'screenshots.html', [
+        return parent::render($response, 'screenshots.html.twig', [
             'items' => $items,
         ]);
     }

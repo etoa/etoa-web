@@ -37,7 +37,7 @@ class ServerNoticeController extends AbstractSettingsController
 
     public function show(Request $request, Response $response, ConfigSettingRepository $config): Response
     {
-        return parent::render($response, 'servernotice.html', [
+        return parent::render($response, 'servernotice.html.twig', [
             'fields' => $this->getFields($config),
         ]);
     }

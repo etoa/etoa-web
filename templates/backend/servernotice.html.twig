@@ -1,10 +1,10 @@
-{% extends "layouts/backend.html" %}
+{% extends "layouts/backend.html.twig" %}
 
 {% block content %}
 <form action="{{ url_for('admin.servernotice.store') }}" method="post">
     {% for field in fields %}
     <div class="mb-3">
-        {% include "components/form-field.html" with {'field': field} only %}
+        {% include "components/form-field.html.twig" with {'field': field} only %}
     </div>
     {% endfor %}
     <div>

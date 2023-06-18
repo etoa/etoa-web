@@ -34,7 +34,7 @@ class RegisterController extends FrontendController
             'startDate' => $round->startDate,
         ], $rounds->active());
 
-        return parent::render($response, 'rounds.html', [
+        return parent::render($response, 'rounds.html.twig', [
             'text' => 'Bitte wähle die Runde aus:',
             'rounds' => $rounds,
         ]);

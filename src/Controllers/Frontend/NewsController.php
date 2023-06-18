@@ -27,7 +27,7 @@ class NewsController extends FrontendController
     {
         $news_board_id = $this->config->getInt('news_board');
 
-        return parent::render($response, 'news.html', [
+        return parent::render($response, 'news.html.twig', [
             'text' => $this->getTextContent('home'),
             'news' => $this->fetchNews($news_board_id),
             'board_url' => ForumBridge::url('board', $news_board_id),

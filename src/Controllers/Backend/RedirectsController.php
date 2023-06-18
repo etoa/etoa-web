@@ -19,14 +19,14 @@ class RedirectsController extends BackendController
 
     public function index(Request $request, Response $response, RedirectRepository $redirects): Response
     {
-        return parent::render($response, 'redirects/index.html', [
+        return parent::render($response, 'redirects/index.html.twig', [
             'redirects' => $redirects->all(),
         ]);
     }
 
     public function create(Request $request, Response $response): Response
     {
-        return parent::render($response, 'redirects/create.html');
+        return parent::render($response, 'redirects/create.html.twig');
     }
 
     public function store(Request $request, Response $response, RedirectRepository $redirects, App $app): Response
@@ -67,7 +67,7 @@ class RedirectsController extends BackendController
 
     public function edit(Request $request, Response $response, RedirectRepository $redirects, int $id): Response
     {
-        return parent::render($response, 'redirects/edit.html', [
+        return parent::render($response, 'redirects/edit.html.twig', [
             'redirect' => $redirects->get($id),
         ]);
     }
@@ -102,7 +102,7 @@ class RedirectsController extends BackendController
 
     public function confirmDelete(Request $request, Response $response, RedirectRepository $redirects, int $id): Response
     {
-        return parent::render($response, 'redirects/delete.html', [
+        return parent::render($response, 'redirects/delete.html.twig', [
             'redirect' => $redirects->get($id),
         ]);
     }

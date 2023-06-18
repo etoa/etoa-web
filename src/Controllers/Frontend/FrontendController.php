@@ -82,7 +82,7 @@ abstract class FrontendController extends AbstractController
         $t = time();
         $logintoken = sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $t) . dechex($t);
 
-        return $this->view->fetch('frontend/widgets/game_login.html', [
+        return $this->view->fetch('frontend/widgets/game_login.html.twig', [
             'loginform' => [
                 'logintoken' => $logintoken,
                 'nickField' => sha1('nick' . $logintoken . $t),
@@ -184,7 +184,7 @@ abstract class FrontendController extends AbstractController
             ],
         ];
 
-        return $this->view->fetch('frontend/widgets/main_menu.html', [
+        return $this->view->fetch('frontend/widgets/main_menu.html.twig', [
             'nav' => array_filter($items, fn ($i) => null !== $i),
         ]);
     }
@@ -217,7 +217,7 @@ abstract class FrontendController extends AbstractController
             return $data;
         });
 
-        return $this->view->fetch('frontend/widgets/forum_status.html', $data);
+        return $this->view->fetch('frontend/widgets/forum_status.html.twig', $data);
     }
 
     private function getServerNotice(): string
@@ -230,6 +230,6 @@ abstract class FrontendController extends AbstractController
             'updated' => $this->config->get('server_notice_updated'),
         ] : [];
 
-        return $this->view->fetch('frontend/widgets/server_notice.html', $data);
+        return $this->view->fetch('frontend/widgets/server_notice.html.twig', $data);
     }
 }

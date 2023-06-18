@@ -13,7 +13,7 @@ class MaintenancePageController
 {
     public function __invoke(Request $request, Response $response, Twig $view): Response
     {
-        return $view->render($response, 'maintenance.html', [
+        return $view->render($response, 'maintenance.html.twig', [
             'forumUrl' => config('forum.url', 'https://forum.etoa.ch/'),
             'message' => file_get_contents(AppRouteProvider::MAINTENANCE_PAGE_TRIGGER),
         ]);

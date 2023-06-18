@@ -39,7 +39,7 @@ class TextController extends BackendController
             ];
         }
 
-        return parent::render($response, 'texts/index.html', [
+        return parent::render($response, 'texts/index.html.twig', [
             'texts' => $items,
         ]);
     }
@@ -48,7 +48,7 @@ class TextController extends BackendController
     {
         $text = $texts->findByKeyword($key);
 
-        return parent::render($response, 'texts/edit.html', [
+        return parent::render($response, 'texts/edit.html.twig', [
             'key' => $key,
             'text' => isset($this->templates[$key]) ? [
                 ...$this->templates[$key],

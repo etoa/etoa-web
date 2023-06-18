@@ -97,7 +97,7 @@ class SettingsController extends AbstractSettingsController
 
     public function show(Request $request, Response $response, ConfigSettingRepository $config): Response
     {
-        return parent::render($response, 'settings.html', [
+        return parent::render($response, 'settings.html.twig', [
             'fields' => $this->getFields($config),
         ]);
     }

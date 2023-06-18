@@ -50,7 +50,7 @@ class ErrorController extends FrontendController
     {
         $code = $request->getQueryParams()['err'] ?? 'unknown';
 
-        return parent::render($response, 'error.html', [
+        return parent::render($response, 'error.html.twig', [
             'message' => self::$messages[$code] ?? self::$messages['unknown'],
             'support_url' => ForumBridge::url('board', $this->config->getInt('support_board')),
         ]);

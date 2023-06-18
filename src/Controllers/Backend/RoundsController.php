@@ -18,14 +18,14 @@ class RoundsController extends BackendController
 
     public function index(Request $request, Response $response, RoundRepository $rounds): Response
     {
-        return parent::render($response, 'rounds/index.html', [
+        return parent::render($response, 'rounds/index.html.twig', [
             'rounds' => $rounds->all(),
         ]);
     }
 
     public function create(Request $request, Response $response): Response
     {
-        return parent::render($response, 'rounds/create.html');
+        return parent::render($response, 'rounds/create.html.twig');
     }
 
     public function store(Request $request, Response $response, RoundRepository $rounds): Response
@@ -46,7 +46,7 @@ class RoundsController extends BackendController
 
     public function edit(Request $request, Response $response, RoundRepository $rounds, int $id): Response
     {
-        return parent::render($response, 'rounds/edit.html', [
+        return parent::render($response, 'rounds/edit.html.twig', [
             'round' => $rounds->get($id),
         ]);
     }
@@ -70,7 +70,7 @@ class RoundsController extends BackendController
 
     public function confirmDelete(Request $request, Response $response, RoundRepository $rounds, int $id): Response
     {
-        return parent::render($response, 'rounds/delete.html', [
+        return parent::render($response, 'rounds/delete.html.twig', [
             'round' => $rounds->get($id),
         ]);
     }

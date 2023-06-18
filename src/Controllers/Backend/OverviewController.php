@@ -21,7 +21,7 @@ class OverviewController extends BackendController
     {
         $admins = $forum->usersOfGroup(config('auth.admin.usergroup'));
 
-        return parent::render($response, 'overview.html', [
+        return parent::render($response, 'overview.html.twig', [
             'forumAdminUrl' => ForumBridge::url('admin'),
             'rounds' => $rounds->all(),
             'admins' => array_map(fn (User $admin) => [

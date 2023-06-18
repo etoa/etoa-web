@@ -26,7 +26,7 @@ class DonateController extends FrontendController
 
     public function __invoke(Request $request, Response $response): Response
     {
-        return parent::render($response, 'donate.html', [
+        return parent::render($response, 'donate.html.twig', [
             'text' => $this->getTextContent('spenden'),
         ]);
     }

@@ -1,11 +1,11 @@
-{% extends "layouts/backend.html" %}
+{% extends "layouts/backend.html.twig" %}
 
 {% block content %}
 <form action="{{ url_for('admin.settings.store') }}" method="post">
     <div class="row gy-3 gx-4 mb-3">
         {% for field in fields %}
         <div class="col-md-6 col-xl-4">
-            {% include "components/form-field.html" with {'field': field} only %}
+            {% include "components/form-field.html.twig" with {'field': field} only %}
         </div>
         {% endfor %}
     </div>
